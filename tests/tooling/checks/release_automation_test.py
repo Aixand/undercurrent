@@ -120,7 +120,7 @@ class ReleaseTests(unittest.TestCase):
             release.verify_existing_crate(crate(), crate(source=b"tampered"), COMMIT)
 
     def test_retry_publishes_only_remaining_crates(self):
-        package = self.root / "target/package"
+        package = self.root / "target/package/tmp-crate"
         package.mkdir(parents=True)
         data = crate()
         (package / f"{release.CRATES[0]}-0.1.0-beta.crate").write_bytes(data)
