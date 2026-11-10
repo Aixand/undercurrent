@@ -113,6 +113,29 @@ The [release workflow](../../.github/workflows/release.yml) runs when you push a
 declared product versions to match. Diagnostic tags under `ci/` do not publish.
 Branch and pull-request checks remain read-only.
 
+### Rehearse installer qualification without publishing
+
+Normal pushes and pull requests run the four-platform
+[product checks workflow](../../.github/workflows/product-checks.yml). They do not
+build shipping packages or run full installer lifecycle qualification.
+
+The [product installer workflow](../../.github/workflows/product-installer.yml)
+first runs those checks, then packages and verifies the product and SDK on all
+four platforms. It exercises installation, upgrades, rollback rejection, and
+uninstall. The release workflow calls it for version tags.
+
+To run the same installer qualification manually, use GitHub Actions' **Run
+workflow** control for **Product installer**, or run from the repository root
+with an authenticated GitHub CLI:
+
+```sh
+gh workflow run product-installer.yml --ref main
+```
+
+A manual run uploads qualification artifacts. It does not publish crates or a
+GitHub Release. Versioned release archives remain gated on version-tag refs;
+publication is owned by the release workflow.
+
 ### Configure publication
 
 Before the first release:

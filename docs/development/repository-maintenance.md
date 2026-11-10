@@ -52,7 +52,7 @@ Repository administrators should keep the following protection on `main`:
 - Use pull requests for maintainer changes. External pull requests are not accepted.
 - After successful trial runs, require **Secret scan**,
   **Repository file policy**, **Documentation checks**, **License inventory and
-  packaging**, **Dependency advisories**, and all four **Product installer (OS)** matrix jobs.
+  packaging**, **Dependency advisories**, and all four **Product checks (OS)** matrix jobs.
 - Require the branch to be up to date before merging.
 - Apply protection to administrators as well as other maintainers.
 - Prevent force pushes and branch deletion.
@@ -64,8 +64,11 @@ Choose implementation checks using the [verification guide](verification.md); th
 [native platform workflow](platform-testing.md) runs for diagnostic tags and
 version-tag releases. It
 checks that the tagged commit is on `main` before starting native tests.
-The separate [product installer workflow](../../.github/workflows/product-installer.yml)
-checks installation on pull requests, pushes to `main`, and manual runs.
+The [product checks workflow](../../.github/workflows/product-checks.yml) runs
+formatting, lint, Rust/Python tests, and Linux shell contracts on pull requests
+and pushes to `main`. The separate
+[product installer workflow](../../.github/workflows/product-installer.yml) runs
+full packaging and installation qualification for releases and manual rehearsals.
 Changes to workflows and protection settings require particular
 care because they control this enforcement.
 

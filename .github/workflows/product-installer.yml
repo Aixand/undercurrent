@@ -1,14 +1,14 @@
 name: Product installer
 on:
   workflow_call:
-  pull_request:
-  push:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
+  checks:
+    uses: ./.github/workflows/product-checks.yml
   product:
+    needs: checks
     name: Product installer (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
@@ -42,16 +42,6 @@ jobs:
       - name: Install Linux shell fixtures
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y zsh fish
-      - run: python scripts/dev/cli.py check
-      - run: python scripts/dev/cli.py test
-      - name: Linux group and shell contracts
-        if: runner.os == 'Linux'
-        run: |
-          python tests/conformance/groups_test.py
-          python tests/e2e/run.py --test exec-environment --test platform-detection --bin-dir target/debug
-      - name: Reclaim Linux development build space before packaging
-        if: runner.os == 'Linux'
-        run: cargo clean --profile dev
       - run: python scripts/dev/cli.py package --output dist/release
       - run: python scripts/dev/cli.py verify --artifact dist/release --install --report dist/verification.json
       - run: python scripts/prepare_product_runtime.py --bootstrap-output dist/bootstrap
