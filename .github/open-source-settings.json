@@ -14,19 +14,19 @@
       "app_slug": "github-actions"
     },
     {
-      "context": "Product installer (ubuntu-22.04)",
+      "context": "Product checks (ubuntu-22.04)",
       "app_slug": "github-actions"
     },
     {
-      "context": "Product installer (macos-15-intel)",
+      "context": "Product checks (macos-15-intel)",
       "app_slug": "github-actions"
     },
     {
-      "context": "Product installer (macos-15)",
+      "context": "Product checks (macos-15)",
       "app_slug": "github-actions"
     },
     {
-      "context": "Product installer (windows-2022)",
+      "context": "Product checks (windows-2022)",
       "app_slug": "github-actions"
     },
     {

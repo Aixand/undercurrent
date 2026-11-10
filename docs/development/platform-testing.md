@@ -16,8 +16,9 @@ native job; other diagnostic tags and release tags select Linux, macOS and Windo
 
 To test a commit on Windows only, create and push a new tag at a commit on `main`,
 for example `ci/windows-20261008-1`. This starts CI without publishing a release.
-The separate repository and product-installer checks run on pushes to `main`
-and maintainer pull requests.
+The separate repository and [product checks](../../.github/workflows/product-checks.yml)
+run on pushes to `main` and maintainer pull requests. Full installer qualification
+runs through version-tag releases or a manual installer workflow run.
 
 An all-platform run starts four native jobs: Ubuntu 24.04, macOS 15 (Arm64),
 macOS 15 Intel, and Windows Server 2022. Each job uses its platform's existing

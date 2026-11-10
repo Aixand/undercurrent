@@ -19,7 +19,9 @@ import tomllib
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(os.environ.get(
+    "UNDERCURRENT_RELEASE_SOURCE_ROOT", Path(__file__).resolve().parents[2]
+)).resolve()
 # Dependency order, including dependencies used only on Windows.
 CRATE_DIRECTORIES = {
     "aixand-undercurrent-foundation": "undercurrent-foundation",
@@ -261,7 +263,7 @@ def crates(tag, *, publish=False):
         with urlopen(f"https://static.crates.io/crates/{name}/{name}-{release['version']}.crate", timeout=60) as response:
             remote = response.read()
         require(hashlib.sha256(remote).hexdigest() == existing["checksum"], "Registry checksum differs")
-        local = (ROOT / "target/package" / f"{name}-{release['version']}.crate").read_bytes()
+        local = (ROOT / "target/package/tmp-crate" / f"{name}-{release['version']}.crate").read_bytes()
         verify_existing_crate(local, remote, release["commit"])
         print(f"Already published and source verified: {name}", flush=True)
     if pending:

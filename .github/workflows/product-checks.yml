@@ -1,0 +1,54 @@
+name: Product checks
+on:
+  workflow_call:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: product-checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || startsWith(github.ref, 'refs/heads/') }}
+jobs:
+  checks:
+    name: Product checks (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-15-intel, macos-15, windows-2022]
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      UV_LINK_MODE: copy
+      CARGO_BUILD_JOBS: '6'
+      RUSTUP_TOOLCHAIN: '1.95.0'
+    steps:
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@eb1897b8dc4b5d5bfe39a428a8f2304605e0983c # v7.0.0
+        with:
+          version: '0.12.7'
+          python-version: '3.12.14'
+          activate-environment: true
+      - run: python scripts/dev/cli.py develop
+      - name: Windows developer entrypoint
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./dev.ps1 doctor
+      - name: Native Windows command launcher
+        if: runner.os == 'Windows'
+        run: rustup toolchain install 1.98.0 --profile minimal
+      - name: Install Linux shell fixtures
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y zsh fish
+      - run: python scripts/dev/cli.py check
+      - run: python scripts/dev/cli.py test
+      - name: Linux group and shell contracts
+        if: runner.os == 'Linux'
+        run: |
+          python tests/conformance/groups_test.py
+          python tests/e2e/run.py --test exec-environment --test platform-detection --bin-dir target/debug

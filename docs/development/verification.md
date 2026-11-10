@@ -38,8 +38,8 @@ fixtures have their own cleanup and retain evidence if termination is uncertain.
 
 ## Project validation runner
 
-The normal developer commands also run the gates used by the product-installer
-CI job:
+The normal developer commands also run the gates used by the
+[product checks workflow](../../.github/workflows/product-checks.yml):
 
 ```sh
 ./dev.sh check
