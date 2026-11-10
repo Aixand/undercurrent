@@ -1,0 +1,42 @@
+{
+  "name": "portable-pty",
+  "version": "0.9.0",
+  "upstream": "https://crates.io/crates/portable-pty/0.9.0",
+  "upstream_sha256": "b4a596a2b3d2752d94f51fac2d4a96737b8705dddd311a32b9af47211f08671e",
+  "patch": "cwd-handle.patch",
+  "patch_sha256": "ddf986c82544923622402b51a3c531e0ca2472d4c530292dc96ed2704af5b00f",
+  "safety": "Owned directory Arc retained across fork; async-signal-safe fchdir before close_random_fds; parent cwd unchanged; serialization of a live handle rejected.",
+  "changed_files": [
+    "src/cmdbuilder.rs",
+    "src/unix.rs",
+    "src/win/mod.rs",
+    "src/win/psuedocon.rs",
+    "src/win/job.rs",
+    "src/win/batch.rs",
+    "src/lib.rs",
+    "Cargo.toml",
+    "build.rs",
+    "src/win/conpty.rs"
+  ],
+  "windows_changes": "ConPTY roots start suspended, join a retained kill-on-close job, then resume. Batch command lines use the explicitly supplied interpreter and a bounded encoder; runtime retains script and interpreter file pins. ChildKiller exposes a non-inheritable duplicate of the retained Job Object with JOB_OBJECT_QUERY rights only; no PID-based job lookup is used. The Windows adapter requires the pinned Microsoft ConPTY runtime beside the executable to avoid the Server 2022 system API process-handle leak; Cargo stages the runtime for native builds and tests.",
+  "batch_encoder_source": {
+    "project": "rust-lang/rust",
+    "version": "1.95.0",
+    "path": "library/std/src/sys/args/windows.rs",
+    "sha256": "5d2a9f813804a6f99f82515a86494d16702b05f8e418f0602b7898409f646155",
+    "license": "MIT",
+    "license_text": "LICENSE-RUST-MIT",
+    "modifications": "No raw arguments; bounded length; escaping also applies to script paths. Rust license text is also included in LICENSE.md for release bundles."
+  },
+  "windows_conpty_patch": {
+    "path": "windows-conpty.patch",
+    "base_revision": "0077a99fb1ee6b6018b441a2597ef230366e33a3",
+    "sha256": "dbccde4c81370ed84aff4e519d5e0f73558f6347e73fc3dc6df08256e70b7a98"
+  },
+  "windows_runtime": {
+    "package": "Microsoft.Windows.Console.ConPTY",
+    "version": "1.25.260930003",
+    "provenance": "conpty/PROVENANCE.json",
+    "license": "conpty/LICENSE"
+  }
+}

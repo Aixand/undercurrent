@@ -1,0 +1,155 @@
+{
+  "schema": "undercurrent.vendored-crate-provenance/v0.1.0-beta",
+  "package": {
+    "name": "vte",
+    "version": "0.11.1",
+    "license": "Apache-2.0 OR MIT"
+  },
+  "upstream": {
+    "registry": "crates.io",
+    "crate_sha256": "f5022b5fbf9407086c180e9557be968742d839e68346af7792b8592489732197",
+    "vcs_revision": "5e209bdccb44d7fbf3911629b4b9e771d8298b23"
+  },
+  "trees": {
+    "algorithm": "sha256-tree-v1",
+    "implementation": "scripts/checks/vendor_policy.py::source_digest",
+    "upstream_pristine": {
+      "file_count": 19,
+      "paths": [
+        ".builds/linux.yml",
+        ".cargo-ok",
+        ".cargo_vcs_info.json",
+        ".gitignore",
+        "CHANGELOG.md",
+        "Cargo.lock",
+        "Cargo.toml",
+        "Cargo.toml.orig",
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "README.md",
+        "examples/parselog.rs",
+        "rustfmt.toml",
+        "src/ansi.rs",
+        "src/definitions.rs",
+        "src/lib.rs",
+        "src/params.rs",
+        "src/table.rs",
+        "tests/demo.vte"
+      ],
+      "sha256": "182c0a6dac80b7a8de7b150a9a368d1c6bcc64a32ce7d5ad97f2f8f789c988e1"
+    },
+    "qualified_candidate": {
+      "file_count": 19,
+      "manifest_metadata": "unchanged_upstream_0.11.1",
+      "paths": [
+        ".builds/linux.yml",
+        ".cargo-ok",
+        ".cargo_vcs_info.json",
+        ".gitignore",
+        "CHANGELOG.md",
+        "Cargo.lock",
+        "Cargo.toml",
+        "Cargo.toml.orig",
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "README.md",
+        "examples/parselog.rs",
+        "rustfmt.toml",
+        "src/ansi.rs",
+        "src/definitions.rs",
+        "src/lib.rs",
+        "src/params.rs",
+        "src/table.rs",
+        "tests/demo.vte"
+      ],
+      "sha256": "bc98e6aa9a73c4b839a798e334545dfd42553bc2a201f8f29d89e92aed370fcf"
+    },
+    "vendored_candidate": {
+      "file_count": 17,
+      "paths": [
+        ".builds/linux.yml",
+        ".cargo_vcs_info.json",
+        ".gitignore",
+        "CHANGELOG.md",
+        "Cargo.toml",
+        "Cargo.toml.orig",
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "README.md",
+        "examples/parselog.rs",
+        "rustfmt.toml",
+        "src/ansi.rs",
+        "src/definitions.rs",
+        "src/lib.rs",
+        "src/params.rs",
+        "src/table.rs",
+        "tests/demo.vte"
+      ],
+      "sha256": "daa2bc1c76deba487d5fe3325b12dd7d027f8ca30ef37913b1a3e1d7b6e5deb4"
+    }
+  },
+  "version_handling": {
+    "qualified_manifest_version": "0.11.1",
+    "vendored_version": "0.11.1",
+    "metadata_modified": false
+  },
+  "patch": {
+    "path": "patches/vte-ground-ordered-noop.patch",
+    "sha256": "3c5c222d1329464cad3f11d0f61f2b8fad7fd6351a6877580b3879b0d8681574",
+    "purpose": "Batch valid printable text and complete numeric CSI sequences in Ground state while preserving scalar callback ordering and fallback for controls, private/intermediate/subparameter CSI, invalid UTF-8, split input, parser state, and table behavior.",
+    "changed_files": [
+      {
+        "path": "src/lib.rs",
+        "upstream_sha256": "c32a92ae8989d37456ffca7e6d723f2957c15c429096aeeb8122de4ed88f321e",
+        "candidate_sha256": "f81721a41bff479b778d2e306868c50ac49afb8ea0d30b44ebaa9c0ba4e70b18"
+      }
+    ]
+  },
+  "licenses": [
+    {
+      "spdx": "Apache-2.0",
+      "path": "LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "spdx": "MIT",
+      "path": "LICENSE-MIT",
+      "sha256": "e4c9b06fa850cb9b540a5e400e9f6394cf15efcf4098144de477d1d3dae10150"
+    }
+  ],
+  "unsafe_audit": {
+    "path": "UNSAFE-AUDIT.json",
+    "sha256": "42a0e41e60242b706618127210a2af3005a0a7e60859e0713b158aa7b9997609",
+    "audited_site_count": 3,
+    "new_unsafe_allowed": false
+  },
+  "integration": {
+    "dependency": "workspace_path",
+    "workspace_relative_path": "vendor/vte",
+    "version_requirement": "=0.11.1",
+    "direct_test_consumer": "undercurrent-runtime",
+    "transitive_runtime_consumer": "vt100",
+    "registry_reference_alias": "vte-reference",
+    "registry_reference_version": "=0.11.1",
+    "unsafe_code_added": false
+  },
+  "vendored_files": {
+    ".builds/linux.yml": "d6b8e44b7843c312fba78a12901966521cb840a8c5a3a7b74256e3bfe6afb1b2",
+    ".cargo_vcs_info.json": "7f180032d5740ea4ee946c34c14723806a802ba1559e5d67231ad06f9d8ccae5",
+    ".gitignore": "f9b1ca6ae27d1c18215265024629a8960c31379f206d9ed20f64e0b2dcf79805",
+    "CHANGELOG.md": "5cc90a0a0cd4ff2b27bceab5b4630b94554585af2ffda3e5516e4ebde51da3d2",
+    "Cargo.toml": "6941bb40686e00cea50c30951ff3df1b962634cf74a175b18105ed89ca731b4a",
+    "Cargo.toml.orig": "03cbe58d2614ad38fb2947a176e96bcccca86bf7384a3c06a57a038051675256",
+    "LICENSE-APACHE": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+    "LICENSE-MIT": "e4c9b06fa850cb9b540a5e400e9f6394cf15efcf4098144de477d1d3dae10150",
+    "README.md": "ff6200be737dfb4275b2cfbcd7742a7d7031f159908dd7799925733782341995",
+    "examples/parselog.rs": "c4893136b07e87e613f05f63d6b784153393da82c01a106d4ed2178991ea8914",
+    "rustfmt.toml": "815ceb8294049f74705470e17e7148a724f733088cf7f94ab3984e3e97114df2",
+    "src/ansi.rs": "c99470854c3b7bea14a97e9e8c366fa475a117654729ae28600994500b7ce134",
+    "src/definitions.rs": "c99f830c4ad27631c8b2e055ffef5c920fd8652ed2144c2999799ecf3fea8a30",
+    "src/lib.rs": "f81721a41bff479b778d2e306868c50ac49afb8ea0d30b44ebaa9c0ba4e70b18",
+    "src/params.rs": "fb79b5a035261378e0338f35e822d20640b37d057fb7f75d42e698a49befb545",
+    "src/table.rs": "e8a343a1015e0683cc1f081717fdf5d518daae75667400fc42a405f6592a4a35",
+    "tests/demo.vte": "1ac4e7fe28999e2aa632cd80f85d4f5dae776499164ffe0fa792151614ef80fe"
+  }
+}

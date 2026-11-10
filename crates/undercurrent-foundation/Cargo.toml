@@ -1,0 +1,27 @@
+[package]
+name = "aixand-undercurrent-foundation"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Shared bounded value, digest, and privacy primitives for Undercurrent"
+
+[lib]
+name = "undercurrent_foundation"
+
+[dependencies]
+schemars.workspace = true
+serde.workspace = true
+serde_json = { version = "1.0.151", features = ["preserve_order"] }
+serde_json_canonicalizer.workspace = true
+sha2.workspace = true
+subtle.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+jsonschema.workspace = true
+proptest.workspace = true
+
+[lints]
+workspace = true

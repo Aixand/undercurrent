@@ -1,0 +1,65 @@
+--- a/src/parser.rs
++++ b/src/parser.rs
+@@ -21,6 +21,12 @@
+     #[inline]
+     pub fn process(&mut self, bytes: &[u8]) {
+         self.parser.advance_bytes(&mut self.screen, bytes);
++    }
++
++    /// Drains bounded replies to primary device attributes and status queries.
++    /// The caller delivers these bytes to the same PTY whose output was parsed.
++    pub fn take_replies(&mut self) -> Vec<u8> {
++        self.screen.take_replies()
+     }
+ 
+     /// Resizes the terminal.
+--- a/src/screen.rs
++++ b/src/screen.rs
+@@ -79,9 +79,21 @@
+     visual_bell_count: usize,
+ 
+     errors: usize,
++    replies: Vec<u8>,
+ }
+ 
+ impl Screen {
++    pub(crate) fn take_replies(&mut self) -> Vec<u8> {
++        std::mem::take(&mut self.replies)
++    }
++
++    fn reply(&mut self, bytes: &[u8]) {
++        // Output is untrusted. Bound pending replies even if nobody drains them.
++        if self.replies.len() + bytes.len() <= 1024 {
++            self.replies.extend_from_slice(bytes);
++        }
++    }
++
+     pub(crate) fn new(size: crate::grid::Size, scrollback_len: usize) -> Self {
+         let mut grid = crate::grid::Grid::new(size, scrollback_len);
+         grid.allocate_rows();
+@@ -103,6 +115,7 @@
+             visual_bell_count: 0,
+ 
+             errors: 0,
++            replies: Vec::new(),
+         }
+     }
+ 
+@@ -1522,6 +1535,17 @@
+     }
+ 
+     fn csi_dispatch(&mut self, params: &vte::Params, intermediates: &[u8], _ignore: bool, c: char) {
++        if !_ignore && intermediates.is_empty() && params.len() == 1 {
++            match (c, params.iter().next()) {
++                ('c', Some([0])) => self.reply(b"\x1b[?1;2c"),
++                ('n', Some([5])) => self.reply(b"\x1b[0n"),
++                ('n', Some([6])) => {
++                    let (row, column) = self.cursor_position();
++                    self.reply(format!("\x1b[{};{}R", row + 1, column + 1).as_bytes());
++                }
++                _ => {}
++            }
++        }
+         match intermediates.first() {
+             None => match c {
+                 '@' => self.ich(canonicalize_params_1(params, 1)),

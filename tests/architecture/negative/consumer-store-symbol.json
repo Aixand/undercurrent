@@ -1,0 +1,10 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "consumer-store-symbol",
+  "description": "Approved consumer binaries cannot contain product-store symbols.",
+  "mutation": {
+    "kind": "add_consumer_symbol",
+    "symbol": "undercurrent_store_sqlite::SqliteSessionRepository"
+  },
+  "expected_rule": "ARCH_CONSUMER_SYMBOL_LEAK"
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "application-protocol-edge",
+  "description": "Application cannot depend on the outward product protocol.",
+  "mutation": {
+    "kind": "add_edge",
+    "from": "undercurrent-application",
+    "to": "aixand-undercurrent-protocol"
+  },
+  "expected_rule": "ARCH_APPLICATION_INWARD_PURITY"
+}

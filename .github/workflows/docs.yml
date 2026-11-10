@@ -1,0 +1,27 @@
+name: Documentation
+
+on:
+  workflow_call:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline:
+    name: Documentation checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Test the checker
+        run: python3 tests/tooling/checks/docs_test.py
+      - name: Check selected documentation
+        run: python3 scripts/checks/check-docs.py --root .
+      # Native installation and SDK behavior run in product-installer.yml.
+      # Render changed diagrams and review both themes using the documentation guide.

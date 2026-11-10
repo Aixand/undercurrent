@@ -1,0 +1,1036 @@
+--- a/src/cell.rs
++++ b/src/cell.rs
+@@ -1,5 +1,3 @@
+-use unicode_width::UnicodeWidthChar as _;
+-
+ const CODEPOINTS_IN_CELL: usize = 6;
+ 
+ /// Represents a single terminal cell.
+@@ -30,13 +28,16 @@
+         usize::from(self.len & 0x0f)
+     }
+ 
+-    pub(crate) fn set(&mut self, c: char, a: crate::attrs::Attrs) {
++    #[inline]
++    pub(crate) fn set(
++        &mut self,
++        c: char,
++        a: crate::attrs::Attrs,
++        wide: bool,
++    ) {
+         self.contents[0] = c;
+         self.len = 1;
+-        // strings in this context should always be an arbitrary character
+-        // followed by zero or more zero-width characters, so we should only
+-        // have to look at the first character
+-        self.set_wide(c.width().unwrap_or(1) > 1);
++        self.set_wide(wide);
+         self.attrs = a;
+     }
+ 
+@@ -57,6 +58,7 @@
+         self.len += 1;
+     }
+ 
++    #[inline]
+     pub(crate) fn clear(&mut self, attrs: crate::attrs::Attrs) {
+         self.len = 0;
+         self.attrs = attrs;
+@@ -78,12 +80,14 @@
+ 
+     /// Returns whether the cell contains any text data.
+     #[must_use]
++    #[inline]
+     pub fn has_contents(&self) -> bool {
+         self.len > 0
+     }
+ 
+     /// Returns whether the text data in the cell represents a wide character.
+     #[must_use]
++    #[inline]
+     pub fn is_wide(&self) -> bool {
+         self.len & 0x80 == 0x80
+     }
+@@ -92,10 +96,12 @@
+     /// (in other words, whether the previous cell in the row contains a wide
+     /// character)
+     #[must_use]
++    #[inline]
+     pub fn is_wide_continuation(&self) -> bool {
+         self.len & 0x40 == 0x40
+     }
+ 
++    #[inline]
+     fn set_wide(&mut self, wide: bool) {
+         if wide {
+             self.len |= 0x80;
+@@ -104,6 +110,7 @@
+         }
+     }
+ 
++    #[inline]
+     pub(crate) fn set_wide_continuation(&mut self, wide: bool) {
+         if wide {
+             self.len |= 0x40;
+@@ -112,6 +119,12 @@
+         }
+     }
+ 
++    #[inline]
++    pub(crate) fn set_default_wide_continuation(&mut self) {
++        self.len = 0x40;
++        self.attrs = crate::attrs::Attrs::default();
++    }
++
+     pub(crate) fn attrs(&self) -> &crate::attrs::Attrs {
+         &self.attrs
+     }
+--- a/src/grid.rs
++++ b/src/grid.rs
+@@ -1,4 +1,37 @@
+ use crate::term::BufWrite as _;
++use unicode_width::UnicodeWidthChar as _;
++
++const TEXT_CACHE_ENTRIES: usize = 4;
++const TEXT_CACHE_MAX_BYTES: usize = 256;
++
++#[derive(Clone, Copy, Debug)]
++enum TextOp {
++    Ascii { start: u16, end: u16 },
++    Glyph { c: char, width: u16 },
++}
++
++#[derive(Debug)]
++struct CachedText {
++    text: String,
++    ops: Vec<TextOp>,
++    errors: usize,
++    columns: u16,
++    renderable: bool,
++    rendered_attrs: Option<crate::attrs::Attrs>,
++    rendered_cells: Vec<crate::cell::Cell>,
++}
++
++#[derive(Debug, Default)]
++struct TextCache {
++    entries: Vec<CachedText>,
++    next: usize,
++}
++
++impl Clone for TextCache {
++    fn clone(&self) -> Self {
++        Self::default()
++    }
++}
+ 
+ #[derive(Clone, Debug)]
+ pub struct Grid {
+@@ -13,6 +46,8 @@
+     scrollback: std::collections::VecDeque<crate::row::Row>,
+     scrollback_len: usize,
+     scrollback_offset: usize,
++    width_cache: [Option<(char, Option<u16>)>; 128],
++    text_cache: TextCache,
+ }
+ 
+ impl Grid {
+@@ -29,6 +64,8 @@
+             scrollback: std::collections::VecDeque::new(),
+             scrollback_len,
+             scrollback_offset: 0,
++            width_cache: [None; 128],
++            text_cache: TextCache::default(),
+         }
+     }
+ 
+@@ -150,12 +187,320 @@
+         self.drawing_rows_mut().nth(usize::from(row))
+     }
+ 
++    #[inline]
+     pub fn current_row_mut(&mut self) -> &mut crate::row::Row {
+         self.drawing_row_mut(self.pos.row)
+             // we assume self.pos.row is always valid
+             .unwrap()
+     }
+ 
++    #[inline]
++    pub fn write_ascii(&mut self, mut bytes: &[u8], attrs: crate::attrs::Attrs) {
++        debug_assert!(bytes.iter().all(|byte| matches!(byte, 0x20..=0x7e)));
++        while !bytes.is_empty() {
++            if self.pos.col >= self.size.cols {
++                let last_cell = self
++                    .drawing_cell(Pos {
++                        row: self.pos.row,
++                        col: self.size.cols - 1,
++                    })
++                    .expect("the cursor row and final column must be valid");
++                let wrap = last_cell.has_contents() || last_cell.is_wide_continuation();
++                self.col_wrap(1, wrap);
++            }
++
++            let available = usize::from(self.size.cols - self.pos.col);
++            let count = available.min(bytes.len());
++            let start = self.pos.col;
++            self.current_row_mut()
++                .write_ascii(start, &bytes[..count], attrs);
++            self.pos.col += u16::try_from(count)
++                .expect("a terminal row cannot exceed u16 columns");
++            bytes = &bytes[count..];
++        }
++    }
++
++    #[inline]
++    pub fn write_text(&mut self, text: &str, attrs: crate::attrs::Attrs) -> usize {
++        if text.len() <= TEXT_CACHE_MAX_BYTES {
++            let cache_index = self
++                .text_cache
++                .entries
++                .iter()
++                .position(|entry| entry.text == text)
++                .unwrap_or_else(|| {
++                    let entry = Self::cache_text(text);
++                    if self.text_cache.entries.len() < TEXT_CACHE_ENTRIES {
++                        self.text_cache.entries.push(entry);
++                        self.text_cache.entries.len() - 1
++                    } else {
++                        let index = self.text_cache.next;
++                        self.text_cache.entries[index] = entry;
++                        self.text_cache.next = (index + 1) % TEXT_CACHE_ENTRIES;
++                        index
++                    }
++                });
++            let errors = self.text_cache.entries[cache_index].errors;
++            if self.write_cached_text(cache_index, text, attrs) {
++                return errors;
++            }
++            let op_count = self.text_cache.entries[cache_index].ops.len();
++            for op_index in 0..op_count {
++                let op = self.text_cache.entries[cache_index].ops[op_index];
++                self.apply_text_op(text, op, attrs);
++            }
++            return errors;
++        }
++
++        let bytes = text.as_bytes();
++        let mut errors = 0usize;
++        let mut offset = 0usize;
++        while offset < bytes.len() {
++            let ascii_start = offset;
++            while offset < bytes.len() && matches!(bytes[offset], 0x20..=0x7e) {
++                offset += 1;
++            }
++            if offset > ascii_start {
++                self.write_ascii(&bytes[ascii_start..offset], attrs);
++                continue;
++            }
++
++            let c = text[offset..]
++                .chars()
++                .next()
++                .expect("offset must remain on a UTF-8 character boundary");
++            if c == '\u{fffd}' || ('\u{80}'..'\u{a0}').contains(&c) {
++                errors = errors.saturating_add(1);
++            }
++            let width = self.char_width(c);
++            if width.is_none() && (u32::from(c)) < 256 {
++                offset += c.len_utf8();
++                continue;
++            }
++            let width = width.unwrap_or(1);
++            if width == 0 {
++                self.write_combining(c);
++            } else {
++                self.write_char(c, width, attrs);
++            }
++            offset += c.len_utf8();
++        }
++        errors
++    }
++
++    fn cache_text(text: &str) -> CachedText {
++        let bytes = text.as_bytes();
++        let mut ops = Vec::new();
++        let mut errors = 0usize;
++        let mut columns = 0u16;
++        let mut renderable = true;
++        let mut offset = 0usize;
++        while offset < bytes.len() {
++            let ascii_start = offset;
++            while offset < bytes.len() && matches!(bytes[offset], 0x20..=0x7e) {
++                offset += 1;
++            }
++            if offset > ascii_start {
++                ops.push(TextOp::Ascii {
++                    start: u16::try_from(ascii_start)
++                        .expect("cacheable text offset must fit in u16"),
++                    end: u16::try_from(offset)
++                        .expect("cacheable text offset must fit in u16"),
++                });
++                columns = columns.saturating_add(
++                    u16::try_from(offset - ascii_start)
++                        .expect("cacheable text length must fit in u16"),
++                );
++                continue;
++            }
++
++            let c = text[offset..]
++                .chars()
++                .next()
++                .expect("offset must remain on a UTF-8 character boundary");
++            if c == '\u{fffd}' || ('\u{80}'..'\u{a0}').contains(&c) {
++                errors = errors.saturating_add(1);
++            }
++            let width = c
++                .width()
++                .map(|value| u16::try_from(value).expect("character width must fit in u16"));
++            if width.is_some() || (u32::from(c)) >= 256 {
++                let width = width.unwrap_or(1);
++                // The scalar renderer uses widths above two for wrapping but
++                // represents the glyph as one wide-cell pair. A flat cached
++                // cell slice cannot reproduce that wrapping rule exactly.
++                if (width == 0 && columns == 0) || width > 2 {
++                    renderable = false;
++                }
++                ops.push(TextOp::Glyph {
++                    c,
++                    width,
++                });
++                columns = columns.saturating_add(width);
++            }
++            offset += c.len_utf8();
++        }
++        CachedText {
++            text: text.to_owned(),
++            ops,
++            errors,
++            columns,
++            renderable,
++            rendered_attrs: None,
++            rendered_cells: Vec::new(),
++        }
++    }
++
++    fn write_cached_text(
++        &mut self,
++        cache_index: usize,
++        text: &str,
++        attrs: crate::attrs::Attrs,
++    ) -> bool {
++        let start = self.pos.col;
++        let columns = self.text_cache.entries[cache_index].columns;
++        if !self.text_cache.entries[cache_index].renderable
++            || columns == 0
++            || start > self.size.cols.saturating_sub(columns)
++            || self
++                .drawing_row(self.pos.row)
++                .expect("the cursor row must be valid")
++                .dirty_end()
++                > start
++        {
++            return false;
++        }
++
++        if self.text_cache.entries[cache_index].rendered_attrs != Some(attrs) {
++            let cells = Self::render_cached_text(
++                text,
++                &self.text_cache.entries[cache_index].ops,
++                columns,
++                attrs,
++            );
++            let entry = &mut self.text_cache.entries[cache_index];
++            entry.rendered_attrs = Some(attrs);
++            entry.rendered_cells = cells;
++        }
++
++        let row_index = usize::from(self.pos.row);
++        let cells = &self.text_cache.entries[cache_index].rendered_cells;
++        self.rows[row_index].write_cached(start, cells);
++        self.pos.col = self.pos.col.saturating_add(columns);
++        true
++    }
++
++    fn render_cached_text(
++        text: &str,
++        ops: &[TextOp],
++        columns: u16,
++        attrs: crate::attrs::Attrs,
++    ) -> Vec<crate::cell::Cell> {
++        let mut cells = vec![crate::cell::Cell::default(); usize::from(columns)];
++        let mut col = 0usize;
++        for op in ops {
++            match *op {
++                TextOp::Ascii { start, end } => {
++                    for byte in &text.as_bytes()[usize::from(start)..usize::from(end)] {
++                        cells[col].set(char::from(*byte), attrs, false);
++                        col += 1;
++                    }
++                },
++                TextOp::Glyph { c, width: 0 } => {
++                    let mut target = col - 1;
++                    if cells[target].is_wide_continuation() {
++                        target -= 1;
++                    }
++                    cells[target].append(c);
++                },
++                TextOp::Glyph { c, width: 1 } => {
++                    cells[col].set(c, attrs, false);
++                    col += 1;
++                },
++                TextOp::Glyph { c, width: 2 } => {
++                    cells[col].set(c, attrs, true);
++                    cells[col + 1].set_default_wide_continuation();
++                    col += 2;
++                },
++                TextOp::Glyph { .. } => {
++                    unreachable!("Unicode width must be zero, one, or two")
++                },
++            }
++        }
++        cells
++    }
++
++    #[inline]
++    fn apply_text_op(&mut self, text: &str, op: TextOp, attrs: crate::attrs::Attrs) {
++        match op {
++            TextOp::Ascii { start, end } => {
++                self.write_ascii(
++                    &text.as_bytes()[usize::from(start)..usize::from(end)],
++                    attrs,
++                );
++            },
++            TextOp::Glyph { c, width: 0 } => self.write_combining(c),
++            TextOp::Glyph { c, width } => self.write_char(c, width, attrs),
++        }
++    }
++
++    #[inline]
++    pub fn char_width(&mut self, c: char) -> Option<u16> {
++        let code = c as usize;
++        let index = (code ^ (code >> 6) ^ (code >> 12)) & (self.width_cache.len() - 1);
++        if let Some((cached_char, width)) = self.width_cache[index] {
++            if cached_char == c {
++                return width;
++            }
++        }
++
++        let width = c
++            .width()
++            .map(|value| u16::try_from(value).expect("character width must fit in u16"));
++        self.width_cache[index] = Some((c, width));
++        width
++    }
++
++    #[inline]
++    fn write_char(&mut self, c: char, width: u16, attrs: crate::attrs::Attrs) {
++        debug_assert!(width > 0);
++        let pos = self.pos;
++        let mut wrap = false;
++        if pos.col > self.size.cols - width {
++            let last_cell = self
++                .drawing_cell(Pos {
++                    row: pos.row,
++                    col: self.size.cols - 1,
++                })
++                .expect("the cursor row and final column must be valid");
++            wrap = last_cell.has_contents() || last_cell.is_wide_continuation();
++        }
++        self.col_wrap(width, wrap);
++        let col = self.pos.col;
++        let occupied_columns = if width > 1 { 2 } else { 1 };
++        self.current_row_mut()
++            .write_char(col, c, occupied_columns, attrs);
++        self.pos.col = self.pos.col.saturating_add(occupied_columns);
++    }
++
++    #[inline]
++    fn write_combining(&mut self, c: char) {
++        let pos = self.pos;
++        if pos.col > 0 {
++            self.current_row_mut().append_combining(pos.col - 1, c);
++        } else if pos.row > 0
++            && self
++                .drawing_row(pos.row - 1)
++                .expect("the previous cursor row must be valid")
++                .wrapped()
++        {
++            let col = self.size.cols - 1;
++            self.drawing_row_mut(pos.row - 1)
++                .expect("the previous cursor row must be valid")
++                .append_combining(col, c);
++        }
++    }
++
+     pub fn visible_cell(&self, pos: Pos) -> Option<&crate::cell::Cell> {
+         self.visible_row(pos.row).and_then(|r| r.get(pos.col))
+     }
+@@ -545,10 +890,10 @@
+ 
+     pub fn scroll_up(&mut self, count: u16) {
+         for _ in 0..(count.min(self.size.rows - self.scroll_top)) {
+-            self.rows
+-                .insert(usize::from(self.scroll_bottom) + 1, self.new_row());
+-            let removed = self.rows.remove(usize::from(self.scroll_top));
++            let mut removed = self.rows.remove(usize::from(self.scroll_top));
+             if self.scrollback_len > 0 && !self.scroll_region_active() {
++                self.rows
++                    .insert(usize::from(self.scroll_bottom), self.new_row());
+                 self.scrollback.push_back(removed);
+                 while self.scrollback.len() > self.scrollback_len {
+                     self.scrollback.pop_front();
+@@ -557,6 +902,9 @@
+                     self.scrollback_offset =
+                         self.scrollback.len().min(self.scrollback_offset + 1);
+                 }
++            } else {
++                removed.reset();
++                self.rows.insert(usize::from(self.scroll_bottom), removed);
+             }
+         }
+     }
+@@ -640,6 +988,7 @@
+         self.row_clamp();
+     }
+ 
++    #[inline]
+     pub fn col_inc(&mut self, count: u16) {
+         self.pos.col = self.pos.col.saturating_add(count);
+     }
+@@ -664,6 +1013,7 @@
+         self.col_clamp();
+     }
+ 
++    #[inline]
+     pub fn col_wrap(&mut self, width: u16, wrap: bool) {
+         if self.pos.col > self.size.cols - width {
+             let mut prev_pos = self.pos;
+--- a/src/parser.rs
++++ b/src/parser.rs
+@@ -21,10 +21,9 @@
+ 
+     /// Processes the contents of the given byte string, and updates the
+     /// in-memory terminal state.
++    #[inline]
+     pub fn process(&mut self, bytes: &[u8]) {
+-        for byte in bytes {
+-            self.parser.advance(&mut self.screen, *byte);
+-        }
++        self.parser.advance_bytes(&mut self.screen, bytes);
+     }
+ 
+     /// Resizes the terminal.
+@@ -72,3 +71,78 @@
+         Ok(())
+     }
+ }
++
++#[cfg(test)]
++mod tests {
++    use super::Parser;
++
++    #[test]
++    fn bulk_processing_matches_scalar_terminal_state() {
++        let mut input = b"0123456789abcdefghijklmnopqrstuvwxyz".repeat(12);
++        input.extend_from_slice(b"\r\n\x1b[31mred\x1b[0m ");
++        input.extend_from_slice("界🙂e\u{301}".as_bytes());
++        input.extend_from_slice(b"\x1b]2;bulk title\x07");
++        input.extend_from_slice(&[0xf5, 0xff, b'!']);
++
++        let mut scalar = Parser::new(6, 17, 8);
++        for byte in &input {
++            scalar.parser.advance(&mut scalar.screen, *byte);
++        }
++
++        let mut bulk = Parser::new(6, 17, 8);
++        for chunk in input.chunks(7) {
++            bulk.process(chunk);
++        }
++
++        assert_eq!(bulk.screen().contents_formatted(), scalar.screen().contents_formatted());
++        assert_eq!(bulk.screen().title(), scalar.screen().title());
++        assert_eq!(bulk.screen().icon_name(), scalar.screen().icon_name());
++        assert_eq!(bulk.screen().errors(), scalar.screen().errors());
++    }
++
++    #[test]
++    fn repeated_three_column_glyph_falls_back_to_scalar_rendering() {
++        let text = "\u{17d8}";
++        let mut scalar = Parser::new(4, 20, 4);
++        let mut bulk = Parser::new(4, 20, 4);
++
++        for _ in 0..4 {
++            for byte in text.as_bytes() {
++                scalar.parser.advance(&mut scalar.screen, *byte);
++            }
++            bulk.process(text.as_bytes());
++        }
++
++        assert_eq!(bulk.screen().contents_formatted(), scalar.screen().contents_formatted());
++        assert_eq!(bulk.screen().cursor_position(), scalar.screen().cursor_position());
++        assert_eq!(bulk.screen().errors(), scalar.screen().errors());
++    }
++
++    #[test]
++    fn repeated_plain_unicode_and_controls_match_scalar_rendering() {
++        const TEXT: &str = "cacheable prompt: alpha beta \u{754c}\u{1f642}e\u{301}";
++        const CONTROL: &[u8] = b"\x1b[0m\r\n";
++        const FALLBACK: &str = "\u{17d8}\u{17d8}";
++
++        let mut scalar = Parser::new(40, 120, 0);
++        let mut bulk = Parser::new(40, 120, 0);
++        for iteration in 0..32_768 {
++            for bytes in [TEXT.as_bytes(), CONTROL] {
++                for byte in bytes {
++                    scalar.parser.advance(&mut scalar.screen, *byte);
++                }
++                bulk.process(bytes);
++            }
++            if iteration % 16 == 0 {
++                for byte in FALLBACK.as_bytes() {
++                    scalar.parser.advance(&mut scalar.screen, *byte);
++                }
++                bulk.process(FALLBACK.as_bytes());
++            }
++        }
++
++        assert_eq!(bulk.screen().contents_formatted(), scalar.screen().contents_formatted());
++        assert_eq!(bulk.screen().cursor_position(), scalar.screen().cursor_position());
++        assert_eq!(bulk.screen().errors(), scalar.screen().errors());
++    }
++}
+--- a/src/row.rs
++++ b/src/row.rs
+@@ -4,6 +4,7 @@
+ pub struct Row {
+     cells: Vec<crate::cell::Cell>,
+     wrapped: bool,
++    dirty_end: u16,
+ }
+ 
+ impl Row {
+@@ -11,6 +12,7 @@
+         Self {
+             cells: vec![crate::cell::Cell::default(); usize::from(cols)],
+             wrapped: false,
++            dirty_end: 0,
+         }
+     }
+ 
+@@ -27,6 +29,92 @@
+             cell.clear(attrs);
+         }
+         self.wrapped = false;
++        self.dirty_end = if attrs == crate::attrs::Attrs::default() {
++            0
++        } else {
++            self.cols()
++        };
++    }
++
++    pub fn reset(&mut self) {
++        self.cells[..usize::from(self.dirty_end)]
++            .fill(crate::cell::Cell::default());
++        self.wrapped = false;
++        self.dirty_end = 0;
++    }
++
++    #[inline]
++    pub fn write_ascii(
++        &mut self,
++        start: u16,
++        bytes: &[u8],
++        attrs: crate::attrs::Attrs,
++    ) {
++        debug_assert!(bytes.iter().all(|byte| matches!(byte, 0x20..=0x7e)));
++        debug_assert!(usize::from(start) + bytes.len() <= self.cells.len());
++        self.dirty_end = self.dirty_end.max(
++            start.saturating_add(
++                u16::try_from(bytes.len()).expect("a terminal row cannot exceed u16 columns"),
++            ),
++        );
++
++        for (offset, byte) in bytes.iter().enumerate() {
++            let col = usize::from(start) + offset;
++            let wide_continuation = self.cells[col].is_wide_continuation();
++            let wide = self.cells[col].is_wide();
++            if wide_continuation {
++                self.cells[col - 1].clear(attrs);
++            }
++            if wide {
++                self.cells[col + 1].set(' ', attrs, false);
++            }
++            self.cells[col].set(char::from(*byte), attrs, false);
++        }
++    }
++
++    #[inline]
++    pub fn write_char(
++        &mut self,
++        col: u16,
++        c: char,
++        width: u16,
++        attrs: crate::attrs::Attrs,
++    ) {
++        debug_assert!(matches!(width, 1 | 2));
++        self.dirty_end = self.dirty_end.max(col.saturating_add(width));
++        let col = usize::from(col);
++        if self.cells[col].is_wide_continuation() {
++            self.cells[col - 1].clear(attrs);
++        }
++        if self.cells[col].is_wide() {
++            self.cells[col + 1].set(' ', attrs, false);
++        }
++
++        self.cells[col].set(c, attrs, width > 1);
++        if width > 1 {
++            let next = col + 1;
++            if self.cells[next].is_wide() {
++                let next_next = next + 1;
++                self.cells[next_next].clear(attrs);
++                self.dirty_end = self.dirty_end.max(
++                    u16::try_from(next_next + 1)
++                        .expect("a terminal row cannot exceed u16 columns"),
++                );
++                if next_next == self.cells.len() - 1 {
++                    self.wrapped = false;
++                }
++            }
++            self.cells[next].set_default_wide_continuation();
++        }
++    }
++
++    #[inline]
++    pub fn append_combining(&mut self, mut col: u16, c: char) {
++        if self.cells[usize::from(col)].is_wide_continuation() {
++            col -= 1;
++        }
++        self.cells[usize::from(col)].append(c);
++        self.dirty_end = self.dirty_end.max(col.saturating_add(1));
+     }
+ 
+     fn cells(&self) -> impl Iterator<Item = &crate::cell::Cell> {
+@@ -38,18 +126,21 @@
+     }
+ 
+     pub fn get_mut(&mut self, col: u16) -> Option<&mut crate::cell::Cell> {
++        self.dirty_end = self.dirty_end.max(col.saturating_add(1));
+         self.cells.get_mut(usize::from(col))
+     }
+ 
+     pub fn insert(&mut self, i: u16, cell: crate::cell::Cell) {
+         self.cells.insert(usize::from(i), cell);
+         self.wrapped = false;
++        self.dirty_end = self.cols();
+     }
+ 
+     pub fn remove(&mut self, i: u16) {
+         self.clear_wide(i);
+         self.cells.remove(usize::from(i));
+         self.wrapped = false;
++        self.dirty_end = self.cols();
+     }
+ 
+     pub fn erase(&mut self, i: u16, attrs: crate::attrs::Attrs) {
+@@ -59,11 +150,15 @@
+         if i == self.cols() - if wide { 2 } else { 1 } {
+             self.wrapped = false;
+         }
++        self.dirty_end = self
++            .dirty_end
++            .max(i.saturating_add(if wide { 2 } else { 1 }));
+     }
+ 
+     pub fn truncate(&mut self, len: u16) {
+         self.cells.truncate(usize::from(len));
+         self.wrapped = false;
++        self.dirty_end = self.dirty_end.min(len);
+         let last_cell = &mut self.cells[usize::from(len) - 1];
+         if last_cell.is_wide() {
+             last_cell.clear(*last_cell.attrs());
+@@ -73,6 +168,7 @@
+     pub fn resize(&mut self, len: u16, cell: crate::cell::Cell) {
+         self.cells.resize(usize::from(len), cell);
+         self.wrapped = false;
++        self.dirty_end = len;
+     }
+ 
+     pub fn wrap(&mut self, wrap: bool) {
+@@ -83,6 +179,21 @@
+         self.wrapped
+     }
+ 
++    #[inline]
++    pub fn dirty_end(&self) -> u16 {
++        self.dirty_end
++    }
++
++    #[inline]
++    pub fn write_cached(&mut self, start: u16, cells: &[crate::cell::Cell]) {
++        debug_assert!(self.dirty_end <= start);
++        let start = usize::from(start);
++        let end = start + cells.len();
++        self.cells[start..end].clone_from_slice(cells);
++        self.dirty_end = u16::try_from(end)
++            .expect("a terminal row cannot exceed u16 columns");
++    }
++
+     pub fn clear_wide(&mut self, col: u16) {
+         let cell = &self.cells[usize::from(col)];
+         let other = if cell.is_wide() {
+@@ -93,6 +204,9 @@
+             return;
+         };
+         other.clear(*other.attrs());
++        self.dirty_end = self.dirty_end.max(
++            col.saturating_add(2).min(self.cols()),
++        );
+     }
+ 
+     pub fn write_contents(
+--- a/src/screen.rs
++++ b/src/screen.rs
+@@ -1,5 +1,4 @@
+ use crate::term::BufWrite as _;
+-use unicode_width::UnicodeWidthChar as _;
+ 
+ const MODE_APPLICATION_KEYPAD: u8 = 0b0000_0001;
+ const MODE_APPLICATION_CURSOR: u8 = 0b0000_0010;
+@@ -809,21 +808,19 @@
+ }
+ 
+ impl Screen {
++    #[inline]
+     fn text(&mut self, c: char) {
+-        let pos = self.grid().pos();
+-        let size = self.grid().size();
+         let attrs = self.attrs;
++        let grid = self.grid_mut();
++        let pos = grid.pos();
++        let size = grid.size();
+ 
+-        let width = c.width();
++        let width = grid.char_width(c);
+         if width.is_none() && (u32::from(c)) < 256 {
+             // don't even try to draw control characters
+             return;
+         }
+-        let width = width
+-            .unwrap_or(1)
+-            .try_into()
+-            // width() can only return 0, 1, or 2
+-            .unwrap();
++        let width = width.unwrap_or(1);
+ 
+         // it doesn't make any sense to wrap if the last column in a row
+         // didn't already have contents. don't try to handle the case where a
+@@ -835,8 +832,7 @@
+         // cells, which i really don't want to do).
+         let mut wrap = false;
+         if pos.col > size.cols - width {
+-            let last_cell = self
+-                .grid()
++            let last_cell = grid
+                 .drawing_cell(crate::grid::Pos {
+                     row: pos.row,
+                     col: size.cols - 1,
+@@ -849,13 +845,12 @@
+                 wrap = true;
+             }
+         }
+-        self.grid_mut().col_wrap(width, wrap);
+-        let pos = self.grid().pos();
++        grid.col_wrap(width, wrap);
++        let pos = grid.pos();
+ 
+         if width == 0 {
+             if pos.col > 0 {
+-                let mut prev_cell = self
+-                    .grid_mut()
++                let mut prev_cell = grid
+                     .drawing_cell_mut(crate::grid::Pos {
+                         row: pos.row,
+                         col: pos.col - 1,
+@@ -866,8 +861,7 @@
+                     // checked for pos.col > 0.
+                     .unwrap();
+                 if prev_cell.is_wide_continuation() {
+-                    prev_cell = self
+-                        .grid_mut()
++                    prev_cell = grid
+                         .drawing_cell_mut(crate::grid::Pos {
+                             row: pos.row,
+                             col: pos.col - 2,
+@@ -882,8 +876,7 @@
+                 }
+                 prev_cell.append(c);
+             } else if pos.row > 0 {
+-                let prev_row = self
+-                    .grid()
++                let prev_row = grid
+                     .drawing_row(pos.row - 1)
+                     // pos.row is valid, since it comes directly from
+                     // self.grid().pos() which we assume to always have a
+@@ -891,8 +884,7 @@
+                     // checked for pos.row > 0.
+                     .unwrap();
+                 if prev_row.wrapped() {
+-                    let mut prev_cell = self
+-                        .grid_mut()
++                    let mut prev_cell = grid
+                         .drawing_cell_mut(crate::grid::Pos {
+                             row: pos.row - 1,
+                             col: size.cols - 1,
+@@ -904,8 +896,7 @@
+                         // is always valid.
+                         .unwrap();
+                     if prev_cell.is_wide_continuation() {
+-                        prev_cell = self
+-                            .grid_mut()
++                        prev_cell = grid
+                             .drawing_cell_mut(crate::grid::Pos {
+                                 row: pos.row - 1,
+                                 col: size.cols - 2,
+@@ -924,8 +915,7 @@
+                 }
+             }
+         } else {
+-            if self
+-                .grid()
++            if grid
+                 .drawing_cell(pos)
+                 // pos.row is valid because we assume self.grid().pos() to
+                 // always have a valid row value. pos.col is valid because we
+@@ -934,8 +924,7 @@
+                 .unwrap()
+                 .is_wide_continuation()
+             {
+-                let prev_cell = self
+-                    .grid_mut()
++                let prev_cell = grid
+                     .drawing_cell_mut(crate::grid::Pos {
+                         row: pos.row,
+                         col: pos.col - 1,
+@@ -951,8 +940,7 @@
+                 prev_cell.clear(attrs);
+             }
+ 
+-            if self
+-                .grid()
++            if grid
+                 .drawing_cell(pos)
+                 // pos.row is valid because we assume self.grid().pos() to
+                 // always have a valid row value. pos.col is valid because we
+@@ -961,8 +949,7 @@
+                 .unwrap()
+                 .is_wide()
+             {
+-                let next_cell = self
+-                    .grid_mut()
++                let next_cell = grid
+                     .drawing_cell_mut(crate::grid::Pos {
+                         row: pos.row,
+                         col: pos.col + 1,
+@@ -975,23 +962,21 @@
+                     // wide character, so it must have the second half of the
+                     // wide character after it.
+                     .unwrap();
+-                next_cell.set(' ', attrs);
++                next_cell.set(' ', attrs, false);
+             }
+ 
+-            let cell = self
+-                .grid_mut()
++            let cell = grid
+                 .drawing_cell_mut(pos)
+                 // pos.row is valid because we assume self.grid().pos() to
+                 // always have a valid row value. pos.col is valid because we
+                 // called col_wrap() immediately before this, which ensures
+                 // that self.grid().pos().col has a valid value.
+                 .unwrap();
+-            cell.set(c, attrs);
+-            self.grid_mut().col_inc(1);
++            cell.set(c, attrs, width > 1);
++            grid.col_inc(1);
+             if width > 1 {
+-                let pos = self.grid().pos();
+-                if self
+-                    .grid()
++                let pos = grid.pos();
++                if grid
+                     .drawing_cell(pos)
+                     // pos.row is valid because we assume self.grid().pos() to
+                     // always have a valid row value. pos.col is valid because
+@@ -1007,8 +992,7 @@
+                         row: pos.row,
+                         col: pos.col + 1,
+                     };
+-                    let next_next_cell = self
+-                        .grid_mut()
++                    let next_next_cell = grid
+                         .drawing_cell_mut(next_next_pos)
+                         // pos.row is valid because we assume
+                         // self.grid().pos() to always have a valid row value.
+@@ -1023,15 +1007,14 @@
+                         .unwrap();
+                     next_next_cell.clear(attrs);
+                     if next_next_pos.col == size.cols - 1 {
+-                        self.grid_mut()
++                        grid
+                             .drawing_row_mut(pos.row)
+                             // we assume self.grid().pos().row is always valid
+                             .unwrap()
+                             .wrap(false);
+                     }
+                 }
+-                let next_cell = self
+-                    .grid_mut()
++                let next_cell = grid
+                     .drawing_cell_mut(pos)
+                     // pos.row is valid because we assume self.grid().pos() to
+                     // always have a valid row value. pos.col is valid because
+@@ -1043,7 +1026,7 @@
+                     .unwrap();
+                 next_cell.clear(crate::attrs::Attrs::default());
+                 next_cell.set_wide_continuation(true);
+-                self.grid_mut().col_inc(1);
++                grid.col_inc(1);
+             }
+         }
+     }
+@@ -1551,6 +1534,7 @@
+ }
+ 
+ impl vte::Perform for Screen {
++    #[inline]
+     fn print(&mut self, c: char) {
+         if c == '\u{fffd}' || ('\u{80}'..'\u{a0}').contains(&c) {
+             self.errors = self.errors.saturating_add(1);
+@@ -1558,6 +1542,20 @@
+         self.text(c);
+     }
+ 
++    #[inline]
++    fn print_ascii(&mut self, bytes: &[u8]) {
++        let attrs = self.attrs;
++        self.grid_mut().write_ascii(bytes, attrs);
++    }
++
++    #[inline]
++    fn print_str(&mut self, text: &str) {
++        let attrs = self.attrs;
++        let errors = self.grid_mut().write_text(text, attrs);
++        self.errors = self.errors.saturating_add(errors);
++    }
++
++    #[inline]
+     fn execute(&mut self, b: u8) {
+         match b {
+             7 => self.bel(),
+@@ -1577,6 +1575,7 @@
+         }
+     }
+ 
++    #[inline]
+     fn esc_dispatch(&mut self, intermediates: &[u8], _ignore: bool, b: u8) {
+         intermediates.first().map_or_else(
+             || match b {

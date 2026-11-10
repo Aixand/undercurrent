@@ -1,0 +1,13 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "vendored vt100 wrong consumer",
+  "description": "Only the approved runtime and CLI renderer edges may consume the vendored vt100 path; the daemon may not.",
+  "mutation": {
+    "kind": "add_path_dependency",
+    "package": "undercurrent-daemon",
+    "name": "vt100",
+    "path": "vendor/vt100",
+    "dependency_kind": "normal"
+  },
+  "expected_rule": "ARCH_VENDORED_PATH_MISMATCH"
+}

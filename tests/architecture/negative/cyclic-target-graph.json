@@ -1,0 +1,11 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "cyclic-target-graph",
+  "description": "The product target graph must remain acyclic.",
+  "mutation": {
+    "kind": "add_edge",
+    "from": "aixand-undercurrent-wire",
+    "to": "undercurrent-daemon"
+  },
+  "expected_rule": "ARCH_CYCLIC_TARGET_GRAPH"
+}

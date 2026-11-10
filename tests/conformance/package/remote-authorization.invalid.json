@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "Retired remote listener settings must be rejected.",
+  "target": "config",
+  "base": "tests/conformance/package/config.local.valid.json",
+  "mutation": {
+    "operation": "add",
+    "path": "/websocket",
+    "value": {
+      "bind_address": "0.0.0.0",
+      "port": 9100
+    }
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$"
+}

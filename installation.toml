@@ -1,0 +1,89 @@
+schema = 2
+profile = "workspace"
+
+[workspace]
+name = "undercurrent"
+version = "0.1.0-beta"
+release-tag = "v{version}"
+default-product = "undercurrent"
+targets = ["linux-x86_64-gnu", "macos-x86_64", "macos-arm64", "windows-x86_64-msvc"]
+
+[commands]
+develop = [["rustup", "toolchain", "install", "1.95.0", "--profile", "minimal", "--component", "rustfmt", "--component", "clippy"], ["uv", "python", "install", "3.12.14"]]
+check = [
+  ["rustup", "run", "1.95.0", "{python}", "scripts/checks/check-formatting.py"],
+  ["{python}", "scripts/checks/check-names.py"],
+  ["rustup", "run", "1.95.0", "cargo", "clippy", "--locked", "--workspace", "--all-targets", "--all-features", "--", "-D", "warnings"],
+  ["{python}", "scripts/checks/check-docs.py", "--root", "."],
+  ["{python}", "scripts/checks/check-repository-files.py"],
+  ["{python}", "scripts/checks/validate-package-manifest.py"],
+  ["{python}", "scripts/release/third_party_licenses.py", "check"],
+  ["{python}", "scripts/product_checks.py", "check"],
+]
+test = [
+  ["rustup", "run", "1.95.0", "cargo", "build", "--locked", "--workspace", "--bins", "--all-features"],
+  ["rustup", "run", "1.95.0", "cargo", "test", "--locked", "--workspace", "--all-features", "--no-fail-fast"],
+  ["{python}", "scripts/product_checks.py", "test"],
+  ["{python}", "tests/tooling/run.py"],
+]
+
+[components.native]
+adapter = "cargo"
+toolchain = "1.95.0"
+binaries = ["uc", "uc-daemon", "uc-session-host", "uc-python-bridge", "uc-mcp"]
+
+[components.sdk]
+adapter = "payload"
+python = "3.12.14"
+build = [["{python}", "-B", "{root}/scripts/product_payload.py", "--sdk", "--output", "{output}", "--target", "{target}"]]
+verification = [["{python}", "-I", "-B", "-c", "from undercurrent import Client; assert Client.__module__ == 'undercurrent.client'"]]
+
+[components.resources]
+adapter = "payload"
+dependencies = ["native", "sdk"]
+build = [["{python}", "-B", "{root}/scripts/product_payload.py", "--output", "{output}", "--target", "{target}", "--native", "{component:native}", "--sdk-output", "{component:sdk}"]]
+
+[products.undercurrent]
+adapter = "native"
+version = "0.1.0-beta"
+components = ["native", "sdk", "resources"]
+python = "3.12.14"
+runtimes = ["python"]
+stateful = true
+license-acceptance = "LICENSE"
+verification = [["{command:uc}", "--version"], ["{command:uc}", "settings", "--help"], ["{command:uc-daemon}", "--version"], ["{command:uc-session-host}", "--version"], ["{command:uc-mcp}", "--version"], ["{python}", "-I", "{payload}/share/undercurrent/verify.py", "--payload", "{payload}"]]
+
+[products.undercurrent.commands.uc]
+program = "bin/uc{exe}"
+[products.undercurrent.commands.uc-daemon]
+program = "bin/uc-daemon{exe}"
+[products.undercurrent.commands.uc-session-host]
+program = "bin/uc-session-host{exe}"
+[products.undercurrent.commands.uc-python-bridge]
+program = "bin/uc-python-bridge{exe}"
+[products.undercurrent.commands.uc-mcp]
+program = "bin/uc-mcp{exe}"
+
+[runtimes.python]
+role = "python"
+version = "3.12.14"
+[runtimes.python.targets.linux-x86_64-gnu]
+path = "build/runtimes/linux-x86_64-gnu.tar.gz"
+sha256 = "7ce4a71285d913955a76053cc7605ea96da8ecada54dba9cf395245961816421"
+executable = "bin/python3"
+strip = 1
+[runtimes.python.targets.macos-x86_64]
+path = "build/runtimes/macos-x86_64.tar.gz"
+sha256 = "bd486eadd20259ad1fece28c800205baac0113c3b9cc663ddae495c19ba9db38"
+executable = "bin/python3"
+strip = 1
+[runtimes.python.targets.macos-arm64]
+path = "build/runtimes/macos-arm64.tar.gz"
+sha256 = "8b0f1fa71eab7ca644e482c631807a1116fa848491051cd1c8d9429491de63a6"
+executable = "bin/python3"
+strip = 1
+[runtimes.python.targets.windows-x86_64-msvc]
+path = "build/runtimes/windows-x86_64-msvc.tar.gz"
+sha256 = "8e6aad12ef6fc9685e67ce66253f8f72d6e8fa02cb7187e5850bd4db5ecd9e2a"
+executable = "python.exe"
+strip = 1

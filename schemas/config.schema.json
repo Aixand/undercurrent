@@ -1,0 +1,700 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:undercurrent:schema:config:v0.1.0-beta",
+  "title": "Undercurrent standalone configuration",
+  "description": "Standalone Undercurrent configuration. All product storage derives from UNDERCURRENT_HOME, defaulting to $HOME/.aixand/undercurrent.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "paths": {
+      "$ref": "#/$defs/paths"
+    },
+    "logging": {
+      "$ref": "#/$defs/logging"
+    },
+    "persistence": {
+      "$ref": "#/$defs/persistence"
+    },
+    "process": {
+      "$ref": "#/$defs/process"
+    },
+    "terminal": {
+      "$ref": "#/$defs/terminal"
+    },
+    "workers": {
+      "$ref": "#/$defs/workers"
+    },
+    "transport": {
+      "$ref": "#/$defs/transport"
+    },
+    "requests": {
+      "$ref": "#/$defs/requests"
+    },
+    "client": {
+      "$ref": "#/$defs/client"
+    },
+    "services": {
+      "$ref": "#/$defs/services"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0-beta"
+    },
+    "default_profile": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ]
+    },
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "diagnostics_enabled": {
+          "type": "boolean"
+        },
+        "debug_enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "local": {
+      "$ref": "#/$defs/local"
+    },
+    "profiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    },
+    "cli": {
+      "$ref": "#/$defs/cli"
+    },
+    "shortcuts": {
+      "$ref": "#/$defs/shortcuts"
+    }
+  },
+  "$defs": {
+    "positiveInteger": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "nonNegativeInteger": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "basisPoints": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000
+    },
+    "absolutePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^/"
+    },
+    "nullableAbsolutePath": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/absolutePath"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    },
+    "logging": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_file_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "retained_files": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "queue_lines": {
+          "$ref": "#/$defs/positiveInteger"
+        }
+      }
+    },
+    "persistence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_sessions": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_outbox_events": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_record_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_read_batch": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "command_queue_capacity": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "busy_timeout_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        }
+      }
+    },
+    "process": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_processes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "spawn_workers": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "spawn_queue_capacity": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "input_queue_sequences": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "input_queue_bytes_per_process": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "output_read_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "screen_snapshot_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "environment_file_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "environment_entries": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "environment_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "worker_thread_stack_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "force_confirmation_timeout_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        }
+      }
+    },
+    "terminal": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "per_session_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "global_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "chunk_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "append_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "replay_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "sessions": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "subscriptions": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "scrollback": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "memory_lines": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5000000
+            }
+          }
+        }
+      }
+    },
+    "workers": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mutation_active_sessions": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "mutation_waiters_per_session": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "mutation_diagnostic_page_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "outbox_batch_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "restart_batch_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "foreground_activation_delay_millis": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "health_activation_delay_millis": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "observation_batch_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "observation_retained_issues": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "health_check_workers": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "health_check_queue_capacity": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "health_check_timeout_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "health_check_screen_text_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "health_check_detail_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "foreground_interval_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "health_interval_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "observation_retry_interval_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "reconciliation_batch_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "reconciliation_retained_issues": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "outbox_poll_interval_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "restart_poll_interval_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "observation_poll_interval_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "process_exit_error_backoff_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        }
+      }
+    },
+    "transport": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_frame_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_logical_streams": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_pending_requests": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "connection_queue_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "stream_queue_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "connection_queue_messages": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "stream_queue_messages": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "control_queue_messages": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "lifecycle_queue_messages": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "state_queue_messages": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "bulk_queue_messages": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "initial_stream_window_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "heartbeat_interval_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "heartbeat_timeout_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "resume_retention_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "handshake_frame_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "handshake_timeout_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "write_timeout_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "maximum_connections": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "maximum_retained_issues": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "replay_streams": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "replay_bytes_per_stream": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "replay_bytes_per_connection": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "replay_item_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "connection_diagnostic_page_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "stream_diagnostic_page_size": {
+          "$ref": "#/$defs/positiveInteger"
+        }
+      }
+    },
+    "requests": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "request_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "response_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "stream_spec_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "stream_item_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "terminal_stream_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "dispatcher_workers": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "dispatcher_queue_capacity": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "idempotency_retention_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "idempotency_records": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "idempotency_total_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "cursor_clients": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "cursors_per_client": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "screen_checkpoint_clients": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "screen_checkpoints_per_client": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "screen_checkpoint_bytes_per_client": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "product_streams": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "diagnostic_clients": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "diagnostic_cursors_per_client": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "diagnostic_page_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "diagnostic_snapshot_rows": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "maximum_shutdown_drain_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        }
+      }
+    },
+    "client": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dial_timeout_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "cancellation_interval_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "writer_queue_messages": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "bulk_parallel_requests": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "stream_mailbox_messages": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "stream_mailbox_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "reconnect_initial_delay_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "reconnect_maximum_delay_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "reconnect_backoff_basis_points": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "reconnect_jitter_basis_points": {
+          "$ref": "#/$defs/basisPoints"
+        },
+        "reconnect_maximum_attempts": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "maximum_parallel_resumes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "resume_timeout_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        }
+      }
+    },
+    "services": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_command_arguments": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_command_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_environment_entries": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_environment_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_path_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_health_rules": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_health_rule_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_terminal_columns": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_terminal_rows": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_input_items": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_input_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_query_page_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_work_items": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_event_filter_sessions": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_event_filter_kinds": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_event_page_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_profile_page_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_profile_environment_name_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "max_profile_sample_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "session_subscriptions": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "restart_jobs": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "observation_jobs": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "input_delivery_records": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "session_event_records": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "session_event_subscriptions": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "telemetry_diagnostic_records": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "telemetry_metric_records": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "detection_profiles": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "profile_test_samples": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "foreground_evidence_items": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "foreground_evidence_age_millis": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "foreground_minimum_confidence_basis_points": {
+          "$ref": "#/$defs/basisPoints"
+        },
+        "foreground_motion_confidence_basis_points": {
+          "$ref": "#/$defs/basisPoints"
+        },
+        "foreground_server_idle_confidence_basis_points": {
+          "$ref": "#/$defs/basisPoints"
+        },
+        "profile_description_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "profile_binary_patterns": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "profile_argument_patterns": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "profile_environment_names": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "profile_environment_name_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "profile_foreground_rules": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "profile_background_rules": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "profile_patterns_per_rule": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "profile_pattern_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "regex_cached_patterns": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "regex_compiled_size_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "regex_determinize_size_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "regex_match_text_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "profile_trait_needles": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "profile_trait_text_bytes": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "profile_input_submission_delay_millis": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        }
+      }
+    },
+    "local": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    },
+    "cli": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "command_timeout_millis": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400000
+        },
+        "daemon_startup_timeout_millis": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400000
+        },
+        "list_page_size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "logs_max_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        }
+      }
+    },
+    "shortcuts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "prefix": {
+          "type": "string",
+          "pattern": "^(?:[aA][lL][tT]-[a-zA-Z]|[cC][tT][rR][lL]-[a-zA-Z]|[\\x00-\\x7F])$"
+        }
+      }
+    }
+  }
+}

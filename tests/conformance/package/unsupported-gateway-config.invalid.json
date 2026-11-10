@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "Gateway listener settings are outside the supported local configuration surface.",
+  "target": "config",
+  "base": "tests/conformance/package/config.local.valid.json",
+  "mutation": {
+    "operation": "add",
+    "path": "/gateway",
+    "value": {
+      "bind_address": "127.0.0.1",
+      "port": 9100
+    }
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$"
+}

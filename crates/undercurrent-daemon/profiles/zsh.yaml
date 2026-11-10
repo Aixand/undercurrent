@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: Apache-2.0
+schema_version: 0.1.0-beta
+name: zsh
+description: Zsh shell
+disabled: false
+matching_fallback: true
+matching:
+- binary:
+  - zsh
+  arguments: []
+  required_environment: []
+archetype: line_oriented
+input_delivery:
+  type: immediate
+baseline_interaction: null
+foreground_rules:
+- claim:
+    type: interaction
+    state: available
+    modality: text
+    semantic: zsh.command
+  patterns:
+  - '(?m)[%$#❯→]\s*$'
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 2
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 8500
+background_rules: []
+alternate_screen_is_normal: false
+silent_until_input: false
+output_exclusions:
+  top_rows: 0
+  bottom_rows: 0

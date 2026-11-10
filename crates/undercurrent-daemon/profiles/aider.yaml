@@ -1,0 +1,46 @@
+# SPDX-License-Identifier: Apache-2.0
+schema_version: 0.1.0-beta
+name: aider
+description: Aider AI coding assistant
+disabled: false
+matching:
+- binary:
+  - aider
+  arguments: []
+  required_environment: []
+archetype: animated_agent
+input_delivery:
+  type: paced_trailing_submit
+  delay_millis: 120
+baseline_interaction:
+  state: available
+  modality: text
+  semantic: aider.composer
+foreground_rules:
+- claim:
+    type: interaction
+    state: available
+    modality: text
+    semantic: aider.composer
+  patterns:
+  - '(?m)^>\s*$'
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 1
+    anchor:
+      type: cursor
+    columns: null
+  confidence_basis_points: 9000
+background_rules: []
+alternate_screen_is_normal: false
+silent_until_input: false
+output_exclusions:
+  top_rows: 0
+  bottom_rows: 0

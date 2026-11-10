@@ -1,0 +1,24 @@
+name: Dependency license notices
+
+on:
+  workflow_call:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  license-notices:
+    name: License inventory and packaging
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - run: python3 scripts/release/third_party_licenses.py check
+      - run: python3 tests/tooling/checks/dependency_licenses_test.py

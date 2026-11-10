@@ -1,0 +1,146 @@
+# SPDX-License-Identifier: Apache-2.0
+schema_version: 0.1.0-beta
+name: opencode
+description: OpenCode TUI coding agent
+disabled: false
+matching:
+- binary:
+  - opencode
+  arguments: []
+  required_environment: []
+archetype: animated_agent
+input_delivery:
+  type: paced_trailing_submit
+  delay_millis: 120
+baseline_interaction:
+  state: available
+  modality: text
+  semantic: opencode.composer
+foreground_rules:
+- claim:
+    type: interaction
+    state: requested
+    modality: options
+    semantic: opencode.permission
+  patterns:
+  - (?m)Permission required
+  - '(?m)\bAllow once\b'
+  - (?m)Waiting for permission event
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9500
+- claim:
+    type: constraint
+    state: present
+    semantic: opencode.rate_limit
+  patterns:
+  - (?m)Free usage exceeded
+  - (?m)Quota exceeded
+  - '(?im)\brate limit(?:ed)?\b'
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9500
+- claim:
+    type: constraint
+    state: present
+    semantic: opencode.retrying
+  patterns:
+  - '(?m)\[retrying (?:in .+ )?attempt #\d+\]'
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 8
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 8500
+- claim:
+    type: interaction
+    state: available
+    modality: text
+    semantic: opencode.composer
+  patterns:
+  - '(?m)Ask anything\.\.\.'
+  - '(?m)\bctrl\+p\s+(?:commands|cmd)\b'
+  - '(?m)\bctrl\+t\s+variants\b'
+  excludes:
+  - (?m)Permission required
+  - '(?m)\besc\s+(?:again to )?interrupt\b'
+  - '(?m)\[retrying\b'
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9000
+- claim:
+    type: constraint
+    state: present
+    semantic: opencode.error
+  patterns:
+  - (?m)opencode crashed
+  - (?m)Invalid API key
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9000
+background_rules:
+- kind: agent
+  patterns:
+  - '(?im)\bview\s+subagents\b'
+  - '(?im)\b[[:alnum:]+-]+\s+subagents\b'
+  excludes: []
+  name_patterns: []
+  label: subagent
+  region: null
+  confidence_basis_points: 7000
+alternate_screen_is_normal: true
+silent_until_input: false
+output_exclusions:
+  top_rows: 0
+  bottom_rows: 0

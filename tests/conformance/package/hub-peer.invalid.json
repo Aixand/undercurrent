@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "The removed Hub cannot be an explicit Undercurrent peer.",
+  "target": "package",
+  "base": "undercurrent-package.json",
+  "mutation": {
+    "operation": "replace",
+    "path": "/dependencies/peers",
+    "value": [
+      {
+        "coordinate": "external/coordinator",
+        "class": "peer",
+        "required_for": "ecosystem_attachment_only",
+        "selection": "explicit",
+        "automatic_install": false
+      }
+    ]
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$.dependencies.peers"
+}

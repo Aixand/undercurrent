@@ -1,0 +1,72 @@
+{
+  "paths": {},
+  "logging": {
+    "max_file_bytes": 16777216,
+    "retained_files": 5,
+    "queue_lines": 8192
+  },
+  "persistence": {
+    "max_sessions": 2048,
+    "max_outbox_events": 65536,
+    "max_record_bytes": 1048576,
+    "max_read_batch": 256,
+    "command_queue_capacity": 1024,
+    "busy_timeout_millis": 5000
+  },
+  "process": {
+    "max_processes": 2048,
+    "spawn_workers": 8,
+    "spawn_queue_capacity": 512,
+    "input_queue_sequences": 64,
+    "input_queue_bytes_per_process": 1048576,
+    "output_read_bytes": 16384,
+    "screen_snapshot_bytes": 131072,
+    "environment_file_bytes": 1048576,
+    "environment_entries": 1024,
+    "environment_bytes": 2097152,
+    "worker_thread_stack_bytes": 524288,
+    "force_confirmation_timeout_millis": 2000
+  },
+  "terminal": {
+    "per_session_bytes": 2097152,
+    "global_bytes": 268435456,
+    "chunk_bytes": 16384,
+    "append_bytes": 65536,
+    "replay_bytes": 1048576,
+    "sessions": 2048,
+    "subscriptions": 4096
+  },
+  "workers": {
+    "outbox_batch_size": 256,
+    "restart_batch_size": 256,
+    "reconciliation_batch_size": 256
+  },
+  "transport": {
+    "max_frame_bytes": 262144,
+    "resume_retention_millis": 30000,
+    "maximum_connections": 64
+  },
+  "requests": {
+    "request_bytes": 262144,
+    "response_bytes": 262144,
+    "idempotency_retention_millis": 300000,
+    "idempotency_records": 65536
+  },
+  "client": {
+    "dial_timeout_millis": 5000,
+    "reconnect_initial_delay_millis": 100,
+    "reconnect_maximum_delay_millis": 5000,
+    "reconnect_maximum_attempts": 0,
+    "resume_timeout_millis": 5000
+  },
+  "services": {
+    "max_command_arguments": 1024,
+    "max_command_bytes": 1048576,
+    "max_environment_entries": 1024,
+    "max_environment_bytes": 2097152,
+    "max_terminal_columns": 1000,
+    "max_terminal_rows": 1000
+  },
+  "schema_version": "0.1.0-beta",
+  "local": {}
+}

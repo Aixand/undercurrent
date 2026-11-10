@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: Apache-2.0
+schema_version: 0.1.0-beta
+name: cmd
+description: Windows Command Prompt
+disabled: false
+matching_fallback: true
+matching:
+- binary: [cmd, cmd.exe]
+archetype: line_oriented
+input_delivery:
+  type: immediate
+foreground_rules:
+- claim:
+    type: interaction
+    state: available
+    modality: text
+    semantic: cmd.command
+  patterns:
+  - '(?m)^[A-Za-z]:\\[^\r\n>]*>\s*$'
+  region:
+    type: bottom_rows
+    rows: 2
+    anchor:
+      type: any
+  confidence_basis_points: 8500

@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "Ordinary installation cannot clone the monorepo or trigger a source build.",
+  "target": "package",
+  "base": "undercurrent-package.json",
+  "mutation": {
+    "operation": "replace",
+    "path": "/installation/ordinary_mode",
+    "value": "source_build"
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$.installation.ordinary_mode"
+}

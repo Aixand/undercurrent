@@ -1,0 +1,294 @@
+name: Native platform CI
+
+on:
+  workflow_call:
+  push:
+    tags:
+      - 'ci/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qualify-tag:
+    name: Check tagged commit is on main
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      on-main: ${{ steps.main.outputs.on-main }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check main ancestry
+        id: main
+        shell: bash
+        run: |
+          if git merge-base --is-ancestor HEAD refs/remotes/origin/main; then
+            echo "on-main=true" >> "$GITHUB_OUTPUT"
+            echo "Tagged commit is on main; native CI is eligible to run." >> "$GITHUB_STEP_SUMMARY"
+          else
+            status=$?
+            if [ "$status" -ne 1 ]; then
+              exit "$status"
+            fi
+            echo "on-main=false" >> "$GITHUB_OUTPUT"
+            echo "Native CI skipped: tagged commit is not on main." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  native-behavior:
+    name: Native behavior (${{ matrix.os }})
+    needs: qualify-tag
+    # Only tags on main qualify; preserve the Windows-only tag option.
+    if: >-
+      ${{ needs.qualify-tag.outputs.on-main == 'true' &&
+          !startsWith(github.ref, 'refs/tags/ci/windows-') }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-15, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: python3 scripts/ci/run-logged.py {0}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.13'
+      - name: Product naming policy
+        env:
+          UC_CI_LOG_NAME: product-naming-policy
+        run: python3 scripts/checks/check-names.py
+      - name: Install Linux shell fixtures
+        if: runner.os == 'Linux'
+        env:
+          UC_CI_LOG_NAME: install-linux-shell-fixtures
+        run: sudo apt-get update && sudo apt-get install -y zsh fish
+      - name: Install macOS Fish fixture
+        if: runner.os == 'macOS'
+        env:
+          UC_CI_LOG_NAME: install-macos-fish-fixture
+        run: brew install fish
+      - name: Install repository Rust toolchain
+        env:
+          UC_CI_LOG_NAME: install-repository-rust-toolchain
+        run: |
+          version=$(sed -n 's/^channel = "\(.*\)"/\1/p' rust-toolchain.toml)
+          rustup toolchain install "$version" --profile minimal --component rustfmt
+      - name: Restore native Rust build cache
+        id: rust-cache
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/registry/src
+            ~/.cargo/git/db
+            target/debug
+            target/release
+          key: rust-v1-${{ matrix.os }}-${{ runner.arch }}-${{ hashFiles('rust-toolchain.toml', '**/Cargo.lock', '**/Cargo.toml') }}-${{ github.sha }}
+          restore-keys: |
+            rust-v1-${{ matrix.os }}-${{ runner.arch }}-${{ hashFiles('rust-toolchain.toml', '**/Cargo.lock', '**/Cargo.toml') }}-
+      - name: Formatting
+        env:
+          UC_CI_LOG_NAME: formatting
+        run: python3 scripts/checks/check-formatting.py
+      - name: Build and install into isolated prefix
+        id: install
+        env:
+          UC_CI_LOG_NAME: build-and-install-into-isolated-prefix
+        run: |
+          export UNDERCURRENT_DEV_INSTALL_DIR="$RUNNER_TEMP/uc-bin"
+          export CARGO_TARGET_DIR="$GITHUB_WORKSPACE/target"
+          ./dev.sh install --prod
+          "$UNDERCURRENT_DEV_INSTALL_DIR/uc" --version
+          "$UNDERCURRENT_DEV_INSTALL_DIR/uc-daemon" --version
+          "$UNDERCURRENT_DEV_INSTALL_DIR/uc-session-host" --version
+      - name: Installer host and failure contracts
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        env:
+          UC_CI_LOG_NAME: installer-host-and-failure-contracts
+        run: bash tests/conformance/dev_installer_test.sh
+      - name: MCP protocol and live session contracts
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        env:
+          UC_CI_LOG_NAME: mcp-contracts
+        run: python3 tests/conformance/mcp_test.py --binary-dir "$RUNNER_TEMP/uc-bin"
+      - name: Shared CLI capability contracts
+        id: cli-contract
+        env:
+          UC_CI_LOG_NAME: cli-contract
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: python3 tests/e2e/platform/test-platform-contract.py "$RUNNER_TEMP/uc-bin"
+      - name: Upload immediate cli-contract failure diagnostics
+        if: ${{ !cancelled() && steps.cli-contract.outcome == 'failure' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: early-cli-contract-${{ matrix.os }}
+          path: ${{ runner.temp }}/uc-ci-logs/
+          retention-days: 7
+      - name: Shared real Bash, Zsh and Fish detection
+        id: shell-detection
+        env:
+          UC_CI_LOG_NAME: shell-detection
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: python3 tests/e2e/platform/test-platform-detection.py "$RUNNER_TEMP/uc-bin"
+      - name: Upload immediate shell-detection failure diagnostics
+        if: ${{ !cancelled() && steps.shell-detection.outcome == 'failure' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: early-shell-detection-${{ matrix.os }}
+          path: ${{ runner.temp }}/uc-ci-logs/
+          retention-days: 7
+      - name: Shared endpoint and foreground evidence tests
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        env:
+          UC_CI_LOG_NAME: shared-endpoint-and-foreground-evidence-tests
+        run: |
+          cargo test --locked -p aixand-undercurrent-transport-local --test endpoint
+          cargo test --locked -p undercurrent-runtime --test foreground_evidence
+          cargo test --locked -p undercurrent-runtime --test terminal_screen terminal_queries
+      - name: Supervisor, peer authentication, reset and socket path regressions
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        env:
+          UC_CI_LOG_NAME: supervisor-peer-authentication-reset-and-socket-path-regressions
+        run: |
+          cargo test --locked -p undercurrent-runtime --lib process::execute_host::tests -- --test-threads=1
+          cargo test --locked -p undercurrent-runtime --lib agent_ancestry_tests
+          cargo test --locked -p undercurrent-runtime --lib pinned_pty_cwd
+          cargo test --locked -p undercurrent-cli --lib shell_integration::tests
+          cargo test --locked -p undercurrent-cli --lib reset::tests
+          cargo test --locked -p undercurrent-daemon --lib session_host_socket
+      - name: Darwin adapter failure cases
+        if: ${{ !cancelled() && steps.install.outcome == 'success' && runner.os == 'macOS' }}
+        env:
+          UC_CI_LOG_NAME: darwin-adapter-failure-cases
+        run: |
+          cargo test --locked -p undercurrent-platform-macos
+          cargo test --locked -p undercurrent-runtime --lib macos_observation::tests
+      - name: Shared live environment behavior
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        env:
+          UC_CI_LOG_NAME: shared-live-environment-behavior
+        run: python3 tests/e2e/cli/exec-environment.py --bin-dir "$RUNNER_TEMP/uc-bin"
+      - name: Native release bundle qualification
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        env:
+          UC_CI_LOG_NAME: native-release-bundle-qualification
+        run: |
+          python3 scripts/checks/validate-package-manifest.py
+          python3 scripts/release/release_bundle_qualification.py adversarial
+          python3 tests/conformance/package/test-platform-bundle.py --bin-dir "$RUNNER_TEMP/uc-bin"
+      - name: Save native Rust build cache
+        if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.rust-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/registry/src
+            ~/.cargo/git/db
+            target/debug
+            target/release
+          key: ${{ steps.rust-cache.outputs.cache-primary-key }}
+      - name: Upload all native diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: native-logs-${{ matrix.os }}
+          path: ${{ runner.temp }}/uc-ci-logs/
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Upload bundle qualification reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: platform-qualification-${{ matrix.os }}
+          path: target/platform-bundles/*.json
+          if-no-files-found: ignore
+      - name: Capability checklist
+        if: always()
+        env:
+          UC_CI_LOG_NAME: capability-checklist
+        run: cat docs/development/platform-testing.md >> "$GITHUB_STEP_SUMMARY"
+
+  windows-native:
+    name: Native behavior (windows-2022)
+    needs: qualify-tag
+    if: ${{ needs.qualify-tag.outputs.on-main == 'true' }}
+    runs-on: windows-2022
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.13'
+      - name: Repository Rust toolchain
+        run: python scripts/ci/windows-native.py --stage toolchain
+      - name: Formatting
+        run: python scripts/ci/windows-native.py --stage formatting
+      - name: Product naming policy
+        run: python scripts/ci/windows-native.py --stage naming
+      - name: CI runner contracts
+        run: python scripts/ci/windows-native.py --stage runner
+      - name: Release bundle rejection contracts
+        run: python scripts/ci/windows-native.py --stage bundle-rejection
+      - name: Build native executables
+        run: python scripts/ci/windows-native.py --stage build
+      - name: Workspace and Windows native contracts
+        run: python scripts/ci/windows-native.py --stage workspace
+      - name: MCP protocol and live session contracts
+        run: |
+          cargo build --locked -p undercurrent-mcp -p undercurrent-cli -p undercurrent-daemon --bins
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tests/conformance/mcp_test.py --binary-dir target/debug
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Authenticated native capture failure contracts
+        run: python scripts/ci/windows-native.py --stage capture
+      - name: Architecture and external SDK consumer
+        run: python scripts/ci/windows-native.py --stage architecture
+      - name: Real daemon lifecycle and crash recovery
+        run: python scripts/ci/windows-native.py --stage smoke
+      - name: PowerShell development installer contracts
+        run: python scripts/ci/windows-native.py --stage installer
+      - name: Native adapters, runtime and product lint
+        run: python scripts/ci/windows-native.py --stage lint
+      - name: Install native release binaries
+        id: install
+        run: python scripts/ci/windows-native.py --stage install
+      - name: Installed release behavior
+        run: python scripts/ci/windows-native.py --stage installed-smoke
+      - name: Interactive ConPTY attachment
+        run: python scripts/ci/windows-native.py --stage attach
+      - name: Verified native release bundle and installed behavior
+        run: python scripts/ci/windows-native.py --stage bundle
+      - name: Uninstall native release binaries
+        if: ${{ always() && steps.install.outcome == 'success' }}
+        run: python scripts/ci/windows-native.py --stage uninstall
+      - name: Upload native smoke evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: windows-native-smoke
+          path: |
+            target/windows-ci/
+            target/windows-native-smoke-*/
+            target/windows-attach-smoke-*/
+            target/platform-bundles/windows-x86_64-msvc.json
+            target/windows-release-adversarial.json
+          if-no-files-found: ignore
+          retention-days: 7

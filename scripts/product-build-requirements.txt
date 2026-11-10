@@ -1,0 +1,2 @@
+# Constrain the existing SDK backend without changing its published metadata.
+setuptools==84.1.0

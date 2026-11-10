@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: Apache-2.0
+schema_version: 0.1.0-beta
+name: antigravity
+description: Google Antigravity CLI (agy)
+matching:
+- binary: [agy]
+archetype: animated_agent
+input_delivery:
+  type: paced_trailing_submit
+  delay_millis: 120
+baseline_interaction:
+  state: available
+  modality: text
+  semantic: antigravity.composer
+foreground_rules:
+- claim:
+    type: interaction
+    state: requested
+    modality: options
+    semantic: antigravity.workspace_trust
+  patterns:
+  - '(?m)^\s*Do you trust the contents of this project\?\s*$'
+  traits:
+    screen_contains:
+    - 'Accessing workspace:'
+    - 'Antigravity CLI requires permission to read, edit, and execute files here.'
+    - 'Yes, I trust this folder'
+    - 'No, exit'
+  region: null
+  confidence_basis_points: 9500
+- claim:
+    type: constraint
+    state: present
+    semantic: antigravity.authentication
+  patterns:
+  - '(?m)^(?:Error: )?[Aa]uthentication required(?:\.|$)'
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor: {type: any}
+  confidence_basis_points: 9500
+alternate_screen_is_normal: true
+silent_until_input: false

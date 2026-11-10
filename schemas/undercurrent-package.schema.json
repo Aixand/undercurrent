@@ -1,0 +1,1350 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:undercurrent:schema:package:v0.1.0-beta",
+  "title": "Undercurrent standalone package manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "coordinate",
+    "name",
+    "version",
+    "kind",
+    "release_status",
+    "selection",
+    "runtime",
+    "artifacts",
+    "platforms",
+    "installation",
+    "configuration",
+    "state",
+    "contracts",
+    "protocols",
+    "implementation_registries",
+    "health",
+    "verification",
+    "dependencies",
+    "integrity",
+    "provenance",
+    "license",
+    "upgrade",
+    "deprecation",
+    "release"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "schemas/undercurrent-package.schema.json"
+    },
+    "schema_version": {
+      "const": "undercurrent.package/v0.1.0-beta"
+    },
+    "coordinate": {
+      "const": "undercurrent"
+    },
+    "name": {
+      "const": "Undercurrent"
+    },
+    "version": {
+      "const": "0.1.0-beta"
+    },
+    "kind": {
+      "const": "standalone_product"
+    },
+    "release_status": {
+      "enum": [
+        "unpublished",
+        "published"
+      ]
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "independently_selectable",
+        "virtual",
+        "default_install_scope",
+        "automatic_expansion"
+      ],
+      "properties": {
+        "independently_selectable": {
+          "const": true
+        },
+        "virtual": {
+          "const": false
+        },
+        "default_install_scope": {
+          "const": "undercurrent_only"
+        },
+        "automatic_expansion": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model",
+        "allowed_placements",
+        "forbidden_placements",
+        "semantic_transport",
+        "local_security",
+        "remote_security",
+        "direct_daemon_linking",
+        "implicit_daemon_launch",
+        "standalone_route",
+        "direct_route"
+      ],
+      "properties": {
+        "model": {
+          "const": "external_daemon"
+        },
+        "allowed_placements": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "const": "local_process"
+          }
+        },
+        "forbidden_placements": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "const": "embedded"
+          }
+        },
+        "semantic_transport": {
+          "const": "local_ipc"
+        },
+        "local_security": {
+          "const": "same_os_user_local_ipc"
+        },
+        "remote_security": {
+          "const": "unsupported"
+        },
+        "direct_daemon_linking": {
+          "const": false
+        },
+        "implicit_daemon_launch": {
+          "const": true
+        },
+        "standalone_route": {
+          "const": "uc -> SDK -> local IPC -> uc-daemon"
+        },
+        "direct_route": {
+          "const": "caller -> public SDK -> authenticated UCMP/local IPC -> uc-daemon"
+        }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/cliArtifact"
+          },
+          {
+            "$ref": "#/$defs/daemonArtifact"
+          },
+          {
+            "$ref": "#/$defs/sessionHostArtifact"
+          }
+        ]
+      }
+    },
+    "platforms": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/linuxPlatform"
+          },
+          {
+            "$ref": "#/$defs/macosArm64Platform"
+          },
+          {
+            "$ref": "#/$defs/macosIntelPlatform"
+          },
+          {
+            "$ref": "#/$defs/windowsPlatform"
+          }
+        ]
+      },
+      "uniqueItems": true
+    },
+    "installation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ordinary_mode",
+        "artifact_source",
+        "monorepo_clone",
+        "implicit_source_build",
+        "verify_before_execution",
+        "required_bundle_metadata",
+        "install_root",
+        "activation"
+      ],
+      "properties": {
+        "ordinary_mode": {
+          "const": "verified_release_artifact"
+        },
+        "artifact_source": {
+          "const": "verified_undercurrent_release"
+        },
+        "monorepo_clone": {
+          "const": false
+        },
+        "implicit_source_build": {
+          "const": false
+        },
+        "verify_before_execution": {
+          "const": true
+        },
+        "required_bundle_metadata": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "sha256_checksums",
+              "provenance_attestation",
+              "license_metadata"
+            ]
+          }
+        },
+        "install_root": {
+          "const": "operator_selected_prefix"
+        },
+        "activation": {
+          "const": "explicit"
+        }
+      }
+    },
+    "configuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "namespace",
+        "schema",
+        "schema_representation",
+        "supported_documents",
+        "document_schema_version",
+        "future_schema_versions",
+        "unknown_fields",
+        "secret_material",
+        "product_path_keys",
+        "environment_overrides"
+      ],
+      "properties": {
+        "namespace": {
+          "const": "root"
+        },
+        "schema": {
+          "const": "schemas/config.schema.json"
+        },
+        "schema_representation": {
+          "const": "json_schema_2020_12"
+        },
+        "supported_documents": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "yaml",
+              "toml"
+            ]
+          }
+        },
+        "document_schema_version": {
+          "const": "0.1.0-beta"
+        },
+        "future_schema_versions": {
+          "const": "reject"
+        },
+        "unknown_fields": {
+          "const": "reject"
+        },
+        "secret_material": {
+          "const": "file_references_only"
+        },
+        "product_path_keys": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "environment_overrides": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "const": "UNDERCURRENT_HOME"
+          }
+        }
+      }
+    },
+    "state": {
+      "$ref": "#/$defs/state"
+    },
+    "contracts": {
+      "$ref": "#/$defs/contracts"
+    },
+    "protocols": {
+      "$ref": "#/$defs/protocols"
+    },
+    "implementation_registries": {
+      "$ref": "#/$defs/implementationRegistries"
+    },
+    "health": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "liveness",
+        "readiness_operation",
+        "diagnostics_operation",
+        "degraded_or_partial_state",
+        "live_identified_attempts",
+        "recovered_unknown_attempts"
+      ],
+      "properties": {
+        "liveness": {
+          "const": "local_ipc_handshake"
+        },
+        "readiness_operation": {
+          "const": "get_daemon_status"
+        },
+        "diagnostics_operation": {
+          "const": "get_diagnostics"
+        },
+        "degraded_or_partial_state": {
+          "const": "explicit"
+        },
+        "live_identified_attempts": {
+          "const": "readiness_allowed"
+        },
+        "recovered_unknown_attempts": {
+          "const": "readiness_blocked_until_evidence_backed_repair"
+        }
+      }
+    },
+    "verification": {
+      "$ref": "#/$defs/verification"
+    },
+    "dependencies": {
+      "$ref": "#/$defs/dependencies"
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_digest",
+        "per_artifact_digest_required",
+        "bundle_manifest_digest_required",
+        "verify_before_execution",
+        "failure_action"
+      ],
+      "properties": {
+        "artifact_digest": {
+          "const": "sha256"
+        },
+        "per_artifact_digest_required": {
+          "const": true
+        },
+        "bundle_manifest_digest_required": {
+          "const": true
+        },
+        "verify_before_execution": {
+          "const": true
+        },
+        "failure_action": {
+          "const": "abort_installation"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attestation",
+        "source_coordinate",
+        "builder_identity",
+        "materials"
+      ],
+      "properties": {
+        "attestation": {
+          "const": "required_at_release"
+        },
+        "source_coordinate": {
+          "const": "undercurrent"
+        },
+        "builder_identity": {
+          "const": "required_at_release"
+        },
+        "materials": {
+          "const": "required_at_release"
+        }
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metadata",
+        "texts",
+        "acceptance",
+        "notices"
+      ],
+      "properties": {
+        "metadata": {
+          "const": "required_in_release_bundle"
+        },
+        "texts": {
+          "const": "required_in_release_bundle"
+        },
+        "acceptance": {
+          "const": "before_installation"
+        },
+        "notices": {
+          "const": [
+            "crates/undercurrent-foundation/NOTICE"
+          ]
+        }
+      }
+    },
+    "upgrade": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy",
+        "backup_required",
+        "compatibility_check_required",
+        "schema_validation",
+        "failed_upgrade"
+      ],
+      "properties": {
+        "strategy": {
+          "const": "stop_backup_replace_verify_restart"
+        },
+        "backup_required": {
+          "const": true
+        },
+        "compatibility_check_required": {
+          "const": true
+        },
+        "schema_validation": {
+          "const": "exact_current_required"
+        },
+        "failed_upgrade": {
+          "const": "stop_and_preserve_state"
+        }
+      }
+    },
+    "deprecation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy",
+        "compatibility_policy"
+      ],
+      "properties": {
+        "policy": {
+          "const": "current_release_only"
+        },
+        "compatibility_policy": {
+          "const": "exact_current_or_reject"
+        }
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "publishing_performed",
+        "deployment_performed",
+        "release_artifacts_required_for_ordinary_install"
+      ],
+      "properties": {
+        "publishing_performed": {
+          "const": false
+        },
+        "deployment_performed": {
+          "const": false
+        },
+        "release_artifacts_required_for_ordinary_install": {
+          "const": true
+        }
+      }
+    }
+  },
+  "$defs": {
+    "artifactCommon": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "name",
+        "kind",
+        "entrypoint",
+        "required",
+        "platforms"
+      ],
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "const": "executable"
+        },
+        "entrypoint": {
+          "type": "boolean"
+        },
+        "required": {
+          "const": true
+        },
+        "platforms": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "enum": [
+              "linux-x86_64-gnu",
+              "macos-arm64",
+              "macos-x86_64",
+              "windows-x86_64-msvc"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "cliArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "name",
+        "kind",
+        "entrypoint",
+        "required",
+        "platforms"
+      ],
+      "properties": {
+        "role": {
+          "const": "cli"
+        },
+        "name": {
+          "const": "uc"
+        },
+        "kind": {
+          "const": "executable"
+        },
+        "entrypoint": {
+          "const": true
+        },
+        "required": {
+          "const": true
+        },
+        "platforms": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "enum": [
+              "linux-x86_64-gnu",
+              "macos-arm64",
+              "macos-x86_64",
+              "windows-x86_64-msvc"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "daemonArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "name",
+        "kind",
+        "entrypoint",
+        "required",
+        "platforms"
+      ],
+      "properties": {
+        "role": {
+          "const": "daemon"
+        },
+        "name": {
+          "const": "uc-daemon"
+        },
+        "kind": {
+          "const": "executable"
+        },
+        "entrypoint": {
+          "const": true
+        },
+        "required": {
+          "const": true
+        },
+        "platforms": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "enum": [
+              "linux-x86_64-gnu",
+              "macos-arm64",
+              "macos-x86_64",
+              "windows-x86_64-msvc"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "sessionHostArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "name",
+        "kind",
+        "entrypoint",
+        "required",
+        "platforms"
+      ],
+      "properties": {
+        "role": {
+          "const": "session_host"
+        },
+        "name": {
+          "const": "uc-session-host"
+        },
+        "kind": {
+          "const": "executable"
+        },
+        "entrypoint": {
+          "const": false
+        },
+        "required": {
+          "const": true
+        },
+        "platforms": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "enum": [
+              "linux-x86_64-gnu",
+              "macos-arm64",
+              "macos-x86_64",
+              "windows-x86_64-msvc"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "linuxPlatform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "os",
+        "architecture",
+        "libc",
+        "status",
+        "placements"
+      ],
+      "properties": {
+        "id": {
+          "const": "linux-x86_64-gnu"
+        },
+        "os": {
+          "const": "linux"
+        },
+        "architecture": {
+          "const": "x86_64"
+        },
+        "libc": {
+          "const": "gnu"
+        },
+        "status": {
+          "const": "supported"
+        },
+        "placements": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "const": "local_process"
+          }
+        }
+      }
+    },
+    "store": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "owner",
+        "engine",
+        "location_policy",
+        "default_filename",
+        "data_classes"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "canonical_state",
+            "session_host_journal"
+          ]
+        },
+        "owner": {
+          "const": "undercurrent"
+        },
+        "engine": {
+          "enum": [
+            "sqlite",
+            "implementation_private_durable_journal"
+          ]
+        },
+        "location_policy": {
+          "enum": [
+            "product_home_state_directory",
+            "product_state_root"
+          ]
+        },
+        "default_filename": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "data_classes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner",
+        "canonical_writer",
+        "foreign_store_access",
+        "roots",
+        "stores",
+        "schema",
+        "retention",
+        "backup",
+        "uninstall"
+      ],
+      "properties": {
+        "owner": {
+          "const": "undercurrent"
+        },
+        "canonical_writer": {
+          "const": "undercurrent"
+        },
+        "foreign_store_access": {
+          "const": "forbidden"
+        },
+        "roots": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "product_home",
+            "configuration_file",
+            "configured_state_directory"
+          ],
+          "properties": {
+            "product_home": {
+              "const": "$UNDERCURRENT_HOME or $HOME/.aixand/undercurrent"
+            },
+            "configuration_file": {
+              "const": "<product-home>/config.yaml"
+            },
+            "configured_state_directory": {
+              "const": "<product-home>/state"
+            }
+          }
+        },
+        "stores": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/store"
+          }
+        },
+        "schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "owner",
+            "engine",
+            "current_version",
+            "storage_format",
+            "existing_database_policy",
+            "current_attached_policy",
+            "current_attached_request_digest"
+          ],
+          "properties": {
+            "owner": {
+              "const": "undercurrent"
+            },
+            "engine": {
+              "const": "sqlite"
+            },
+            "current_version": {
+              "const": "0.1.0-beta"
+            },
+            "storage_format": {
+              "const": 1
+            },
+            "existing_database_policy": {
+              "const": "exact_current_or_reject_without_mutation"
+            },
+            "current_attached_policy": {
+              "const": "required_and_fail_closed_on_loss"
+            },
+            "current_attached_request_digest": {
+              "const": "required_canonical_and_fail_closed_on_loss"
+            }
+          }
+        },
+        "retention": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "terminal_output_per_session_bytes",
+            "terminal_output_global_bytes",
+            "terminal_eviction",
+            "disconnected_replay_millis",
+            "completed_idempotency_millis",
+            "ambiguous_pending_mutations",
+            "runtime_cancellation_controls"
+          ],
+          "properties": {
+            "terminal_output_per_session_bytes": {
+              "const": 2097152
+            },
+            "terminal_output_global_bytes": {
+              "const": 268435456
+            },
+            "terminal_eviction": {
+              "const": "oldest_first_with_explicit_gaps"
+            },
+            "disconnected_replay_millis": {
+              "const": 30000
+            },
+            "completed_idempotency_millis": {
+              "const": 300000
+            },
+            "ambiguous_pending_mutations": {
+              "const": "retain_until_reconciled"
+            },
+            "runtime_cancellation_controls": {
+              "const": "retain_until_explicit_product_purge"
+            }
+          }
+        },
+        "backup": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "owner",
+            "scope",
+            "consistency",
+            "integrity_check",
+            "secret_material"
+          ],
+          "properties": {
+            "owner": {
+              "const": "undercurrent"
+            },
+            "scope": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "canonical_state",
+                  "session_host_journal"
+                ]
+              }
+            },
+            "consistency": {
+              "const": "quiesced_or_transactionally_consistent"
+            },
+            "integrity_check": {
+              "const": "required"
+            },
+            "secret_material": {
+              "const": "excluded"
+            }
+          }
+        },
+        "uninstall": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "stop_owned_processes",
+            "default_data_action",
+            "purge_requires_explicit_selection",
+            "purge_foreign_or_hub_state"
+          ],
+          "properties": {
+            "stop_owned_processes": {
+              "const": true
+            },
+            "default_data_action": {
+              "const": "preserve"
+            },
+            "purge_requires_explicit_selection": {
+              "const": true
+            },
+            "purge_foreign_or_hub_state": {
+              "const": false
+            }
+          }
+        }
+      }
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "count",
+        "fixture"
+      ],
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fixture": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "contracts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "crate",
+        "protocol_crate",
+        "contract_version",
+        "schema_version",
+        "request_schema",
+        "response_schema",
+        "version_negotiation",
+        "operations",
+        "streams",
+        "registries",
+        "capabilities"
+      ],
+      "properties": {
+        "crate": {
+          "const": "undercurrent-protocol"
+        },
+        "protocol_crate": {
+          "const": "undercurrent-protocol"
+        },
+        "contract_version": {
+          "const": "0.1.0-beta"
+        },
+        "schema_version": {
+          "const": "0.1.0-beta"
+        },
+        "request_schema": {
+          "const": "undercurrent.request"
+        },
+        "response_schema": {
+          "const": "undercurrent.response"
+        },
+        "version_negotiation": {
+          "const": "exact_current_or_reject"
+        },
+        "operations": {
+          "type": "array",
+          "minItems": 34,
+          "maxItems": 34,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "streams": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "session_watch",
+              "session_events",
+              "terminal_output",
+              "agent_events"
+            ]
+          }
+        },
+        "registries": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "operations",
+            "streams",
+            "events",
+            "errors"
+          ],
+          "properties": {
+            "operations": {
+              "$ref": "#/$defs/registry"
+            },
+            "streams": {
+              "$ref": "#/$defs/registry"
+            },
+            "events": {
+              "$ref": "#/$defs/registry"
+            },
+            "errors": {
+              "$ref": "#/$defs/registry"
+            }
+          }
+        },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "ucmpProtocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "magic",
+        "version",
+        "visibility",
+        "version_policy",
+        "connection_version"
+      ],
+      "properties": {
+        "magic": {
+          "const": "UCMP"
+        },
+        "version": {
+          "const": "0.1.0-beta"
+        },
+        "visibility": {
+          "const": "public_local_ipc"
+        },
+        "version_policy": {
+          "const": "exact_current_or_reject"
+        },
+        "connection_version": {
+          "const": "0.1.0-beta"
+        }
+      }
+    },
+    "uchsProtocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "magic",
+        "version",
+        "visibility",
+        "configurable_endpoint",
+        "version_policy"
+      ],
+      "properties": {
+        "magic": {
+          "const": "UCHS"
+        },
+        "version": {
+          "const": "0.1.0-beta"
+        },
+        "visibility": {
+          "const": "implementation_private"
+        },
+        "configurable_endpoint": {
+          "const": false
+        },
+        "version_policy": {
+          "const": "exact_current_or_reject"
+        }
+      }
+    },
+    "protocols": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ucmp",
+        "uchs"
+      ],
+      "properties": {
+        "ucmp": {
+          "$ref": "#/$defs/ucmpProtocol"
+        },
+        "uchs": {
+          "$ref": "#/$defs/uchsProtocol"
+        }
+      }
+    },
+    "implementationRegistries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cli_commands",
+        "daemon_startup_stages"
+      ],
+      "properties": {
+        "cli_commands": {
+          "$ref": "#/$defs/registry"
+        },
+        "daemon_startup_stages": {
+          "$ref": "#/$defs/registry"
+        }
+      }
+    },
+    "workflowStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "step",
+        "interface"
+      ],
+      "properties": {
+        "step": {
+          "type": "string",
+          "minLength": 1
+        },
+        "interface": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package_validator",
+        "configuration_command",
+        "artifact_probe_commands",
+        "minimum_standalone_workflow"
+      ],
+      "properties": {
+        "package_validator": {
+          "const": "scripts/checks/validate-package-manifest.py"
+        },
+        "configuration_command": {
+          "const": "uc config validate"
+        },
+        "artifact_probe_commands": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "minimum_standalone_workflow": {
+          "type": "array",
+          "minItems": 6,
+          "items": {
+            "$ref": "#/$defs/workflowStep"
+          }
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "optional",
+        "peers",
+        "forbidden_automatic"
+      ],
+      "properties": {
+        "required": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "optional": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "peers": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "forbidden_automatic": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "macosArm64Platform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "os",
+        "architecture",
+        "libc",
+        "status",
+        "placements"
+      ],
+      "properties": {
+        "id": {
+          "const": "macos-arm64"
+        },
+        "os": {
+          "const": "macos"
+        },
+        "architecture": {
+          "const": "arm64"
+        },
+        "libc": {
+          "const": "libSystem"
+        },
+        "status": {
+          "const": "supported"
+        },
+        "placements": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "const": "local_process"
+          }
+        }
+      }
+    },
+    "macosIntelPlatform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "os",
+        "architecture",
+        "libc",
+        "status",
+        "placements"
+      ],
+      "properties": {
+        "id": {
+          "const": "macos-x86_64"
+        },
+        "os": {
+          "const": "macos"
+        },
+        "architecture": {
+          "const": "x86_64"
+        },
+        "libc": {
+          "const": "libSystem"
+        },
+        "status": {
+          "const": "supported"
+        },
+        "placements": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "const": "local_process"
+          }
+        }
+      }
+    },
+    "windowsPlatform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "os",
+        "architecture",
+        "libc",
+        "status",
+        "placements"
+      ],
+      "properties": {
+        "id": {
+          "const": "windows-x86_64-msvc"
+        },
+        "os": {
+          "const": "windows"
+        },
+        "architecture": {
+          "const": "x86_64"
+        },
+        "libc": {
+          "const": "msvc"
+        },
+        "status": {
+          "const": "supported"
+        },
+        "placements": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "const": "local_process"
+          }
+        }
+      }
+    }
+  }
+}

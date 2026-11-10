@@ -1,0 +1,20 @@
+[package]
+name = "aixand-undercurrent-protocol"
+description = "Typed product requests, responses, and events for Undercurrent"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[lib]
+name = "undercurrent_protocol"
+
+[dependencies]
+undercurrent-foundation.workspace = true
+uuid.workspace = true
+serde.workspace = true
+serde_json = "1.0.151"
+
+[lints]
+workspace = true

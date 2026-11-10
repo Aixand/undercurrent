@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "A connection protocol from another release is rejected.",
+  "target": "package",
+  "base": "undercurrent-package.json",
+  "mutation": {
+    "operation": "replace",
+    "path": "/protocols/ucmp/connection_version",
+    "value": "99.0.0"
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$.protocols.ucmp.connection_version"
+}

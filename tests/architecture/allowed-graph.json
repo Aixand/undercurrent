@@ -1,0 +1,371 @@
+{
+  "schema_version": "undercurrent.architecture/v0.1.0-beta",
+  "workspace_packages": {
+    "undercurrent-application": {
+      "disposition": "application",
+      "allowed_internal_dependencies": [
+        "undercurrent-domain"
+      ]
+    },
+    "undercurrent-cli": {
+      "disposition": "standalone_cli",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent",
+        "aixand-undercurrent-platform-windows",
+        "aixand-undercurrent-protocol",
+        "undercurrent-config",
+        "undercurrent-diagnostics"
+      ]
+    },
+    "undercurrent-config": {
+      "disposition": "shared_configuration",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent-foundation"
+      ]
+    },
+    "undercurrent-daemon": {
+      "disposition": "external_daemon_composition",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent",
+        "aixand-undercurrent-multiplex",
+        "aixand-undercurrent-platform-windows",
+        "aixand-undercurrent-protocol",
+        "aixand-undercurrent-transport-core",
+        "aixand-undercurrent-transport-local",
+        "aixand-undercurrent-wire",
+        "undercurrent-application",
+        "undercurrent-config",
+        "undercurrent-diagnostics",
+        "undercurrent-domain",
+        "undercurrent-runtime",
+        "undercurrent-store-sqlite"
+      ]
+    },
+    "undercurrent-diagnostics": {
+      "disposition": "executable_failure_evidence",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent-platform-windows"
+      ]
+    },
+    "undercurrent-domain": {
+      "disposition": "domain",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent-foundation"
+      ]
+    },
+    "aixand-undercurrent-foundation": {
+      "disposition": "shared_foundational_mechanisms",
+      "allowed_internal_dependencies": []
+    },
+    "undercurrent-mcp": {
+      "disposition": "mcp_public_client_adapter",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent",
+        "aixand-undercurrent-protocol",
+        "undercurrent-config"
+      ]
+    },
+    "aixand-undercurrent-multiplex": {
+      "disposition": "internal_ucmp_scheduling",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent-wire"
+      ]
+    },
+    "undercurrent-platform-macos": {
+      "disposition": "daemon_private_platform_adapter",
+      "allowed_internal_dependencies": []
+    },
+    "aixand-undercurrent-platform-windows": {
+      "disposition": "shared_native_os_primitives",
+      "allowed_internal_dependencies": []
+    },
+    "aixand-undercurrent-protocol": {
+      "disposition": "public_product_contract",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent-foundation"
+      ]
+    },
+    "undercurrent-python-bridge": {
+      "disposition": "python_public_client_adapter",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent",
+        "aixand-undercurrent-protocol"
+      ]
+    },
+    "undercurrent-runtime": {
+      "disposition": "daemon_private_runtime_uchs",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent-foundation",
+        "aixand-undercurrent-platform-windows",
+        "undercurrent-application",
+        "undercurrent-domain",
+        "undercurrent-platform-macos"
+      ]
+    },
+    "aixand-undercurrent": {
+      "disposition": "public_typed_local_client",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent-multiplex",
+        "aixand-undercurrent-protocol",
+        "aixand-undercurrent-transport-local",
+        "aixand-undercurrent-wire"
+      ]
+    },
+    "undercurrent-store-sqlite": {
+      "disposition": "daemon_private_store_adapter",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent-foundation",
+        "aixand-undercurrent-platform-windows",
+        "undercurrent-application",
+        "undercurrent-domain"
+      ]
+    },
+    "aixand-undercurrent-transport-core": {
+      "disposition": "transport_independent_server_engine",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent-multiplex",
+        "aixand-undercurrent-protocol",
+        "aixand-undercurrent-wire"
+      ]
+    },
+    "aixand-undercurrent-transport-local": {
+      "disposition": "protected_local_ipc",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent-multiplex",
+        "aixand-undercurrent-platform-windows",
+        "aixand-undercurrent-protocol",
+        "aixand-undercurrent-transport-core",
+        "aixand-undercurrent-wire"
+      ]
+    },
+    "aixand-undercurrent-wire": {
+      "disposition": "internal_ucmp_uchs_primitives",
+      "allowed_internal_dependencies": [
+        "aixand-undercurrent-foundation"
+      ]
+    }
+  },
+  "public_external_surfaces": [
+    "aixand-undercurrent",
+    "aixand-undercurrent-protocol"
+  ],
+  "allowed_external_path_packages": [],
+  "allowed_vendored_path_dependencies": [
+    {
+      "kind": "normal",
+      "package": "undercurrent-cli",
+      "name": "vt100",
+      "path": "vendor/vt100"
+    },
+    {
+      "kind": "normal",
+      "package": "undercurrent-cli",
+      "name": "vte",
+      "path": "vendor/vte"
+    },
+    {
+      "kind": "normal",
+      "package": "undercurrent-runtime",
+      "name": "portable-pty",
+      "path": "vendor/portable-pty"
+    },
+    {
+      "kind": "normal",
+      "package": "undercurrent-runtime",
+      "name": "vt100",
+      "path": "vendor/vt100"
+    },
+    {
+      "kind": "dev",
+      "package": "undercurrent-runtime",
+      "name": "vte",
+      "path": "vendor/vte"
+    }
+  ],
+  "allowed_registry_reference_dependencies": [
+    {
+      "kind": "dev",
+      "name": "vt100",
+      "package": "undercurrent-runtime",
+      "rename": "vt100-reference",
+      "requirement": "=0.15.2",
+      "source": "registry+https://github.com/rust-lang/crates.io-index"
+    },
+    {
+      "kind": "dev",
+      "name": "vte",
+      "package": "undercurrent-runtime",
+      "rename": "vte-reference",
+      "requirement": "=0.11.1",
+      "source": "registry+https://github.com/rust-lang/crates.io-index"
+    }
+  ],
+  "allowed_crates_io_patches": [],
+  "allowed_vte_resolved_edges": [
+    {
+      "consumer": {
+        "name": "undercurrent-cli",
+        "version": "0.1.0-beta",
+        "source": null,
+        "path": "crates/undercurrent-cli",
+        "package_id": "path:crates/undercurrent-cli#0.1.0-beta"
+      },
+      "dependency": {
+        "name": "vte",
+        "version": "0.11.1",
+        "source": null,
+        "path": "vendor/vte",
+        "package_id": "path:vendor/vte#0.11.1"
+      },
+      "dependency_name": "vte",
+      "kind": "normal"
+    },
+    {
+      "consumer": {
+        "name": "undercurrent-runtime",
+        "version": "0.1.0-beta",
+        "source": null,
+        "path": "crates/undercurrent-runtime",
+        "package_id": "path:crates/undercurrent-runtime#0.1.0-beta"
+      },
+      "dependency": {
+        "name": "vte",
+        "version": "0.11.1",
+        "source": null,
+        "path": "vendor/vte",
+        "package_id": "path:vendor/vte#0.11.1"
+      },
+      "dependency_name": "vte",
+      "kind": "dev"
+    },
+    {
+      "consumer": {
+        "name": "undercurrent-runtime",
+        "version": "0.1.0-beta",
+        "source": null,
+        "path": "crates/undercurrent-runtime",
+        "package_id": "path:crates/undercurrent-runtime#0.1.0-beta"
+      },
+      "dependency": {
+        "name": "vte",
+        "version": "0.11.1",
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "path": null,
+        "package_id": "registry+https://github.com/rust-lang/crates.io-index#vte@0.11.1"
+      },
+      "dependency_name": "vte-reference",
+      "kind": "dev"
+    },
+    {
+      "consumer": {
+        "name": "vt100",
+        "version": "0.15.2",
+        "source": null,
+        "path": "vendor/vt100",
+        "package_id": "path:vendor/vt100#0.15.2"
+      },
+      "dependency": {
+        "name": "vte",
+        "version": "0.11.1",
+        "source": null,
+        "path": "vendor/vte",
+        "package_id": "path:vendor/vte#0.11.1"
+      },
+      "dependency_name": "vte",
+      "kind": "normal"
+    },
+    {
+      "consumer": {
+        "name": "vt100",
+        "version": "0.15.2",
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "path": null,
+        "package_id": "registry+https://github.com/rust-lang/crates.io-index#vt100@0.15.2"
+      },
+      "dependency": {
+        "name": "vte",
+        "version": "0.11.1",
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "path": null,
+        "package_id": "registry+https://github.com/rust-lang/crates.io-index#vte@0.11.1"
+      },
+      "dependency_name": "vte",
+      "kind": "normal"
+    }
+  ],
+  "domain_forbidden_imports": [
+    "axum",
+    "clap",
+    "portable_pty",
+    "rusqlite",
+    "tokio",
+    "tracing",
+    "undercurrent_application",
+    "undercurrent_protocol"
+  ],
+  "application_forbidden_imports": [
+    "axum",
+    "clap",
+    "portable_pty",
+    "rusqlite",
+    "tokio",
+    "tracing",
+    "tungstenite",
+    "undercurrent_protocol",
+    "undercurrent_runtime",
+    "undercurrent_store_sqlite"
+  ],
+  "cli_forbidden_imports": [
+    "crate::process_launch",
+    "portable_pty",
+    "std::os::unix::net::UnixStream",
+    "std::process::Command",
+    "tokio::process",
+    "undercurrent_application",
+    "undercurrent_daemon",
+    "undercurrent_domain",
+    "undercurrent_multiplex",
+    "undercurrent_runtime",
+    "undercurrent_store_sqlite",
+    "undercurrent_transport_core",
+    "undercurrent_transport_local",
+    "undercurrent_wire"
+  ],
+  "cli_daemon_lifecycle_process_files": [
+    "src/daemon_lifecycle.rs",
+    "src/daemon_lifecycle/process_launch.rs"
+  ],
+  "cli_private_reset_module": "crates/undercurrent-cli/src/reset.rs",
+  "consumer_direct_dependencies": [
+    "aixand-undercurrent",
+    "aixand-undercurrent-protocol"
+  ],
+  "consumer_forbidden_dependencies": [
+    "undercurrent-application",
+    "undercurrent-daemon",
+    "undercurrent-diagnostics",
+    "undercurrent-domain",
+    "undercurrent-platform-macos",
+    "undercurrent-runtime",
+    "undercurrent-store-sqlite"
+  ],
+  "consumer_forbidden_symbol_fragments": [
+    "undercurrent_application",
+    "undercurrent_daemon",
+    "undercurrent_diagnostics",
+    "undercurrent_domain",
+    "undercurrent_platform_macos",
+    "undercurrent_runtime",
+    "undercurrent_store_sqlite"
+  ],
+  "semantic_transport": {
+    "package": "aixand-undercurrent-transport-local",
+    "protocol": "local_ipc",
+    "count": 1
+  },
+  "private_unix_packages": [
+    "aixand-undercurrent-transport-local",
+    "undercurrent-daemon",
+    "undercurrent-runtime"
+  ]
+}

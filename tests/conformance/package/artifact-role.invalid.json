@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "The release bundle must contain the canonical uc-session-host helper.",
+  "target": "package",
+  "base": "undercurrent-package.json",
+  "mutation": {
+    "operation": "replace",
+    "path": "/artifacts/2/name",
+    "value": "uc-worker"
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$.artifacts[2]"
+}

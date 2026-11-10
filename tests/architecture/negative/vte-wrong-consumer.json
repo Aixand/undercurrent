@@ -1,0 +1,27 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "vte wrong resolved consumer",
+  "description": "No additional product package may consume the vendored vte implementation.",
+  "mutation": {
+    "kind": "add_vte_resolved_edge",
+    "edge": {
+      "consumer": {
+        "name": "undercurrent-daemon",
+        "version": "0.1.0-beta",
+        "source": null,
+        "path": "crates/undercurrent-daemon",
+        "package_id": "path:crates/undercurrent-daemon#0.1.0-beta"
+      },
+      "dependency": {
+        "name": "vte",
+        "version": "0.11.1",
+        "source": null,
+        "path": "vendor/vte",
+        "package_id": "path:vendor/vte#0.11.1"
+      },
+      "dependency_name": "vte",
+      "kind": "normal"
+    }
+  },
+  "expected_rule": "ARCH_VTE_IDENTITY_MISMATCH"
+}

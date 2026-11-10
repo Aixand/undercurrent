@@ -1,0 +1,9 @@
+{"command":"daemon","result_category":"invalid_input","product_error_category":"invalid_request","error_disposition":"semantic_rejection","message":"daemon rejected InvalidRequest: semantic"}
+{"command":"daemon","result_category":"failure","product_error_category":"persistence","error_disposition":"infrastructure_failure","message":"daemon rejected Persistence: infrastructure"}
+{"command":"daemon","result_category":"failure","product_error_category":"process","error_disposition":"runtime_failure","message":"daemon rejected Process: runtime"}
+{"command":"daemon","result_category":"runtime","product_error_category":"transport","error_disposition":"transport_failure","message":"daemon rejected Transport: transport"}
+{"command":"daemon","result_category":"runtime","product_error_category":"protocol_mismatch","error_disposition":"protocol_failure","message":"daemon rejected ProtocolMismatch: protocol"}
+{"command":"daemon","result_category":"incomplete","product_error_category":"timed_out","error_disposition":"timeout","message":"daemon rejected TimedOut: timeout"}
+{"command":"daemon","result_category":"interrupted","product_error_category":"cancelled","error_disposition":"cancellation","message":"daemon rejected Cancelled: cancellation"}
+{"command":"daemon","result_category":"failure","product_error_category":"failed_precondition","error_disposition":"unknown_inconclusive","message":"daemon rejected FailedPrecondition: unknown"}
+{"command":"exec","result_category":"incomplete","error_disposition":"partial","message":"daemon stdout output is not available inline"}

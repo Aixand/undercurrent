@@ -1,0 +1,27 @@
+{
+  "operation": "execute_in_session",
+  "input": {
+    "mutation": {
+      "idempotency_key": "exec-retry-1",
+      "attempt": {
+        "attempt_id": "exec-attempt-1",
+        "fencing_token": 8,
+        "payload_digest_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "contract": {
+        "capability": "execute_in_session",
+        "schema": "undercurrent.request",
+        "schema_version": "0.1.0-beta",
+        "contract_version": "99.0.0"
+      }
+    },
+    "session_id": "session-1",
+    "command": {
+      "program": "printf",
+      "arguments": [
+        "hello"
+      ]
+    },
+    "output_inline_limit_bytes": 4096
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "embedded-runtime-feature",
+  "description": "No feature may activate an embedded Undercurrent runtime.",
+  "mutation": {
+    "kind": "add_feature",
+    "package": "aixand-undercurrent",
+    "feature": "embedded-runtime"
+  },
+  "expected_rule": "ARCH_EMBEDDED_RUNTIME"
+}

@@ -1,0 +1,267 @@
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -118,6 +118,16 @@
+             return;
+         }
+ 
++        if matches!(self.state, State::Ground) {
++            if (0x20..=0x7f).contains(&byte) {
++                performer.print(byte as char);
++                return;
++            }
++            if matches!(byte, 0x90 | 0x9b | 0x9d..=0xc1 | 0xf5..=0xff) {
++                return;
++            }
++        }
++
+         // Handle state changes in the anywhere state before evaluating changes
+         // for current state.
+         let mut change = table::STATE_CHANGES[State::Anywhere as usize][byte as usize];
+@@ -132,6 +142,109 @@
+         self.perform_state_change(performer, state, action, byte);
+     }
+ 
++    /// Advances the parser over a byte slice, batching valid printable text
++    /// while preserving scalar processing for controls, invalid UTF-8, and
++    /// incomplete UTF-8 sequences split across calls.
++    #[inline]
++    pub fn advance_bytes<P: Perform>(&mut self, performer: &mut P, bytes: &[u8]) {
++        let mut index = 0;
++        while index < bytes.len() {
++            if matches!(self.state, State::Ground) {
++                if let Some(consumed) = self.advance_numeric_csi(performer, &bytes[index..]) {
++                    index += consumed;
++                    continue;
++                }
++
++                let ascii_start = index;
++                while index < bytes.len() && matches!(bytes[index], 0x20..=0x7e) {
++                    index += 1;
++                }
++                if index > ascii_start {
++                    performer.print_ascii(&bytes[ascii_start..index]);
++                    continue;
++                }
++
++                if bytes[index] >= 0x80 {
++                    let text_start = index;
++                    let mut text_end = index;
++                    while text_end < bytes.len()
++                        && bytes[text_end] >= 0x20
++                        && bytes[text_end] != 0x7f
++                    {
++                        text_end += 1;
++                    }
++                    if let Err(error) = core::str::from_utf8(&bytes[text_start..text_end]) {
++                        let valid = error.valid_up_to();
++                        if valid > 0 {
++                            let text = core::str::from_utf8(&bytes[text_start..text_start + valid])
++                                .expect("valid_up_to must delimit valid UTF-8");
++                            performer.print_str(text);
++                            index = text_start + valid;
++                            continue;
++                        }
++                    } else {
++                        let text = core::str::from_utf8(&bytes[text_start..text_end])
++                            .expect("the UTF-8 slice was just validated");
++                        performer.print_str(text);
++                        index = text_end;
++                        continue;
++                    }
++                }
++            }
++
++            self.advance(performer, bytes[index]);
++            index += 1;
++        }
++    }
++
++    #[inline]
++    fn advance_numeric_csi<P: Perform>(
++        &mut self,
++        performer: &mut P,
++        bytes: &[u8],
++    ) -> Option<usize> {
++        if bytes.len() < 3 || !bytes.starts_with(b"\x1b[") {
++            return None;
++        }
++
++        let mut final_index = 2;
++        while final_index < bytes.len() {
++            match bytes[final_index] {
++                b'0'..=b'9' | b';' => final_index += 1,
++                0x40..=0x7e => break,
++                _ => return None,
++            }
++        }
++        if final_index == bytes.len() {
++            return None;
++        }
++
++        self.intermediate_idx = 0;
++        self.ignoring = false;
++        self.param = 0;
++        self.params.clear();
++        for byte in &bytes[2..final_index] {
++            if self.params.is_full() {
++                self.ignoring = true;
++                continue;
++            }
++            if *byte == b';' {
++                self.params.push(self.param);
++                self.param = 0;
++            } else {
++                self.param = self.param.saturating_mul(10);
++                self.param = self.param.saturating_add((*byte - b'0') as u16);
++            }
++        }
++        if self.params.is_full() {
++            self.ignoring = true;
++        } else {
++            self.params.push(self.param);
++        }
++        performer.csi_dispatch(self.params(), &[], self.ignoring, bytes[final_index] as char);
++        Some(final_index + 1)
++    }
++
+     #[inline]
+     fn process_utf8<P>(&mut self, performer: &mut P, byte: u8)
+     where
+@@ -366,6 +479,27 @@
+     /// Draw a character to the screen and update states.
+     fn print(&mut self, _c: char) {}
+ 
++    /// Draw a contiguous run of printable ASCII bytes.
++    ///
++    /// The default preserves the scalar callback contract. Implementations
++    /// may override this to update their backing store in bulk.
++    fn print_ascii(&mut self, bytes: &[u8]) {
++        debug_assert!(bytes.iter().all(|byte| matches!(byte, 0x20..=0x7e)));
++        for byte in bytes {
++            self.print(char::from(*byte));
++        }
++    }
++
++    /// Draw a valid UTF-8 text run.
++    ///
++    /// The default preserves the scalar callback contract. Implementations
++    /// may override this while retaining one `print` action per character.
++    fn print_str(&mut self, text: &str) {
++        for c in text.chars() {
++            self.print(c);
++        }
++    }
++
+     /// Execute a C0 or C1 control function.
+     fn execute(&mut self, _byte: u8) {}
+ 
+@@ -925,6 +1059,109 @@
+     }
+ }
+ 
++#[cfg(test)]
++mod bulk_tests {
++    use super::{Params, Parser, Perform};
++    use std::vec::Vec;
++
++    #[derive(Debug, Eq, PartialEq)]
++    enum Event {
++        Print(char),
++        Execute(u8),
++        Hook(Vec<Vec<u16>>, Vec<u8>, bool, char),
++        Put(u8),
++        Unhook,
++        Osc(Vec<Vec<u8>>, bool),
++        Csi(Vec<Vec<u16>>, Vec<u8>, bool, char),
++        Esc(Vec<u8>, bool, u8),
++    }
++
++    #[derive(Default)]
++    struct Recorder(Vec<Event>);
++
++    impl Perform for Recorder {
++        fn print(&mut self, c: char) {
++            self.0.push(Event::Print(c));
++        }
++
++        fn execute(&mut self, byte: u8) {
++            self.0.push(Event::Execute(byte));
++        }
++
++        fn hook(&mut self, params: &Params, intermediates: &[u8], ignore: bool, action: char) {
++            self.0.push(Event::Hook(
++                params.iter().map(|param| param.to_vec()).collect(),
++                intermediates.to_vec(),
++                ignore,
++                action,
++            ));
++        }
++
++        fn put(&mut self, byte: u8) {
++            self.0.push(Event::Put(byte));
++        }
++
++        fn unhook(&mut self) {
++            self.0.push(Event::Unhook);
++        }
++
++        fn osc_dispatch(&mut self, params: &[&[u8]], bell_terminated: bool) {
++            self.0.push(Event::Osc(
++                params.iter().map(|param| param.to_vec()).collect(),
++                bell_terminated,
++            ));
++        }
++
++        fn csi_dispatch(
++            &mut self,
++            params: &Params,
++            intermediates: &[u8],
++            ignore: bool,
++            action: char,
++        ) {
++            self.0.push(Event::Csi(
++                params.iter().map(|param| param.to_vec()).collect(),
++                intermediates.to_vec(),
++                ignore,
++                action,
++            ));
++        }
++
++        fn esc_dispatch(&mut self, intermediates: &[u8], ignore: bool, byte: u8) {
++            self.0.push(Event::Esc(intermediates.to_vec(), ignore, byte));
++        }
++    }
++
++    #[test]
++    fn bulk_and_scalar_paths_dispatch_identically() {
++        let mut input = b"plain text \x1b[31mred\x1b[0m ".to_vec();
++        input.extend_from_slice("界🙂e\u{301}".as_bytes());
++        input.extend_from_slice(b"\x1b[m\x1b[;4m\x1b[9223372036854775808m\x1b[38:2:1:2:3m");
++        input.extend_from_slice(b"\x1b]2;title\x07\x1bP0;1|xy\x9c\x7f");
++        input.extend_from_slice(&[0xf5, 0xff, b'!']);
++
++        let mut scalar_parser = Parser::new();
++        let mut scalar = Recorder::default();
++        for byte in &input {
++            scalar_parser.advance(&mut scalar, *byte);
++        }
++
++        let mut bulk_parser = Parser::new();
++        let mut bulk = Recorder::default();
++        bulk_parser.advance_bytes(&mut bulk, &input);
++
++        assert_eq!(bulk.0, scalar.0);
++
++        let mut chunked_parser = Parser::new();
++        let mut chunked = Recorder::default();
++        for chunk in input.chunks(3) {
++            chunked_parser.advance_bytes(&mut chunked, chunk);
++        }
++
++        assert_eq!(chunked.0, scalar.0);
++    }
++}
++
+ #[cfg(all(feature = "nightly", test))]
+ mod bench {
+     extern crate std;

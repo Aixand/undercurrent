@@ -1,0 +1,37 @@
+{
+  "request": {
+    "attempt_id": "attempt-0001",
+    "request_digest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "contract": {
+      "capability": "get_runtime_attempt_status",
+      "schema": "undercurrent.request",
+      "schema_version": "0.1.0-beta",
+      "contract_version": "0.1.0-beta"
+    }
+  },
+  "result": {
+    "attempt_id": "attempt-0001",
+    "fencing_token": 7,
+    "binding": {
+      "caller_cell_identity": "cell:build",
+      "request_digest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "launch_profile_digest_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "environment_binding_digest_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "input_digest_sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+    },
+    "snapshot": {
+      "status": "known_applied",
+      "result_digest_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+      "observed_at_millis": 48,
+      "session": {
+        "session_id": "session-0001",
+        "lifecycle": {
+          "state": "running"
+        },
+        "revision": 5,
+        "lifecycle_revision": 4,
+        "observed_at_millis": 50
+      }
+    }
+  }
+}

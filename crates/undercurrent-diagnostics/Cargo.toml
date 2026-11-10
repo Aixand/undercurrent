@@ -1,0 +1,22 @@
+[package]
+name = "undercurrent-diagnostics"
+description = "Bounded private failure diagnostics for Undercurrent"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+
+[dependencies]
+serde.workspace = true
+serde_json = "1.0.151"
+getrandom.workspace = true
+tempfile.workspace = true
+libc.workspace = true
+rustix.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+undercurrent-platform-windows = { package = "aixand-undercurrent-platform-windows", path = "../undercurrent-platform-windows" }
+
+[lints]
+workspace = true

@@ -1,0 +1,14 @@
+[package]
+name = "undercurrent-domain"
+description = "Session values, lifecycle rules, and operation contracts for Undercurrent"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+undercurrent-foundation.workspace = true
+
+[lints]
+workspace = true

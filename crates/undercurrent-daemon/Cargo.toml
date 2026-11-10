@@ -1,0 +1,52 @@
+[package]
+name = "undercurrent-daemon"
+description = "Standalone daemon and session host for Undercurrent"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "uc-daemon"
+path = "src/main.rs"
+
+[[bin]]
+name = "uc-session-host"
+path = "src/session_host_main.rs"
+
+[dependencies]
+undercurrent-diagnostics = { path = "../undercurrent-diagnostics" }
+getrandom.workspace = true
+undercurrent-config = { path = "../undercurrent-config" }
+async-channel.workspace = true
+serde.workspace = true
+serde-saphyr = { version = "0.0.28", default-features = false, features = ["deserialize"] }
+granit-parser = "0.0.6"
+serde_json = "1.0.151"
+signal-hook.workspace = true
+libc.workspace = true
+log.workspace = true
+nix = { workspace = true, features = ["dir", "fs", "socket", "user"] }
+tokio = { version = "1.53.3", features = ["io-util", "macros", "net", "rt-multi-thread", "signal", "sync", "time"] }
+tracing.workspace = true
+tracing-appender.workspace = true
+tracing-subscriber.workspace = true
+toml = "0.9.12"
+tempfile.workspace = true
+undercurrent-application = { path = "../undercurrent-application" }
+undercurrent-domain = { path = "../undercurrent-domain" }
+undercurrent-multiplex = { package = "aixand-undercurrent-multiplex", path = "../undercurrent-multiplex" }
+undercurrent-protocol = { package = "aixand-undercurrent-protocol", path = "../undercurrent-protocol" }
+undercurrent-runtime = { path = "../undercurrent-runtime" }
+undercurrent-sdk = { package = "aixand-undercurrent", path = "../undercurrent-sdk" }
+undercurrent-store-sqlite = { path = "../undercurrent-store-sqlite" }
+undercurrent-transport-local = { package = "aixand-undercurrent-transport-local", path = "../undercurrent-transport-local" }
+undercurrent-transport-core = { package = "aixand-undercurrent-transport-core", path = "../undercurrent-transport-core" }
+undercurrent-wire = { package = "aixand-undercurrent-wire", path = "../undercurrent-wire" }
+
+[lints]
+workspace = true
+
+[target.'cfg(windows)'.dependencies]
+undercurrent-platform-windows = { package = "aixand-undercurrent-platform-windows", path = "../undercurrent-platform-windows" }

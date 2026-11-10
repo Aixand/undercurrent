@@ -1,0 +1,11 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "domain-outward-edge",
+  "description": "Domain cannot depend on protocol or another outward layer.",
+  "mutation": {
+    "kind": "add_edge",
+    "from": "undercurrent-domain",
+    "to": "aixand-undercurrent-protocol"
+  },
+  "expected_rule": "ARCH_DOMAIN_INWARD_PURITY"
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "vendored-path-mismatch",
+  "description": "The runtime's vendored vt100 dependency must use its exact approved path.",
+  "mutation": {
+    "kind": "add_path_dependency",
+    "package": "undercurrent-runtime",
+    "name": "vt100",
+    "path": "vendor/vt100-copy"
+  },
+  "expected_rule": "ARCH_VENDORED_PATH_MISMATCH"
+}

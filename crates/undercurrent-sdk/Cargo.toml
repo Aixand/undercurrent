@@ -1,0 +1,28 @@
+[package]
+name = "aixand-undercurrent"
+description = "Rust client SDK for the local Undercurrent runtime"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[lib]
+name = "undercurrent_sdk"
+
+[dependencies]
+undercurrent-transport-local = { package = "aixand-undercurrent-transport-local", path = "../undercurrent-transport-local", version = "=0.1.0-beta" }
+futures-util = { version = "0.3.34", features = ["sink"] }
+getrandom.workspace = true
+nix = { workspace = true, features = ["user"] }
+tokio = { version = "1.53.3", features = ["io-util", "macros", "net", "rt-multi-thread", "signal", "sync", "time"] }
+serde_json = "1.0.151"
+undercurrent-multiplex = { package = "aixand-undercurrent-multiplex", path = "../undercurrent-multiplex", version = "=0.1.0-beta" }
+undercurrent-protocol = { package = "aixand-undercurrent-protocol", path = "../undercurrent-protocol", version = "=0.1.0-beta" }
+undercurrent-wire = { package = "aixand-undercurrent-wire", path = "../undercurrent-wire", version = "=0.1.0-beta" }
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

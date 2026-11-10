@@ -1,0 +1,19 @@
+[
+  "generate_identity",
+  "prepare_instance_lock_path",
+  "acquire_instance_lock",
+  "open_persistence",
+  "compose_telemetry",
+  "compose_projections",
+  "start_process_runtime",
+  "compose_application_adapter",
+  "compose_detection",
+  "compose_foreground",
+  "start_health_checks",
+  "start_background_runtime",
+  "start_stream_pump",
+  "compose_product_reads",
+  "start_dispatcher",
+  "bind_listener",
+  "attach_status"
+]

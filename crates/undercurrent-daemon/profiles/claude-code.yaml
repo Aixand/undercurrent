@@ -1,0 +1,164 @@
+# SPDX-License-Identifier: Apache-2.0
+schema_version: 0.1.0-beta
+name: claude-code
+description: Claude Code CLI
+disabled: false
+matching:
+- binary:
+  - claude
+  arguments: []
+  required_environment: []
+archetype: animated_agent
+input_delivery:
+  type: paced_trailing_submit
+  delay_millis: 120
+baseline_interaction:
+  state: available
+  modality: text
+  semantic: claude-code.composer
+foreground_rules:
+- claim:
+    type: interaction
+    state: requested
+    modality: options
+    semantic: claude-code.theme_selection
+  patterns:
+  - '(?m)^\s*Choose the text style that looks best with your terminal\s*$'
+  traits:
+    screen_contains:
+    - 'To change this later, run /theme'
+    - 'Dark mode'
+    - 'Light mode'
+  region: null
+  confidence_basis_points: 9500
+- claim:
+    type: interaction
+    state: requested
+    modality: options
+    semantic: claude-code.workspace_trust
+  patterns:
+  - '(?m)^\s*Quick safety check: Is this a project you created or one you trust\?'
+  traits:
+    screen_contains:
+    - 'Accessing workspace:'
+    - 'Yes, I trust this folder'
+    - 'No, exit'
+    - 'Enter to confirm'
+  region: null
+  confidence_basis_points: 9500
+- claim:
+    type: interaction
+    state: requested
+    modality: options
+    semantic: claude-code.permission
+  patterns:
+  - '(?m)Do you want to .+\?'
+  - '(?m)Allow .+\?'
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9500
+- claim:
+    type: constraint
+    state: present
+    semantic: claude-code.rate_limit
+  patterns:
+  - (?m)You've hit your .+ limit
+  - (?m)You're out of extra usage
+  - (?m)Repeated 529 Overloaded
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9500
+- claim:
+    type: interaction
+    state: available
+    modality: text
+    semantic: claude-code.composer
+  patterns:
+  - '(?m)^❯(?:\s|[^a-zA-Z0-9]*$)'
+  excludes:
+  - (?m)esc to interrupt
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 8
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9000
+- claim:
+    type: constraint
+    state: present
+    semantic: claude-code.error
+  patterns:
+  - (?m)Not logged in · Please run /login
+  - (?m)Login expired · Please run /login
+  - (?m)Invalid API key
+  - (?m)Request timed out
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9000
+background_rules:
+- kind: process_group
+  patterns:
+  - '(?im)\d+\s+shells?\s+(?:still\s+)?running'
+  excludes: []
+  name_patterns: []
+  label: background shell
+  region:
+    type: bottom_rows
+    rows: 8
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9000
+- kind: agent
+  patterns:
+  - '(?im)\d+\s+background agents?\s+to finish'
+  excludes: []
+  name_patterns: []
+  label: background agent
+  region: null
+  confidence_basis_points: 9000
+alternate_screen_is_normal: false
+silent_until_input: false
+output_exclusions:
+  top_rows: 0
+  bottom_rows: 0

@@ -1,0 +1,261 @@
+{
+  "schema": "undercurrent.vendored-crate-provenance/v0.1.0-beta",
+  "package": {
+    "name": "vt100",
+    "version": "0.15.2",
+    "license": "MIT"
+  },
+  "upstream": {
+    "registry": "crates.io",
+    "crate_sha256": "84cd863bf0db7e392ba3bd04994be3473491b31e66340672af5d11943c6274de",
+    "vcs_revision": "4c9e5da3de10d838d792929f1691024d6bf59c85"
+  },
+  "trees": {
+    "algorithm": "sha256-tree-v1",
+    "implementation": "scripts/checks/vendor_policy.py::source_digest",
+    "upstream_pristine": {
+      "file_count": 16,
+      "paths": [
+        ".cargo-ok",
+        ".cargo_vcs_info.json",
+        "CHANGELOG.md",
+        "Cargo.lock",
+        "Cargo.toml",
+        "Cargo.toml.orig",
+        "LICENSE",
+        "README.md",
+        "src/attrs.rs",
+        "src/cell.rs",
+        "src/grid.rs",
+        "src/lib.rs",
+        "src/parser.rs",
+        "src/row.rs",
+        "src/screen.rs",
+        "src/term.rs"
+      ],
+      "sha256": "94bf90c3740a620556100de3ee1d446b6edc1a4acbeb34d8ca3a4bf9b07010fa"
+    },
+    "qualified_candidate": {
+      "file_count": 16,
+      "manifest_metadata": "restored_upstream_0.15.2_pre_wiring",
+      "paths": [
+        ".cargo-ok",
+        ".cargo_vcs_info.json",
+        "CHANGELOG.md",
+        "Cargo.lock",
+        "Cargo.toml",
+        "Cargo.toml.orig",
+        "LICENSE",
+        "README.md",
+        "src/attrs.rs",
+        "src/cell.rs",
+        "src/grid.rs",
+        "src/lib.rs",
+        "src/parser.rs",
+        "src/row.rs",
+        "src/screen.rs",
+        "src/term.rs"
+      ],
+      "sha256": "1b97eb4afbbe8feabdb532c2f3c36be895a40d084151a915f1f8bd36c48429c2"
+    },
+    "integration_candidate": {
+      "file_count": 16,
+      "manifest_metadata": "restored_upstream_0.15.2_direct_vte_path_overlay",
+      "paths": [
+        ".cargo-ok",
+        ".cargo_vcs_info.json",
+        "CHANGELOG.md",
+        "Cargo.lock",
+        "Cargo.toml",
+        "Cargo.toml.orig",
+        "LICENSE",
+        "README.md",
+        "src/attrs.rs",
+        "src/cell.rs",
+        "src/grid.rs",
+        "src/lib.rs",
+        "src/parser.rs",
+        "src/row.rs",
+        "src/screen.rs",
+        "src/term.rs"
+      ],
+      "sha256": "3251612b222d95a997d8c5cbfbcaf67f5a4ba4ad70042cd61bf412191c79acd0"
+    },
+    "vendored_candidate": {
+      "file_count": 14,
+      "paths": [
+        ".cargo_vcs_info.json",
+        "CHANGELOG.md",
+        "Cargo.toml",
+        "Cargo.toml.orig",
+        "LICENSE",
+        "README.md",
+        "src/attrs.rs",
+        "src/cell.rs",
+        "src/grid.rs",
+        "src/lib.rs",
+        "src/parser.rs",
+        "src/row.rs",
+        "src/screen.rs",
+        "src/term.rs"
+      ],
+      "sha256": "9d62b69f8a706203bfb1739b80d3fe63b564357863bdc5d8d9ebd7b5a1b0e27e"
+    }
+  },
+  "version_handling": {
+    "qualified_manifest_versions_not_copied": [
+      "0.15.2+width-recycle-reset-singlegrid",
+      "0.15.2+width_recycle_reset"
+    ],
+    "vendored_version": "0.15.2"
+  },
+  "patch": {
+    "path": "patches/vt100-exact-candidate.patch",
+    "sha256": "fd643c8c461990393895f69ed01f4a7d22b785f5a5e3619dc4f5ba615a2f13db",
+    "purpose": "Batch printable ASCII and valid UTF-8 terminal updates by row, with exact cached Unicode widths (including distinct absent and greater-than-two widths), a bounded non-semantic decoded-run cache that falls back to scalar rendering when cell copying cannot preserve multi-column semantics, dirty-range row recycling, and cached glyph copying into proven-pristine row suffixes, while preserving combining characters, wide-cell cleanup, wrapping, attributes, error accounting, clone semantics, and the vt100 0.15.2 public API.",
+    "changed_files": [
+      {
+        "path": "src/cell.rs",
+        "upstream_sha256": "5539f8bc03f1b20872b3a5a256b9a60c9e0c5d1983c574284f8fbb6ba6ee03c1",
+        "candidate_sha256": "51ef40a250531d55980fdbb9b6dd9ccb536afafa7db232718bcd74d9b42408e8"
+      },
+      {
+        "path": "src/grid.rs",
+        "upstream_sha256": "84331d982dad8f276bb4017af468a81a29e2ff4519d54d2bbd2df61ad92cf5d7",
+        "candidate_sha256": "493d863094d4694b79b9fd23711e05b24d74cd3d99c755dd29cb9658864afae9"
+      },
+      {
+        "path": "src/parser.rs",
+        "upstream_sha256": "0fcf35f2c553fe20059afcf259431789bc4c1e074b53b462746d038fa999aebb",
+        "candidate_sha256": "2bf76ad43576576418e2837d179895a606d2007fc038176814f71dee89ba1e8f"
+      },
+      {
+        "path": "src/row.rs",
+        "upstream_sha256": "3d670ed3f9ba7a83990a88b7e01ddb2137b53993f49471ca78d6864044bce992",
+        "candidate_sha256": "99633d0830d3b5ab7e8c127d52a44c4e94bdd51ce6970b0972ea40fc59925473"
+      },
+      {
+        "path": "src/screen.rs",
+        "upstream_sha256": "97b6ac1fe242017a5f1f2b7a866f738fdc41a1e7db4340b4d87cbe1785da8615",
+        "candidate_sha256": "ebe95a371ad597c9299e87ca877ca889581f0934bc8c8ffe8cecc932df513487"
+      }
+    ]
+  },
+  "metadata_overlay": {
+    "path": "patches/vt100-local-vte-dependency.patch",
+    "sha256": "6e555493a804daa4ae9746ac4d38d060115c14d15fe51e9d2295c6d5b6d9129e",
+    "purpose": "Bind vt100 0.15.2's generated normal and dev vte dependencies to the separately vendored vte 0.11.1 path while preserving Cargo.toml.orig as the exact upstream manifest.",
+    "changed_files": [
+      {
+        "path": "Cargo.toml",
+        "upstream_sha256": "a38fcde696b9fe9458a6c09a600779888095718c3951eef3f5a30fba601a10a3",
+        "candidate_sha256": "e48a0e28834581ee9c7116caf92a4466194be56889fddbe43e492ad84721986b"
+      }
+    ]
+  },
+  "formatting_overlay": {
+    "tool": "rustfmt 1.9.0-stable (59807616e1 2026-04-14)",
+    "edition": "2018",
+    "configuration": "default",
+    "behavioral_scope": "formatting_only",
+    "files": [
+      {
+        "path": "src/attrs.rs",
+        "input_sha256": "76893ab06f4aba9e21bbaec1430237a0214e7ae089655506fcbdeaf04270856f",
+        "output_sha256": "4b8f6ba1ddb39a35db0406273f22b1292f65b29dd33b2656584d10ece8a22468"
+      },
+      {
+        "path": "src/cell.rs",
+        "input_sha256": "51ef40a250531d55980fdbb9b6dd9ccb536afafa7db232718bcd74d9b42408e8",
+        "output_sha256": "ceae7f620a35268e43128158f0a686068b6fcabafdcf274bffe33729936a52e9"
+      },
+      {
+        "path": "src/grid.rs",
+        "input_sha256": "493d863094d4694b79b9fd23711e05b24d74cd3d99c755dd29cb9658864afae9",
+        "output_sha256": "bd222e317a792c58545611fe6a822e3c00b57c894baf9239652c0e4d2e888b73"
+      },
+      {
+        "path": "src/parser.rs",
+        "input_sha256": "2bf76ad43576576418e2837d179895a606d2007fc038176814f71dee89ba1e8f",
+        "output_sha256": "c5e4bf1eae32809a7a51397eda424c46ca5a8b37514821320d43438fed53423a"
+      },
+      {
+        "path": "src/row.rs",
+        "input_sha256": "99633d0830d3b5ab7e8c127d52a44c4e94bdd51ce6970b0972ea40fc59925473",
+        "output_sha256": "2be8a7a63d17bdddde519e90c36a287fb46483443096ca3c482c55ed7b58d8f5"
+      },
+      {
+        "path": "src/screen.rs",
+        "input_sha256": "ebe95a371ad597c9299e87ca877ca889581f0934bc8c8ffe8cecc932df513487",
+        "output_sha256": "3f65db2b2ffe259c76e044c11bab56afa948327ec697b58ad915cbd8d2e4c646"
+      },
+      {
+        "path": "src/term.rs",
+        "input_sha256": "48b7fdad2ead1d6a148ae9b680c5afec0797a94907e7e0c542d896540d510601",
+        "output_sha256": "1c61bfc839026bd730fed5f71b6057286a6a33edede05df16693263cc00f7222"
+      }
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "path": "LICENSE",
+    "sha256": "53a04b0a11073f3d0183c31a4b7bdf9a3f68d453adeec136e59e5a9d9a554370"
+  },
+  "integration": {
+    "dependency": "workspace_path",
+    "version_requirement": "=0.15.2",
+    "vte_source": "path",
+    "vte_path": "../vte",
+    "vte_version_requirement": "=0.11.1",
+    "unsafe_code_added": false,
+    "vte_manifest_sections": [
+      "dependencies.vte",
+      "dev-dependencies.vte"
+    ]
+  },
+  "vendored_files": {
+    ".cargo_vcs_info.json": "59c8ab884e19eb7d0264622845d3a77674654bb4744fd1cca9e71bb0316e14a4",
+    "CHANGELOG.md": "ba3d4706c8a4de9eaaeae41931d72a08a22e0c484feec052ccabaab8296702e6",
+    "Cargo.toml": "e48a0e28834581ee9c7116caf92a4466194be56889fddbe43e492ad84721986b",
+    "Cargo.toml.orig": "17041f82435e68b183393c113469b7542b4c117813f10c7ac7139598241da7cb",
+    "LICENSE": "53a04b0a11073f3d0183c31a4b7bdf9a3f68d453adeec136e59e5a9d9a554370",
+    "README.md": "01d073eaeefbd6a5ded71874cf9fe4738ee0e99a6f47772eb51254cc76c30dba",
+    "src/attrs.rs": "4b8f6ba1ddb39a35db0406273f22b1292f65b29dd33b2656584d10ece8a22468",
+    "src/cell.rs": "ceae7f620a35268e43128158f0a686068b6fcabafdcf274bffe33729936a52e9",
+    "src/grid.rs": "b42f58aca9c77e2a87ee420f7bb33e67fb1e8ed1761da939a3f18b3ce9608e98",
+    "src/lib.rs": "00b627e8529426741027ff7f27e00fcecb388e7d3a8a3b924ca2fc500a8dfa7f",
+    "src/parser.rs": "6b080733b02fc6509183883fa2874d8b3a4cd26d0c7e63f0e6a3750cfcd45cb6",
+    "src/row.rs": "2be8a7a63d17bdddde519e90c36a287fb46483443096ca3c482c55ed7b58d8f5",
+    "src/screen.rs": "4d34a5122cfdaf544d9163f03921eef073a4d662450c426d50ebb57ab9643ada",
+    "src/term.rs": "1c61bfc839026bd730fed5f71b6057286a6a33edede05df16693263cc00f7222"
+  },
+  "scrollback_overlay": {
+    "path": "patches/vt100-scrollback.patch",
+    "sha256": "19cfa2e549d1d79f60e1ea0fed353f7e36ce038c267ec5b283e58e6a2d8ce772",
+    "purpose": "Bound visible history rows to the viewport without offset underflow, and resize retained rows with the viewport. Retain rows scrolled off top-anchored primary-screen regions while excluding interior regions and alternate-screen history.",
+    "changed_files": [
+      {
+        "path": "src/grid.rs",
+        "input_sha256": "bd222e317a792c58545611fe6a822e3c00b57c894baf9239652c0e4d2e888b73",
+        "output_sha256": "b42f58aca9c77e2a87ee420f7bb33e67fb1e8ed1761da939a3f18b3ce9608e98"
+      }
+    ]
+  },
+  "terminal_replies_overlay": {
+    "path": "patches/vt100-terminal-replies.patch",
+    "sha256": "917e6e08089f7fb8a6862d9640ec921c4ee71ad2076610b58a2c1b84369d6870",
+    "purpose": "Bounded primary device attributes, operating status and cursor position replies, drained by the PTY owner without blocking its output reader. No unsafe code.",
+    "changed_files": [
+      {
+        "path": "src/parser.rs",
+        "input_sha256": "c5e4bf1eae32809a7a51397eda424c46ca5a8b37514821320d43438fed53423a",
+        "output_sha256": "6b080733b02fc6509183883fa2874d8b3a4cd26d0c7e63f0e6a3750cfcd45cb6"
+      },
+      {
+        "path": "src/screen.rs",
+        "input_sha256": "3f65db2b2ffe259c76e044c11bab56afa948327ec697b58ad915cbd8d2e4c646",
+        "output_sha256": "4d34a5122cfdaf544d9163f03921eef073a4d662450c426d50ebb57ab9643ada"
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+[
+  "semantic_rejection",
+  "access_rejected",
+  "capacity_rejected",
+  "runtime_failure",
+  "infrastructure_failure",
+  "transport_failure",
+  "protocol_failure",
+  "timeout",
+  "cancellation",
+  "partial",
+  "unknown_inconclusive"
+]

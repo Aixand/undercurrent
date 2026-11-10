@@ -1,0 +1,82 @@
+name: Bug report
+description: Report an error, installation failure, performance problem, or unexpected behavior.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Security vulnerability?** Follow the [security policy](https://github.com/Aixand/undercurrent/blob/main/SECURITY.md) and email corporate@aixand.org privately. Do not use this form or upload sensitive diagnostics; the support archive requirement does not apply to security reports.
+
+        Search [existing issues](https://github.com/Aixand/undercurrent/issues) before opening a new report. Keep each report focused on one problem; you do not need to know its cause.
+
+        **A support archive is required.** If collection or sharing is not possible, explain why in the support report field below.
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: What happened?
+      description: Describe the problem and how it affects your workflow.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include the commands or a small code example and any relevant configuration. If the problem is intermittent, describe what happened before it and how often it occurs.
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and versions
+      description: Include your OS version and architecture, installation method, and output of uc --version. For source builds, include the commit if known. Add daemon/helper, SDK, shell, and terminal versions when relevant. If a version command cannot run, say so.
+      placeholder: |
+        OS and architecture:
+        Installation method:
+        Undercurrent version or source commit:
+        Other relevant versions:
+    validations:
+      required: true
+  - type: textarea
+    id: error-details
+    attributes:
+      label: Error details and failure time
+      description: Include the original error, any printed UC- reference (incident_id in JSON errors), and approximate failure time with timezone. If no error was printed, say so. Remove secrets from copied commands and output.
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        Collect diagnostics after the failure, using the same OS user and `UNDERCURRENT_HOME` as the failed command:
+
+        ```sh
+        uc debug collect --output uc-support.zip
+        ```
+
+        If the error printed a `UC-` reference, use this command instead, replacing `UC_REFERENCE` with the complete reference:
+
+        ```sh
+        uc debug collect --incident UC_REFERENCE --output uc-support.zip
+        ```
+
+        Choose a new filename in a writable directory; collection does not overwrite existing archives. A partial archive is still useful. Collection can work with a stopped daemon or invalid configuration and does not start or repair the daemon.
+
+        Review the archive's contents and `manifest.json` before sharing. Terminal content and panic backtraces are excluded by default. See the [support-report guide](https://github.com/Aixand/undercurrent/blob/HEAD/docs/guides/daemon/diagnostics.md#collect-a-support-report) for review instructions.
+  - type: textarea
+    id: support-report
+    attributes:
+      label: Support archive or reason it is unavailable
+      description: Attach the reviewed ZIP by dragging it into this field. If you cannot collect or share it, explain why and include any collection error. If a build or installation failure prevents running uc, include the failing command and build or installer output instead. Remove secrets from extra output.
+      placeholder: Attach uc-support.zip here, or explain why it is unavailable.
+    validations:
+      required: true

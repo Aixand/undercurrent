@@ -1,0 +1,95 @@
+# SPDX-License-Identifier: Apache-2.0
+schema_version: 0.1.0-beta
+name: copilot-cli
+description: GitHub Copilot CLI
+disabled: false
+matching:
+- binary:
+  - copilot
+  - github-copilot-cli
+  arguments: []
+  required_environment: []
+archetype: animated_agent
+input_delivery:
+  type: paced_trailing_submit
+  delay_millis: 120
+baseline_interaction:
+  state: available
+  modality: text
+  semantic: copilot-cli.composer
+foreground_rules:
+- claim:
+    type: interaction
+    state: requested
+    modality: options
+    semantic: copilot-cli.workspace_trust
+  patterns:
+  - (?m)Do you trust
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9500
+- claim:
+    type: interaction
+    state: requested
+    modality: options
+    semantic: copilot-cli.permission
+  patterns:
+  - (?m)Allow directory access
+  - '(?m)Do you want to allow this\?'
+  - '(?m)Path confirmation \(\d+ remaining\)'
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9500
+- claim:
+    type: interaction
+    state: available
+    modality: text
+    semantic: copilot-cli.composer
+  patterns:
+  - '(?m)^❯\s'
+  - (?m)^┃
+  excludes:
+  - Esc to cancel
+  - esc interrupt
+  - (?m)Do you trust
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9000
+background_rules: []
+alternate_screen_is_normal: true
+silent_until_input: false
+output_exclusions:
+  top_rows: 0
+  bottom_rows: 0

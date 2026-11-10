@@ -1,0 +1,35 @@
+name: Documentation problem
+description: Report outdated instructions, broken links, missing documentation, or confusing explanations.
+title: "[Docs]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Reports about missing context and outdated references are welcome, even if you do not know the correction.
+
+        Search [existing issues](https://github.com/Aixand/undercurrent/issues) first. No diagnostic archive is needed for documentation reports. Use **Bug report** if you are reporting a runtime error or unexpected behavior.
+  - type: input
+    id: location
+    attributes:
+      label: Affected page or file
+      description: Link to the page or provide its repository path and section heading. For missing documentation, say where you expected to find it.
+      placeholder: docs/getting-started/installation.md, section heading
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is outdated, missing, or unclear?
+      description: Quote the relevant text or describe the problem. If the instructions differ from your experience, explain the difference.
+    validations:
+      required: true
+  - type: textarea
+    id: suggested-correction
+    attributes:
+      label: Suggested correction
+      description: Optional. Share proposed wording, a working command, or a reference that would help resolve the issue.
+  - type: input
+    id: version
+    attributes:
+      label: Version or source commit
+      description: Optional. If the problem depends on a version or checkout, include it here.

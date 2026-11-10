@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "The Windows MSVC platform ID must match its x86_64 architecture.",
+  "target": "package",
+  "base": "undercurrent-package.json",
+  "mutation": {
+    "operation": "replace",
+    "path": "/platforms/3/architecture",
+    "value": "arm64"
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$.platforms[3]"
+}

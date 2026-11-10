@@ -1,0 +1,7 @@
+{
+  "template_revision": 2,
+  "configuration_schemas": [1, 2],
+  "legacy_helper_revision": 1,
+  "workspace_helper_revision": 2,
+  "update_policy": "explicit adoption with preserved project adapters"
+}

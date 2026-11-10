@@ -1,0 +1,14 @@
+[package]
+name = "undercurrent-application"
+description = "Application services and ports for the Undercurrent runtime"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+undercurrent-domain = { path = "../undercurrent-domain" }
+
+[lints]
+workspace = true

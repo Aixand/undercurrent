@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:undercurrent:schema:package-negative-fixture:v0.1.0-beta",
+  "title": "Undercurrent package conformance negative fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "fixture_version",
+    "description",
+    "target",
+    "base",
+    "mutation",
+    "expected_code",
+    "expected_path"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../../../schemas/package-negative-fixture.schema.json"
+    },
+    "fixture_version": {
+      "const": "undercurrent.package-negative-fixture/v0.1.0-beta"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target": {
+      "enum": [
+        "package",
+        "config"
+      ]
+    },
+    "base": {
+      "enum": [
+        "undercurrent-package.json",
+        "tests/conformance/package/config.local.valid.json",
+        "tests/conformance/package/config.remote.valid.json"
+      ]
+    },
+    "mutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "path",
+        "value"
+      ],
+      "properties": {
+        "operation": {
+          "enum": [
+            "add",
+            "replace"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "value": {}
+      }
+    },
+    "expected_code": {
+      "const": "SCHEMA_INVALID"
+    },
+    "expected_path": {
+      "type": "string",
+      "pattern": "^\\$"
+    }
+  }
+}

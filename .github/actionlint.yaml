@@ -1,0 +1,4 @@
+# GitHub-hosted label absent from older actionlint releases.
+self-hosted-runner:
+  labels:
+    - macos-15-intel

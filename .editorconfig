@@ -1,0 +1,43 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{rs,py,sh,ps1}]
+indent_style = space
+indent_size = 4
+
+[*.{json,yml,yaml}]
+indent_style = space
+indent_size = 2
+
+[*.pyi]
+indent_style = space
+indent_size = 4
+
+[*.go]
+indent_style = tab
+indent_size = tab
+
+[{Makefile,makefile,GNUmakefile,*.mk}]
+indent_style = tab
+indent_size = tab
+
+[*.{bat,cmd}]
+end_of_line = crlf
+
+# Markdown uses trailing spaces for hard line breaks.
+[*.md]
+trim_trailing_whitespace = false
+
+# Preserve upstream formatting, generated content, and fixture bytes.
+[{vendor/**,target/**,**/fixtures/**,**.lock,tests/architecture/negative/**,tests/conformance/package/*.json}]
+charset = unset
+end_of_line = unset
+insert_final_newline = unset
+trim_trailing_whitespace = unset
+indent_style = unset
+indent_size = unset

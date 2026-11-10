@@ -1,0 +1,13 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "vendored vt100 dev dependency",
+  "description": "The approved vendored vt100 edge must remain the runtime normal dependency.",
+  "mutation": {
+    "kind": "add_path_dependency",
+    "package": "undercurrent-runtime",
+    "name": "vt100",
+    "path": "vendor/vt100",
+    "dependency_kind": "dev"
+  },
+  "expected_rule": "ARCH_VENDORED_PATH_MISMATCH"
+}

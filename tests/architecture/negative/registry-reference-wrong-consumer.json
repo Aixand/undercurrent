@@ -1,0 +1,15 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "registry vt100 reference wrong consumer",
+  "description": "The exact crates.io vt100 oracle is permitted only as the runtime differential-test alias.",
+  "mutation": {
+    "kind": "add_registry_reference_dependency",
+    "package": "undercurrent-daemon",
+    "name": "vt100",
+    "rename": "vt100-reference",
+    "requirement": "=0.15.2",
+    "dependency_kind": "dev",
+    "source": "registry+https://github.com/rust-lang/crates.io-index"
+  },
+  "expected_rule": "ARCH_VT100_REFERENCE_MISMATCH"
+}

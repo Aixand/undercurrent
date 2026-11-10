@@ -1,0 +1,34 @@
+[
+  {
+    "name": "success",
+    "code": 0
+  },
+  {
+    "name": "failure",
+    "code": 1
+  },
+  {
+    "name": "invalid_input",
+    "code": 2
+  },
+  {
+    "name": "incomplete",
+    "code": 3
+  },
+  {
+    "name": "denied",
+    "code": 10
+  },
+  {
+    "name": "approval_required",
+    "code": 11
+  },
+  {
+    "name": "runtime",
+    "code": 70
+  },
+  {
+    "name": "interrupted",
+    "code": 130
+  }
+]

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability privately
+    url: https://github.com/Aixand/undercurrent/blob/main/SECURITY.md
+    about: Email corporate@aixand.org; do not disclose vulnerabilities or sensitive diagnostics in public issues.
+  - name: Report a conduct concern privately
+    url: https://github.com/Aixand/undercurrent/blob/main/CODE_OF_CONDUCT.md
+    about: Email corporate@aixand.org for concerns about behavior in project spaces.

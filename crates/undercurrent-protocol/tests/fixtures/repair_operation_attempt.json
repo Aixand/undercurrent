@@ -1,0 +1,25 @@
+{
+  "request": {
+    "attempt_id": "attempt-0001",
+    "request_digest_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+    "contract": {
+      "capability": "repair_operation_attempt",
+      "schema": "undercurrent.request",
+      "schema_version": "0.1.0-beta",
+      "contract_version": "0.1.0-beta"
+    }
+  },
+  "result": {
+    "attempt_id": "attempt-0001",
+    "resolution": {
+      "certainty": "known_applied",
+      "result_digest_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    },
+    "readiness_complete": false,
+    "unresolved_count": 2,
+    "unresolved_attempt_ids": [
+      "attempt-0002"
+    ],
+    "unresolved_truncated": true
+  }
+}

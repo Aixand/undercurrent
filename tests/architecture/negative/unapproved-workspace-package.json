@@ -1,0 +1,10 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "unapproved-workspace-package",
+  "description": "Every workspace member must have a declared architecture disposition.",
+  "mutation": {
+    "kind": "add_package",
+    "package": "undercurrent-extra"
+  },
+  "expected_rule": "ARCH_WORKSPACE_DISPOSITION"
+}

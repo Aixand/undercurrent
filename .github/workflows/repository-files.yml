@@ -1,0 +1,38 @@
+name: Repository files
+
+on:
+  workflow_call:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  policy:
+    name: Repository file policy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Reject assistant files in the current tracked tree
+        run: python3 scripts/checks/check-repository-files.py
+      - name: Check every introduced commit
+        env:
+          POLICY_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          POLICY_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+          POLICY_FORCED: ${{ github.event.forced && 'true' || 'false' }}
+        run: |
+          if [ "$POLICY_FORCED" = "true" ]; then
+            python3 scripts/checks/check-repository-files.py --all-history
+          elif [ -n "$POLICY_BASE" ] && [ "$POLICY_BASE" != "0000000000000000000000000000000000000000" ]; then
+            python3 scripts/checks/check-repository-files.py --base "$POLICY_BASE" --head "$POLICY_HEAD"
+          fi
+      - name: Test the policy and commit hook
+        run: python3 tests/tooling/checks/repository_files_test.py

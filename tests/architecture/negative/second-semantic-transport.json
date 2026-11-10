@@ -1,0 +1,10 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "second-semantic-transport",
+  "description": "Protected local IPC is the only daemon semantic transport.",
+  "mutation": {
+    "kind": "add_transport",
+    "package": "undercurrent-transport-http"
+  },
+  "expected_rule": "ARCH_LOCAL_TRANSPORT_COUNT"
+}

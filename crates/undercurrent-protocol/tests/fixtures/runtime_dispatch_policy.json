@@ -1,0 +1,21 @@
+{
+  "limits": {
+    "wall_time_millis": 30000,
+    "stdout_bytes": 1024,
+    "stderr_bytes": 2048,
+    "memory_bytes": 4096,
+    "cpu_millis": 500
+  },
+  "output_contract": {
+    "schema": "debug.output/v0.1.0-beta",
+    "schema_digest_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+    "classification": "restricted"
+  },
+  "telemetry_policy_ref": "trust://telemetry/policies/debug-canary",
+  "retention_policy_ref": "trust://retention/policies/debug-canary",
+  "callback_refs": [
+    "runtime-callback://example/workflow/v0.1.0-beta/debug-canary"
+  ],
+  "launch_profile_expires_at_millis": 10000,
+  "environment_binding_expires_at_millis": 20000
+}

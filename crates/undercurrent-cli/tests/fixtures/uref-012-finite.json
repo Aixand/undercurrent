@@ -1,0 +1,11 @@
+{
+  "command": "ls",
+  "snapshot_revision": 7,
+  "sessions": [
+    {
+      "id": "session-1",
+      "revision": 3,
+      "lifecycle": "running"
+    }
+  ]
+}

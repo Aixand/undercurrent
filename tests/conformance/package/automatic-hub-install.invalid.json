@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "Selecting Undercurrent must not automatically install Operation Hub.",
+  "target": "package",
+  "base": "undercurrent-package.json",
+  "mutation": {
+    "operation": "replace",
+    "path": "/selection/automatic_expansion",
+    "value": [
+      "external/coordinator"
+    ]
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$.selection.automatic_expansion"
+}

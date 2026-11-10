@@ -1,0 +1,17 @@
+Undercurrent Foundation contains selected mechanisms derived from Intessio
+Foundation (https://github.com/aixand/intessio), distributed under Apache-2.0.
+See the repository LICENSE for the license text.
+
+Source locations at extraction:
+- foundation/intessio-foundation/crates/core/src/bounded.rs
+- foundation/intessio-foundation/crates/core/src/digest.rs
+- foundation/intessio-foundation/crates/core/src/canonical.rs
+- foundation/intessio-foundation/crates/core/src/reference.rs
+- foundation/intessio-foundation/crates/privacy/src/lib.rs
+
+Extraction retains digest encoding and constant-time verification, canonical
+JSON output and limits, opaque URI validation, classification serialization,
+and the default sensitive-material detection policy. Intessio-specific APIs,
+reference types, generic wire decoders, redaction and secret-resolution APIs
+are intentionally outside this crate. Relevant tests are retained or adapted
+to the extracted API.

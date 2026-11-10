@@ -1,0 +1,74 @@
+# SPDX-License-Identifier: Apache-2.0
+schema_version: 0.1.0-beta
+name: dev-server
+description: Known development-server launch commands
+disabled: false
+matching:
+- binary:
+  - vite
+  arguments: []
+  required_environment: []
+- binary:
+  - next
+  arguments:
+  - '^dev(?:\s|$)'
+  required_environment: []
+- binary:
+  - ng
+  arguments:
+  - '^serve(?:\s|$)'
+  required_environment: []
+- binary:
+  - nest
+  arguments:
+  - '^start(?:\s+.*)?(?:--watch|-w)(?:\s|$)'
+  required_environment: []
+- binary:
+  - nuxt
+  - nuxi
+  arguments:
+  - '^dev(?:\s|$)'
+  required_environment: []
+- binary:
+  - astro
+  arguments:
+  - '^dev(?:\s|$)'
+  required_environment: []
+- binary:
+  - webpack
+  arguments:
+  - '^serve(?:\s|$)'
+  required_environment: []
+- binary:
+  - react-scripts
+  arguments:
+  - '^start(?:\s|$)'
+  required_environment: []
+- binary:
+  - remix
+  arguments:
+  - '^dev(?:\s|$)'
+  required_environment: []
+- binary:
+  - pnpm
+  - yarn
+  - bun
+  arguments:
+  - '^(?:run\s+)?(?:dev|start:dev)(?:\s|$)'
+  required_environment: []
+- binary:
+  - npm
+  arguments:
+  - '^run\s+(?:dev|start:dev)(?:\s|$)'
+  required_environment: []
+archetype: server
+input_delivery:
+  type: immediate
+baseline_interaction: null
+foreground_rules: []
+background_rules: []
+alternate_screen_is_normal: false
+silent_until_input: false
+output_exclusions:
+  top_rows: 0
+  bottom_rows: 0

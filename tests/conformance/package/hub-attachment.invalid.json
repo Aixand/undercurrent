@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "The obsolete attachment declaration cannot accompany direct contracts.",
+  "target": "package",
+  "base": "undercurrent-package.json",
+  "mutation": {
+    "operation": "add",
+    "path": "/protocols/operation_hub_attachment",
+    "value": {}
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$.protocols"
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "cli-local-process",
+  "description": "CLI cannot bypass the daemon with an in-process command runner.",
+  "mutation": {
+    "kind": "add_import",
+    "package": "undercurrent-cli",
+    "symbol": "std::process::Command"
+  },
+  "expected_rule": "ARCH_CLI_LOCAL_EXECUTION"
+}

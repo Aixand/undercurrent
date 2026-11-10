@@ -1,0 +1,21 @@
+[
+  "invalid_request",
+  "invalid_configuration",
+  "not_found",
+  "name_conflict",
+  "failed_precondition",
+  "revision_precondition_failed",
+  "unauthenticated",
+  "permission_denied",
+  "cancelled",
+  "timed_out",
+  "capacity_exceeded",
+  "replay_unavailable",
+  "cursor_expired",
+  "protocol_mismatch",
+  "process",
+  "terminal",
+  "persistence",
+  "transport",
+  "internal"
+]

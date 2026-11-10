@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.1.0-beta",
+  "run_id": null,
+  "machine": null,
+  "os_user": null,
+  "undercurrent_home": null,
+  "uc_version": null,
+  "interface_preference": null,
+  "control_interface": null,
+  "mcp_adapter_version": null,
+  "interface_history": [],
+  "project_directory": null,
+  "base_commit": null,
+  "run_directory": null,
+  "workers": []
+}

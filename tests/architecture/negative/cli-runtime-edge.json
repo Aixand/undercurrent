@@ -1,0 +1,11 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "cli-runtime-edge",
+  "description": "CLI product dependencies are exactly protocol and SDK.",
+  "mutation": {
+    "kind": "add_edge",
+    "from": "undercurrent-cli",
+    "to": "undercurrent-runtime"
+  },
+  "expected_rule": "ARCH_CLI_PRODUCT_DEPENDENCIES"
+}

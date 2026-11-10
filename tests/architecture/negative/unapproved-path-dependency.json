@@ -1,0 +1,12 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "unapproved-path-dependency",
+  "description": "A local helper library requires an explicitly approved dependency identity.",
+  "mutation": {
+    "kind": "add_path_dependency",
+    "package": "aixand-undercurrent-protocol",
+    "name": "helper-core",
+    "path": "vendor/helper-core"
+  },
+  "expected_rule": "ARCH_FOREIGN_PRODUCT_IMPLEMENTATION"
+}

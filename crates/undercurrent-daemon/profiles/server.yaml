@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: Apache-2.0
+schema_version: 0.1.0-beta
+name: server
+description: Generic long-running server selected explicitly
+disabled: false
+matching: []
+archetype: server
+input_delivery:
+  type: immediate
+baseline_interaction: null
+foreground_rules: []
+background_rules: []
+alternate_screen_is_normal: false
+silent_until_input: false
+output_exclusions:
+  top_rows: 0
+  bottom_rows: 0

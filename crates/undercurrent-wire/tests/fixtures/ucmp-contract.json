@@ -1,0 +1,59 @@
+{
+  "magic": "UCMP",
+  "version": "0.1.0-beta",
+  "header_bytes": 22,
+  "message_kinds": [
+    [
+      "request",
+      1
+    ],
+    [
+      "cancel_request",
+      2
+    ],
+    [
+      "open_stream",
+      3
+    ],
+    [
+      "resume_stream",
+      8
+    ],
+    [
+      "close_stream",
+      4
+    ],
+    [
+      "window_update",
+      5
+    ],
+    [
+      "ping",
+      6
+    ],
+    [
+      "client_close",
+      7
+    ],
+    [
+      "response",
+      128
+    ],
+    [
+      "stream_data",
+      129
+    ],
+    [
+      "stream_gap",
+      130
+    ],
+    [
+      "pong",
+      131
+    ],
+    [
+      "server_close",
+      132
+    ]
+  ]
+}

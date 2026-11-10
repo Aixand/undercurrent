@@ -1,0 +1,34 @@
+[package]
+name = "aixand-undercurrent-transport-local"
+description = "Authenticated local IPC transport for Undercurrent"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[lib]
+name = "undercurrent_transport_local"
+
+[dependencies]
+futures-util = { version = "0.3.34", features = ["sink"] }
+tokio = { version = "1.53.3", features = ["io-util", "macros", "net", "rt-multi-thread", "sync", "time"] }
+undercurrent-transport-core = { package = "aixand-undercurrent-transport-core", path = "../undercurrent-transport-core", version = "=0.1.0-beta" }
+undercurrent-multiplex = { package = "aixand-undercurrent-multiplex", path = "../undercurrent-multiplex", version = "=0.1.0-beta" }
+undercurrent-protocol = { package = "aixand-undercurrent-protocol", path = "../undercurrent-protocol", version = "=0.1.0-beta" }
+undercurrent-wire = { package = "aixand-undercurrent-wire", path = "../undercurrent-wire", version = "=0.1.0-beta" }
+
+[target.'cfg(any(target_os = "linux", target_os = "macos"))'.dependencies]
+libc.workspace = true
+nix = { workspace = true, features = ["user", "fs", "socket"] }
+getrandom.workspace = true
+rustix.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+undercurrent-platform-windows = { package = "aixand-undercurrent-platform-windows", path = "../undercurrent-platform-windows", version = "=0.1.0-beta" }
+
+[lints]
+workspace = true

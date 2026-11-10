@@ -1,0 +1,32 @@
+# Keep source, scripts, and hashed package inputs identical on every host.
+# Binary files remain byte-for-byte untouched through automatic detection.
+* text=auto eol=lf
+
+# Windows batch scripts use CRLF working copies; Git retains normalized LF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+
+# Release verification hashes these pinned ConPTY files byte for byte.
+vendor/portable-pty/conpty/LICENSE -text whitespace=cr-at-eol
+vendor/portable-pty/conpty/PROVENANCE.json -text whitespace=cr-at-eol
+# Unified patches represent an empty context line with a single space.
+vendor/portable-pty/windows-conpty.patch whitespace=-blank-at-eol
+
+# Preserve upstream legal records verbatim, including their original newlines.
+licenses/inputs/* -text whitespace=-blank-at-eol
+licenses/THIRD-PARTY-NOTICES.txt whitespace=-blank-at-eol,-blank-at-eof
+licenses/RUST-STDLIB.html whitespace=-blank-at-eol

@@ -1,0 +1,10 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "consumer-daemon-edge",
+  "description": "Operation-owned consumers cannot link daemon implementation.",
+  "mutation": {
+    "kind": "add_consumer_dependency",
+    "package": "undercurrent-daemon"
+  },
+  "expected_rule": "ARCH_CONSUMER_IMPLEMENTATION_EDGE"
+}

@@ -1,0 +1,21 @@
+[package]
+name = "aixand-undercurrent-multiplex"
+description = "Bounded stream multiplexing and scheduling for Undercurrent"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[lib]
+name = "undercurrent_multiplex"
+
+[dependencies]
+undercurrent-wire = { package = "aixand-undercurrent-wire", path = "../undercurrent-wire", version = "=0.1.0-beta" }
+
+[lints]
+workspace = true
+
+[[bench]]
+name = "scheduler_policy"
+harness = false

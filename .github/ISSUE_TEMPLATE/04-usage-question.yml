@@ -1,0 +1,29 @@
+name: Usage question
+description: Ask how to use, configure, or integrate Undercurrent.
+title: "[Question]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check the [documentation](https://github.com/Aixand/undercurrent/blob/HEAD/docs/README.md) and [existing issues](https://github.com/Aixand/undercurrent/issues) first.
+
+        Use this form for general how-to questions. For errors, installation failures, or unexpected behavior, use **Bug report** and include its required support archive or explain why it is unavailable. General usage questions do not require diagnostics.
+  - type: textarea
+    id: question
+    attributes:
+      label: What are you trying to do?
+      description: Describe your goal and the question you need answered.
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What have you read or tried?
+      description: Link to relevant guides and include example commands or code if useful. Remove secrets from anything you share. If you could not find a relevant guide, say so.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Relevant environment
+      description: Optional. Include your OS, Undercurrent version, SDK, shell, or terminal if it helps explain your question.

@@ -1,0 +1,23 @@
+{
+  "operation": "restart_session",
+  "input": {
+    "mutation": {
+      "idempotency_key": "retry-1",
+      "attempt": {
+        "attempt_id": "attempt-1",
+        "fencing_token": 7,
+        "payload_digest_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "contract": {
+        "capability": "restart_session",
+        "schema": "undercurrent.request",
+        "schema_version": "0.1.0-beta",
+        "contract_version": "99.0.0"
+      },
+      "future_hint": {
+        "mode": "compatible"
+      }
+    },
+    "session_id": "session-1"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": "0.1.0-beta",
+  "cli": {
+    "command_timeout_millis": 30000,
+    "daemon_startup_timeout_millis": 10000,
+    "list_page_size": 100,
+    "logs_max_bytes": 65536
+  },
+  "terminal": {
+    "scrollback": {
+      "memory_lines": 2000
+    }
+  },
+  "shortcuts": {
+    "prefix": "alt-u"
+  }
+}

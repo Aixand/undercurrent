@@ -1,0 +1,11 @@
+{
+  "name": "undercurrent-server-demo",
+  "private": true,
+  "version": "0.1.0-beta",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "application-adapter-import",
+  "description": "Application cannot import a concrete SQLite adapter.",
+  "mutation": {
+    "kind": "add_import",
+    "package": "undercurrent-application",
+    "symbol": "rusqlite"
+  },
+  "expected_rule": "ARCH_APPLICATION_FORBIDDEN_IMPORT"
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "undercurrent.release-bundle-negative-cases/v0.1.0-beta",
+  "cases": [
+    {
+      "id": "missing_required_artifact",
+      "expected_error": "missing_required_file"
+    },
+    {
+      "id": "tampered_artifact",
+      "expected_error": "checksum_mismatch"
+    },
+    {
+      "id": "wrong_role",
+      "expected_error": "artifact_role_mismatch"
+    },
+    {
+      "id": "extra_secret",
+      "expected_error": "secret_material_detected"
+    },
+    {
+      "id": "retired_binary",
+      "expected_error": "retired_binary_present"
+    },
+    {
+      "id": "implementation_library",
+      "expected_error": "implementation_library_present"
+    },
+    {
+      "id": "source_tree",
+      "expected_error": "source_tree_present"
+    },
+    {
+      "id": "tampered_third_party_notice",
+      "expected_error": "third_party_license_invalid"
+    },
+    {
+      "id": "tampered_third_party_provenance",
+      "expected_error": "third_party_provenance_invalid"
+    },
+    {
+      "id": "tampered_vte_license",
+      "expected_error": "third_party_license_invalid"
+    },
+    {
+      "id": "tampered_vte_provenance",
+      "expected_error": "third_party_provenance_invalid"
+    },
+    {
+      "id": "tampered_vte_unsafe_audit",
+      "expected_error": "third_party_unsafe_audit_invalid"
+    },
+    {
+      "id": "missing_foundation_notice",
+      "expected_error": "missing_required_file"
+    },
+    {
+      "id": "tampered_foundation_notice",
+      "expected_error": "foundation_notice_invalid"
+    }
+  ]
+}

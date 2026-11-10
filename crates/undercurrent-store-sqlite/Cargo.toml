@@ -1,0 +1,28 @@
+[package]
+name = "undercurrent-store-sqlite"
+description = "SQLite persistence and recovery adapters for Undercurrent"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+undercurrent-foundation.workspace = true
+async-channel.workspace = true
+getrandom.workspace = true
+rusqlite = { version = "0.41.1", features = ["backup", "bundled"] }
+serde.workspace = true
+serde_json = "1.0.151"
+undercurrent-application = { path = "../undercurrent-application" }
+undercurrent-domain = { path = "../undercurrent-domain" }
+
+[target.'cfg(windows)'.dependencies]
+undercurrent-platform-windows = { package = "aixand-undercurrent-platform-windows", path = "../undercurrent-platform-windows" }
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,433 @@
+{
+  "$schema": "schemas/undercurrent-package.schema.json",
+  "schema_version": "undercurrent.package/v0.1.0-beta",
+  "coordinate": "undercurrent",
+  "name": "Undercurrent",
+  "version": "0.1.0-beta",
+  "kind": "standalone_product",
+  "release_status": "unpublished",
+  "selection": {
+    "independently_selectable": true,
+    "virtual": false,
+    "default_install_scope": "undercurrent_only",
+    "automatic_expansion": []
+  },
+  "runtime": {
+    "model": "external_daemon",
+    "allowed_placements": [
+      "local_process"
+    ],
+    "forbidden_placements": [
+      "embedded"
+    ],
+    "semantic_transport": "local_ipc",
+    "local_security": "same_os_user_local_ipc",
+    "remote_security": "unsupported",
+    "direct_daemon_linking": false,
+    "implicit_daemon_launch": true,
+    "standalone_route": "uc -> SDK -> local IPC -> uc-daemon",
+    "direct_route": "caller -> public SDK -> authenticated UCMP/local IPC -> uc-daemon"
+  },
+  "artifacts": [
+    {
+      "role": "cli",
+      "name": "uc",
+      "kind": "executable",
+      "entrypoint": true,
+      "required": true,
+      "platforms": [
+        "linux-x86_64-gnu",
+        "macos-arm64",
+        "macos-x86_64",
+        "windows-x86_64-msvc"
+      ]
+    },
+    {
+      "role": "daemon",
+      "name": "uc-daemon",
+      "kind": "executable",
+      "entrypoint": true,
+      "required": true,
+      "platforms": [
+        "linux-x86_64-gnu",
+        "macos-arm64",
+        "macos-x86_64",
+        "windows-x86_64-msvc"
+      ]
+    },
+    {
+      "role": "session_host",
+      "name": "uc-session-host",
+      "kind": "executable",
+      "entrypoint": false,
+      "required": true,
+      "platforms": [
+        "linux-x86_64-gnu",
+        "macos-arm64",
+        "macos-x86_64",
+        "windows-x86_64-msvc"
+      ]
+    }
+  ],
+  "platforms": [
+    {
+      "id": "linux-x86_64-gnu",
+      "os": "linux",
+      "architecture": "x86_64",
+      "libc": "gnu",
+      "status": "supported",
+      "placements": [
+        "local_process"
+      ]
+    },
+    {
+      "id": "macos-arm64",
+      "os": "macos",
+      "architecture": "arm64",
+      "libc": "libSystem",
+      "status": "supported",
+      "placements": [
+        "local_process"
+      ]
+    },
+    {
+      "id": "macos-x86_64",
+      "os": "macos",
+      "architecture": "x86_64",
+      "libc": "libSystem",
+      "status": "supported",
+      "placements": [
+        "local_process"
+      ]
+    },
+    {
+      "id": "windows-x86_64-msvc",
+      "os": "windows",
+      "architecture": "x86_64",
+      "libc": "msvc",
+      "status": "supported",
+      "placements": [
+        "local_process"
+      ]
+    }
+  ],
+  "installation": {
+    "ordinary_mode": "verified_release_artifact",
+    "artifact_source": "verified_undercurrent_release",
+    "monorepo_clone": false,
+    "implicit_source_build": false,
+    "verify_before_execution": true,
+    "required_bundle_metadata": [
+      "sha256_checksums",
+      "provenance_attestation",
+      "license_metadata"
+    ],
+    "install_root": "operator_selected_prefix",
+    "activation": "explicit"
+  },
+  "configuration": {
+    "namespace": "root",
+    "schema": "schemas/config.schema.json",
+    "schema_representation": "json_schema_2020_12",
+    "supported_documents": [
+      "yaml",
+      "toml"
+    ],
+    "document_schema_version": "0.1.0-beta",
+    "future_schema_versions": "reject",
+    "unknown_fields": "reject",
+    "secret_material": "file_references_only",
+    "product_path_keys": [],
+    "environment_overrides": [
+      "UNDERCURRENT_HOME"
+    ]
+  },
+  "state": {
+    "owner": "undercurrent",
+    "canonical_writer": "undercurrent",
+    "foreign_store_access": "forbidden",
+    "roots": {
+      "product_home": "$UNDERCURRENT_HOME or $HOME/.aixand/undercurrent",
+      "configuration_file": "<product-home>/config.yaml",
+      "configured_state_directory": "<product-home>/state"
+    },
+    "stores": [
+      {
+        "id": "canonical_state",
+        "owner": "undercurrent",
+        "engine": "sqlite",
+        "location_policy": "product_home_state_directory",
+        "default_filename": "undercurrent.db",
+        "data_classes": [
+          "sessions",
+          "operation_attempts",
+          "runtime_cancellation_controls",
+          "runtime_dispatch_policies",
+          "caller_request_digests",
+          "transactional_outbox",
+          "scheduled_restarts",
+          "scheduled_observations"
+        ]
+      },
+      {
+        "id": "session_host_journal",
+        "owner": "undercurrent",
+        "engine": "implementation_private_durable_journal",
+        "location_policy": "product_state_root",
+        "default_filename": null,
+        "data_classes": [
+          "execution_receipts",
+          "terminal_results_pending_acknowledgement"
+        ]
+      }
+    ],
+    "schema": {
+      "owner": "undercurrent",
+      "engine": "sqlite",
+      "current_version": "0.1.0-beta",
+      "storage_format": 1,
+      "existing_database_policy": "exact_current_or_reject_without_mutation",
+      "current_attached_policy": "required_and_fail_closed_on_loss",
+      "current_attached_request_digest": "required_canonical_and_fail_closed_on_loss"
+    },
+    "retention": {
+      "terminal_output_per_session_bytes": 2097152,
+      "terminal_output_global_bytes": 268435456,
+      "terminal_eviction": "oldest_first_with_explicit_gaps",
+      "disconnected_replay_millis": 30000,
+      "completed_idempotency_millis": 300000,
+      "ambiguous_pending_mutations": "retain_until_reconciled",
+      "runtime_cancellation_controls": "retain_until_explicit_product_purge"
+    },
+    "backup": {
+      "owner": "undercurrent",
+      "scope": [
+        "canonical_state",
+        "session_host_journal"
+      ],
+      "consistency": "quiesced_or_transactionally_consistent",
+      "integrity_check": "required",
+      "secret_material": "excluded"
+    },
+    "uninstall": {
+      "stop_owned_processes": true,
+      "default_data_action": "preserve",
+      "purge_requires_explicit_selection": true,
+      "purge_foreign_or_hub_state": false
+    }
+  },
+  "contracts": {
+    "crate": "undercurrent-protocol",
+    "protocol_crate": "undercurrent-protocol",
+    "contract_version": "0.1.0-beta",
+    "schema_version": "0.1.0-beta",
+    "request_schema": "undercurrent.request",
+    "response_schema": "undercurrent.response",
+    "version_negotiation": "exact_current_or_reject",
+    "operations": [
+      "start_session",
+      "stop_session",
+      "restart_session",
+      "rename_session",
+      "update_session_labels",
+      "remove_session",
+      "resize_terminal",
+      "send_terminal_input",
+      "close_standard_input",
+      "list_sessions",
+      "get_session_detail",
+      "get_execution_context",
+      "execute_in_session",
+      "read_terminal_output",
+      "read_terminal_screen",
+      "read_terminal_screen_diff",
+      "read_session_events",
+      "upsert_work_item",
+      "remove_work_item",
+      "list_profiles",
+      "get_profile",
+      "match_profile",
+      "lint_profiles",
+      "test_profile",
+      "get_diagnostics",
+      "create_diagnostic_bundle",
+      "get_daemon_status",
+      "shutdown_daemon",
+      "repair_operation_attempt",
+      "get_runtime_attempt_status",
+      "cancel_runtime_attempt",
+      "get_runtime_cancellation_status",
+      "get_agent_event",
+      "reply_agent_event"
+    ],
+    "streams": [
+      "session_watch",
+      "session_events",
+      "terminal_output",
+      "agent_events"
+    ],
+    "registries": {
+      "operations": {
+        "count": 34,
+        "fixture": "crates/undercurrent-protocol/tests/fixtures/registry_operations.json"
+      },
+      "streams": {
+        "count": 4,
+        "fixture": "crates/undercurrent-protocol/tests/fixtures/registry_streams.json"
+      },
+      "events": {
+        "count": 16,
+        "fixture": "crates/undercurrent-protocol/tests/fixtures/registry_events.json"
+      },
+      "errors": {
+        "count": 19,
+        "fixture": "crates/undercurrent-protocol/tests/fixtures/registry_errors.json"
+      }
+    },
+    "capabilities": [
+      "authenticated_request_context",
+      "authorized_operation_attempt_repair",
+      "authorized_runtime_attempt_cancellation",
+      "authorized_runtime_attempt_status_read",
+      "authorized_runtime_cancellation_status_read",
+      "bounded_launch_preparation",
+      "bounded_agent_event_channel",
+      "bounded_streams",
+      "effect_certainty",
+      "environment_bound_working_directory",
+      "fail_closed_attempt_readiness",
+      "idempotent_mutations",
+      "immutable_content_references",
+      "operation_attempt_fencing",
+      "object_handle_working_directory",
+      "output_integrity",
+      "preacceptance_executable_resolution",
+      "reconciliation",
+      "resume",
+      "runtime_dispatch_policy_retention_without_os_limit_enforcement",
+      "schema_negotiation",
+      "sealed_executable_launch",
+      "secret_reference_resolution",
+      "terminal_pty",
+      "typed_standard_input_close"
+    ]
+  },
+  "protocols": {
+    "ucmp": {
+      "magic": "UCMP",
+      "version": "0.1.0-beta",
+      "visibility": "public_local_ipc",
+      "version_policy": "exact_current_or_reject",
+      "connection_version": "0.1.0-beta"
+    },
+    "uchs": {
+      "magic": "UCHS",
+      "version": "0.1.0-beta",
+      "visibility": "implementation_private",
+      "configurable_endpoint": false,
+      "version_policy": "exact_current_or_reject"
+    }
+  },
+  "implementation_registries": {
+    "cli_commands": {
+      "count": 27,
+      "fixture": "tests/conformance/package/cli-commands.json"
+    },
+    "daemon_startup_stages": {
+      "count": 17,
+      "fixture": "tests/conformance/package/startup-stages.json"
+    }
+  },
+  "health": {
+    "liveness": "local_ipc_handshake",
+    "readiness_operation": "get_daemon_status",
+    "diagnostics_operation": "get_diagnostics",
+    "degraded_or_partial_state": "explicit",
+    "live_identified_attempts": "readiness_allowed",
+    "recovered_unknown_attempts": "readiness_blocked_until_evidence_backed_repair"
+  },
+  "verification": {
+    "package_validator": "scripts/checks/validate-package-manifest.py",
+    "configuration_command": "uc config validate",
+    "artifact_probe_commands": [
+      "uc --help",
+      "uc-daemon --help",
+      "uc-session-host --help"
+    ],
+    "minimum_standalone_workflow": [
+      {
+        "step": "start_daemon",
+        "interface": "uc daemon start"
+      },
+      {
+        "step": "verify_readiness",
+        "interface": "get_daemon_status"
+      },
+      {
+        "step": "start_session",
+        "interface": "start_session"
+      },
+      {
+        "step": "inspect_session",
+        "interface": "get_session_detail"
+      },
+      {
+        "step": "stop_session",
+        "interface": "stop_session"
+      },
+      {
+        "step": "stop_daemon",
+        "interface": "shutdown_daemon"
+      }
+    ]
+  },
+  "dependencies": {
+    "required": [],
+    "optional": [],
+    "peers": [],
+    "forbidden_automatic": [
+      "external/coordinator",
+      "external/workflow-engine",
+      "external/resource-manager",
+      "external/message-service",
+      "external/application-bundle"
+    ]
+  },
+  "integrity": {
+    "artifact_digest": "sha256",
+    "per_artifact_digest_required": true,
+    "bundle_manifest_digest_required": true,
+    "verify_before_execution": true,
+    "failure_action": "abort_installation"
+  },
+  "provenance": {
+    "attestation": "required_at_release",
+    "source_coordinate": "undercurrent",
+    "builder_identity": "required_at_release",
+    "materials": "required_at_release"
+  },
+  "license": {
+    "metadata": "required_in_release_bundle",
+    "texts": "required_in_release_bundle",
+    "acceptance": "before_installation",
+    "notices": [
+      "crates/undercurrent-foundation/NOTICE"
+    ]
+  },
+  "upgrade": {
+    "strategy": "stop_backup_replace_verify_restart",
+    "backup_required": true,
+    "compatibility_check_required": true,
+    "schema_validation": "exact_current_required",
+    "failed_upgrade": "stop_and_preserve_state"
+  },
+  "deprecation": {
+    "policy": "current_release_only",
+    "compatibility_policy": "exact_current_or_reject"
+  },
+  "release": {
+    "publishing_performed": false,
+    "deployment_performed": false,
+    "release_artifacts_required_for_ordinary_install": true
+  }
+}

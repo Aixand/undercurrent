@@ -1,0 +1,66 @@
+{
+  "schema": "undercurrent.vendored-crate-unsafe-audit/v0.1.0-beta",
+  "package": {
+    "name": "vte",
+    "version": "0.11.1",
+    "source_tree_sha256": "daa2bc1c76deba487d5fe3325b12dd7d027f8ca30ef37913b1a3e1d7b6e5deb4"
+  },
+  "policy": {
+    "new_unsafe_allowed": false,
+    "audited_site_count": 3,
+    "patch_sha256": "3c5c222d1329464cad3f11d0f61f2b8fad7fd6351a6877580b3879b0d8681574"
+  },
+  "sites": [
+    {
+      "path": "src/definitions.rs",
+      "source_file_sha256": "c99f830c4ad27631c8b2e055ffef5c920fd8652ed2144c2999799ecf3fea8a30",
+      "candidate_lines": [
+        55,
+        62
+      ],
+      "upstream_lines": [
+        55,
+        62
+      ],
+      "unsafe_line": 55,
+      "context": "Unpack the state-table byte into low-nibble State and high-nibble Action values.",
+      "context_sha256": "6603d5e89aacc1c1177313a78060b0462592ae00e5c7c8c9215275f4122778e9",
+      "invariant": "State and Action each remain exactly 16 tag-only variants with discriminants 0 through 15, so both masked nibbles are valid enum discriminants.",
+      "status": "unchanged_upstream"
+    },
+    {
+      "path": "src/lib.rs",
+      "source_file_sha256": "f81721a41bff479b778d2e306868c50ac49afb8ea0d30b44ebaa9c0ba4e70b18",
+      "candidate_lines": [
+        316,
+        317
+      ],
+      "upstream_lines": [
+        203,
+        204
+      ],
+      "unsafe_line": 317,
+      "context": "Construct the bounded OSC parameter scratch array with uninitialized MaybeUninit elements.",
+      "context_sha256": "45868417b194b4e63a0f4e80dffe2692b5864f8d0ada7422dfdfe17d114922f0",
+      "invariant": "Every element has type MaybeUninit<&[u8]>, so the array itself may begin uninitialized before the used prefix is populated.",
+      "status": "unchanged_upstream"
+    },
+    {
+      "path": "src/lib.rs",
+      "source_file_sha256": "f81721a41bff479b778d2e306868c50ac49afb8ea0d30b44ebaa9c0ba4e70b18",
+      "candidate_lines": [
+        324,
+        328
+      ],
+      "upstream_lines": [
+        211,
+        215
+      ],
+      "unsafe_line": 324,
+      "context": "Cast only the initialized OSC parameter prefix to borrowed byte slices for the synchronous callback.",
+      "context_sha256": "bb3e933a9f84908afdb0d6fc4943e78b8c7eda95f0f146d944c55160ecdfb6d6",
+      "invariant": "osc_num_params never exceeds MAX_OSC_PARAMS, every element in the selected prefix is initialized from a bounds-checked osc_raw range, and the borrowed slices do not escape osc_dispatch.",
+      "status": "unchanged_upstream"
+    }
+  ]
+}

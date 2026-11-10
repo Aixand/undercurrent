@@ -1,0 +1,132 @@
+{
+  "request": {
+    "mutation": {
+      "idempotency_key": "idem-1",
+      "attempt": {
+        "attempt_id": "control-1",
+        "fencing_token": 7,
+        "payload_digest_sha256": "1e92a02d2efdc29741e85a0f2c2110a3b296626c753468f8c2df47af2e14215a"
+      },
+      "contract": {
+        "capability": "cancel_runtime_attempt",
+        "schema": "undercurrent.request",
+        "schema_version": "0.1.0-beta",
+        "contract_version": "0.1.0-beta"
+      }
+    },
+    "control_id": "control-1",
+    "command_digest_sha256": "d696e602e1194d973a1fddbfe01f8a8f241f0fb0b9c1a0a0bd60525d83aa780e",
+    "target_attempt_id": "attempt-start-1",
+    "target_request_digest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "target_fencing_generation": 7,
+    "caller_cell_identity": "cell-1",
+    "session_id": "session-1",
+    "expected_session_revision": 11,
+    "expected_lifecycle_revision": 9,
+    "expected_provider_id": "prv_0198a5bd-2b01-7ae9-9a0c-42532d56e7f7",
+    "expected_provider_generation": 3,
+    "mode": "graceful",
+    "reason": "operator requested stop",
+    "propagation_policy": "target_only",
+    "absolute_deadline_millis": 2000000000000,
+    "source_product": "example/workflow",
+    "tenant_id": "tenant_0198a5bd-2afd-7dd1-b6a3-1fb90c6f0a21",
+    "actor_context_ref": "actor://current",
+    "authority_ref": "authority://cancel/1"
+  },
+  "status_request": {
+    "control_id": "control-1",
+    "command_digest_sha256": "d696e602e1194d973a1fddbfe01f8a8f241f0fb0b9c1a0a0bd60525d83aa780e",
+    "target_attempt_id": "attempt-start-1",
+    "target_request_digest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "session_id": "session-1",
+    "expected_provider_id": "prv_0198a5bd-2b01-7ae9-9a0c-42532d56e7f7",
+    "expected_provider_generation": 3,
+    "source_product": "example/workflow",
+    "tenant_id": "tenant_0198a5bd-2afd-7dd1-b6a3-1fb90c6f0a21",
+    "actor_context_ref": "actor://current",
+    "authority_ref": "authority://status/1",
+    "contract": {
+      "capability": "get_runtime_cancellation_status",
+      "schema": "undercurrent.request",
+      "schema_version": "0.1.0-beta",
+      "contract_version": "0.1.0-beta"
+    }
+  },
+  "cancel_result": {
+    "target": {
+      "target_attempt_id": "attempt-start-1",
+      "target_request_digest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "target_fencing_generation": 7,
+      "caller_cell_identity": "cell-1",
+      "session_id": "session-1",
+      "expected_session_revision": 11,
+      "expected_lifecycle_revision": 9,
+      "expected_provider_id": "prv_0198a5bd-2b01-7ae9-9a0c-42532d56e7f7",
+      "expected_provider_generation": 3
+    },
+    "control": {
+      "control_id": "control-1",
+      "command_digest_sha256": "d696e602e1194d973a1fddbfe01f8a8f241f0fb0b9c1a0a0bd60525d83aa780e",
+      "idempotency_key": "idem-1",
+      "mode": "graceful",
+      "reason": "operator requested stop",
+      "propagation_policy": "target_only",
+      "deadline_millis": 2000000000000,
+      "source_product": "example/workflow",
+      "tenant_id": "tenant_0198a5bd-2afd-7dd1-b6a3-1fb90c6f0a21",
+      "actor_context_ref": "actor://current",
+      "authority_ref": "authority://cancel/1"
+    },
+    "state": {
+      "status": "accepted_stopping",
+      "session": {
+        "session_id": "session-1",
+        "lifecycle": {
+          "state": "stopping"
+        },
+        "revision": 12,
+        "lifecycle_revision": 10,
+        "observed_at_millis": 1700000000000
+      }
+    }
+  },
+  "status_result": {
+    "target": {
+      "target_attempt_id": "attempt-start-1",
+      "target_request_digest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "target_fencing_generation": 7,
+      "caller_cell_identity": "cell-1",
+      "session_id": "session-1",
+      "expected_session_revision": 11,
+      "expected_lifecycle_revision": 9,
+      "expected_provider_id": "prv_0198a5bd-2b01-7ae9-9a0c-42532d56e7f7",
+      "expected_provider_generation": 3
+    },
+    "control": {
+      "control_id": "control-1",
+      "command_digest_sha256": "d696e602e1194d973a1fddbfe01f8a8f241f0fb0b9c1a0a0bd60525d83aa780e",
+      "idempotency_key": "idem-1",
+      "mode": "graceful",
+      "reason": "operator requested stop",
+      "propagation_policy": "target_only",
+      "deadline_millis": 2000000000000,
+      "source_product": "example/workflow",
+      "tenant_id": "tenant_0198a5bd-2afd-7dd1-b6a3-1fb90c6f0a21",
+      "actor_context_ref": "actor://current",
+      "authority_ref": "authority://cancel/1"
+    },
+    "state": {
+      "status": "unknown",
+      "session": {
+        "session_id": "session-1",
+        "lifecycle": {
+          "state": "stopping"
+        },
+        "revision": 12,
+        "lifecycle_revision": 10,
+        "observed_at_millis": 1700000000100
+      }
+    }
+  }
+}

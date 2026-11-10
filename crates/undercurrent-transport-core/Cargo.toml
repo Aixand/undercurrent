@@ -1,0 +1,19 @@
+[package]
+name = "aixand-undercurrent-transport-core"
+description = "Transport session and delivery engine for Undercurrent"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[lib]
+name = "undercurrent_transport_core"
+
+[dependencies]
+undercurrent-multiplex = { package = "aixand-undercurrent-multiplex", path = "../undercurrent-multiplex", version = "=0.1.0-beta" }
+undercurrent-protocol = { package = "aixand-undercurrent-protocol", path = "../undercurrent-protocol", version = "=0.1.0-beta" }
+undercurrent-wire = { package = "aixand-undercurrent-wire", path = "../undercurrent-wire", version = "=0.1.0-beta" }
+
+[lints]
+workspace = true

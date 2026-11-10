@@ -1,0 +1,27 @@
+{
+  "magic": "UCHS",
+  "version": "0.1.0-beta",
+  "header_bytes": 22,
+  "message_kinds": [
+    [
+      "hello",
+      1
+    ],
+    [
+      "accepted",
+      2
+    ],
+    [
+      "rejected",
+      3
+    ]
+  ],
+  "rejection_categories": [
+    "invalid_handshake",
+    "incompatible_version",
+    "missing_capability",
+    "capacity_exceeded",
+    "conflict",
+    "unavailable"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "public-unix-transport",
+  "description": "Native IPC implementation must remain inside the local adapter, not the public SDK.",
+  "mutation": {
+    "kind": "add_unix_use",
+    "package": "aixand-undercurrent",
+    "path": "src/local.rs",
+    "symbol": "std::os::unix::net::UnixStream"
+  },
+  "expected_rule": "ARCH_PUBLIC_UNIX_TRANSPORT"
+}

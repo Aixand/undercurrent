@@ -1,0 +1,27 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "vte second resolved version",
+  "description": "A second vte version must not hide behind the approved package name.",
+  "mutation": {
+    "kind": "add_vte_resolved_edge",
+    "edge": {
+      "consumer": {
+        "name": "undercurrent-runtime",
+        "version": "0.1.0-beta",
+        "source": null,
+        "path": "crates/undercurrent-runtime",
+        "package_id": "path:crates/undercurrent-runtime#0.1.0-beta"
+      },
+      "dependency": {
+        "name": "vte",
+        "version": "0.11.0",
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "path": null,
+        "package_id": "registry+https://github.com/rust-lang/crates.io-index#vte@0.11.0"
+      },
+      "dependency_name": "vte-reference",
+      "kind": "dev"
+    }
+  },
+  "expected_rule": "ARCH_VTE_IDENTITY_MISMATCH"
+}

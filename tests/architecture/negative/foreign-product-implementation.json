@@ -1,0 +1,12 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "foreign-product-implementation",
+  "description": "Undercurrent cannot link another product implementation.",
+  "mutation": {
+    "kind": "add_path_dependency",
+    "package": "undercurrent-daemon",
+    "name": "external-core",
+    "path": "../external-product/crates/external-core"
+  },
+  "expected_rule": "ARCH_FOREIGN_PRODUCT_IMPLEMENTATION"
+}

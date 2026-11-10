@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "Embedded placement is forbidden for Undercurrent.",
+  "target": "package",
+  "base": "undercurrent-package.json",
+  "mutation": {
+    "operation": "replace",
+    "path": "/runtime/allowed_placements",
+    "value": [
+      "local_process",
+      "embedded"
+    ]
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$.runtime.allowed_placements"
+}

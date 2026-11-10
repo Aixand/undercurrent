@@ -1,0 +1,483 @@
+{
+  "schema": "undercurrent.e2e-catalog/v0.1.0-beta",
+  "tests": [
+    {
+      "id": "workspace",
+      "path": "tests/e2e/cli/workspace.py",
+      "group": "cli",
+      "platforms": ["linux", "darwin"],
+      "mode": "manual",
+      "requires": [],
+      "binaries": ["uc", "uc-daemon", "uc-session-host"],
+      "command": ["{python}", "tests/e2e/cli/workspace.py"],
+      "notes": "POSIX PTY workspace navigation, attach/return, creation, groups, labels, previews and cleanup"
+    },
+    {
+      "id": "attach-modes",
+      "path": "tests/e2e/cli/attach-modes.py",
+      "group": "cli",
+      "platforms": [
+        "linux",
+        "darwin"
+      ],
+      "mode": "manual",
+      "requires": [],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/cli/attach-modes.py"
+      ],
+      "notes": "POSIX PTY and isolated daemon; debug binaries by default"
+    },
+    {
+      "id": "attach-picker",
+      "path": "tests/e2e/cli/attach-picker.py",
+      "group": "cli",
+      "platforms": [
+        "linux",
+        "darwin"
+      ],
+      "mode": "manual",
+      "requires": [],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/cli/attach-picker.py"
+      ],
+      "notes": "POSIX PTY and isolated daemon; debug binaries by default"
+    },
+    {
+      "id": "attach-scrolling",
+      "path": "tests/e2e/cli/attach-scrolling.py",
+      "group": "cli",
+      "platforms": [
+        "linux",
+        "darwin"
+      ],
+      "mode": "manual",
+      "requires": [],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/cli/attach-scrolling.py"
+      ],
+      "notes": "POSIX PTY and isolated daemon; debug binaries by default"
+    },
+    {
+      "id": "group-persistence",
+      "path": "tests/e2e/cli/group-persistence.py",
+      "group": "cli",
+      "platforms": [
+        "linux"
+      ],
+      "mode": "manual",
+      "requires": [
+        "bash"
+      ],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/cli/group-persistence.py"
+      ],
+      "notes": "Persistent groups through a Linux PTY; Bash fixture"
+    },
+    {
+      "id": "input-limits",
+      "path": "tests/e2e/cli/input-limits.py",
+      "group": "cli",
+      "platforms": [
+        "linux",
+        "darwin"
+      ],
+      "mode": "manual",
+      "requires": [],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host",
+        "uc-python-bridge"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/cli/input-limits.py",
+        "--artifact-dir",
+        "{bin_dir}",
+        "--report",
+        "{report_dir}/input-limits.json"
+      ],
+      "notes": "Finite input limits through CLI and Python bridge"
+    },
+    {
+      "id": "support-collection",
+      "path": "tests/e2e/cli/support-collection.py",
+      "group": "cli",
+      "platforms": [
+        "linux"
+      ],
+      "mode": "manual",
+      "requires": [],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/cli/support-collection.py",
+        "--artifact-dir",
+        "{bin_dir}"
+      ],
+      "notes": "Support archive collection and redaction"
+    },
+    {
+      "id": "exec-environment",
+      "path": "tests/e2e/cli/exec-environment.py",
+      "group": "cli",
+      "platforms": [
+        "linux",
+        "darwin"
+      ],
+      "mode": "ci",
+      "requires": [
+        "bash",
+        "zsh",
+        "fish"
+      ],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/cli/exec-environment.py",
+        "--bin-dir",
+        "{bin_dir}"
+      ],
+      "notes": "Live shell environment; platform-contracts CI"
+    },
+    {
+      "id": "cli-smoke",
+      "path": "tests/e2e/cli/smoke.py",
+      "group": "cli",
+      "platforms": [
+        "linux"
+      ],
+      "mode": "standalone",
+      "requires": [
+        "bash",
+        "sh",
+        "stty",
+        "dd",
+        "cat",
+        "sleep",
+        "pwd"
+      ],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/cli/smoke.py",
+        "--bin-dir",
+        "{bin_dir}"
+      ],
+      "notes": "Standalone smoke stage; isolated CLI behavior"
+    },
+    {
+      "id": "fast-lifecycle",
+      "path": "tests/e2e/lifecycle/fast-lifecycle.py",
+      "group": "lifecycle",
+      "platforms": [
+        "linux"
+      ],
+      "mode": "manual",
+      "requires": [],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/lifecycle/fast-lifecycle.py",
+        "--artifact-dir",
+        "{bin_dir}"
+      ],
+      "notes": "Isolated lifecycle regression; Linux process identity checks"
+    },
+    {
+      "id": "reset-shutdown",
+      "path": "tests/e2e/lifecycle/reset-shutdown.py",
+      "group": "lifecycle",
+      "platforms": [
+        "linux"
+      ],
+      "mode": "manual",
+      "requires": [],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/lifecycle/reset-shutdown.py",
+        "--artifact-dir",
+        "{bin_dir}"
+      ],
+      "notes": "Isolated lifecycle regression; Linux process identity checks"
+    },
+    {
+      "id": "recovery",
+      "path": "tests/e2e/lifecycle/recovery.py",
+      "group": "lifecycle",
+      "platforms": [
+        "linux"
+      ],
+      "mode": "standalone",
+      "requires": [],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/lifecycle/recovery.py",
+        "--artifact-dir",
+        "{bin_dir}",
+        "--report",
+        "{report_dir}/recovery.json"
+      ],
+      "notes": "Isolated lifecycle regression; Linux process identity checks"
+    },
+    {
+      "id": "local-ipc",
+      "path": "tests/e2e/configuration/local-ipc.py",
+      "group": "configuration",
+      "platforms": [
+        "linux"
+      ],
+      "mode": "standalone",
+      "requires": [],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/configuration/local-ipc.py",
+        "--artifact-dir",
+        "{bin_dir}",
+        "--report",
+        "{report_dir}/local-ipc.json"
+      ],
+      "notes": "Configuration validation stage; rejected settings and home-derived local IPC"
+    },
+    {
+      "id": "launch-modes",
+      "path": "tests/e2e/configuration/test-launch-modes.py",
+      "group": "configuration",
+      "platforms": [
+        "linux"
+      ],
+      "mode": "manual",
+      "requires": [
+        "cc"
+      ],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/configuration/test-launch-modes.py",
+        "{bin_dir}"
+      ],
+      "notes": "Native/sealed launches and executable-relative resources"
+    },
+    {
+      "id": "home-layout",
+      "path": "tests/e2e/configuration/home-layout.py",
+      "group": "configuration",
+      "platforms": [
+        "linux"
+      ],
+      "mode": "manual",
+      "requires": [],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/configuration/home-layout.py",
+        "{bin_dir}"
+      ],
+      "notes": "Home layout, persistence, isolation and rejection of retired inputs"
+    },
+    {
+      "id": "yaml-profiles",
+      "path": "tests/e2e/configuration/test-yaml-profiles.py",
+      "group": "configuration",
+      "platforms": [
+        "linux"
+      ],
+      "mode": "manual",
+      "requires": [],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/configuration/test-yaml-profiles.py",
+        "{bin_dir}"
+      ],
+      "notes": "Profile seeding, reload, detection and input pacing"
+    },
+    {
+      "id": "platform-contract",
+      "path": "tests/e2e/platform/test-platform-contract.py",
+      "group": "platform",
+      "platforms": [
+        "linux",
+        "darwin"
+      ],
+      "mode": "ci",
+      "requires": [],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/platform/test-platform-contract.py",
+        "{bin_dir}"
+      ],
+      "notes": "Shared native CLI behavior; platform-contracts CI"
+    },
+    {
+      "id": "platform-detection",
+      "path": "tests/e2e/platform/test-platform-detection.py",
+      "group": "platform",
+      "platforms": [
+        "linux",
+        "darwin"
+      ],
+      "mode": "ci",
+      "requires": [
+        "bash",
+        "zsh",
+        "fish",
+        "cc"
+      ],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/platform/test-platform-detection.py",
+        "{bin_dir}"
+      ],
+      "notes": "Shared native shell detection; platform-contracts CI"
+    },
+    {
+      "id": "windows-attach",
+      "path": "tests/e2e/platform/windows-attach-smoke.py",
+      "group": "platform",
+      "platforms": [
+        "win32"
+      ],
+      "mode": "ci",
+      "requires": [],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/platform/windows-attach-smoke.py",
+        "--bin-dir",
+        "{bin_dir}"
+      ],
+      "notes": "ConPTY attachment; requires Python pywinpty; Windows CI"
+    },
+    {
+      "id": "windows-native",
+      "path": "tests/e2e/platform/windows-native-smoke.py",
+      "group": "platform",
+      "platforms": [
+        "win32"
+      ],
+      "mode": "ci",
+      "requires": [
+        "pwsh"
+      ],
+      "binaries": [
+        "uc",
+        "uc-daemon",
+        "uc-session-host"
+      ],
+      "command": [
+        "{python}",
+        "tests/e2e/platform/windows-native-smoke.py",
+        "--skip-build",
+        "--bin-dir",
+        "{bin_dir}"
+      ],
+      "notes": "Native lifecycle and crash recovery; Windows CI"
+    },
+    {
+      "id": "windows-peer-contexts",
+      "path": "tests/e2e/platform/windows-peer-contexts.py",
+      "group": "platform",
+      "platforms": ["win32"],
+      "mode": "helper",
+      "requires": ["powershell.exe"],
+      "binaries": ["uc", "uc-daemon", "uc-session-host", "uc-python-bridge"],
+      "command": [],
+      "notes": "Manual elevated SSH qualification for the signed-in desktop user; requires pipe_peer_probe, matching native binaries, and explicit --probe, --uc, and new --work paths. See tests/e2e/README.md."
+    },
+    {
+      "id": "assert-no-tcp-listener",
+      "path": "tests/e2e/platform/assert-no-tcp-listener.py",
+      "group": "platform",
+      "platforms": [
+        "linux"
+      ],
+      "mode": "helper",
+      "requires": [],
+      "binaries": [],
+      "command": [],
+      "notes": "Release-bundle helper; requires the owned live daemon PID"
+    }
+  ]
+}

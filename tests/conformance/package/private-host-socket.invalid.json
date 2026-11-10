@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "The private UCHS endpoint is not configurable through the public product paths.",
+  "target": "config",
+  "base": "tests/conformance/package/config.local.valid.json",
+  "mutation": {
+    "operation": "add",
+    "path": "/paths/socket",
+    "value": "/run/user/1000/undercurrent/session-host.sock"
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$.paths"
+}

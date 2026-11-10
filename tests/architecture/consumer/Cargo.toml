@@ -1,0 +1,12 @@
+[package]
+name = "operation-boundary-consumer"
+version = "0.1.0-beta"
+edition = "2024"
+publish = false
+
+[dependencies]
+undercurrent-protocol = { package = "aixand-undercurrent-protocol", path = "../../../crates/undercurrent-protocol" }
+undercurrent = { package = "aixand-undercurrent", path = "../../../crates/undercurrent-sdk" }
+
+[workspace]
+resolver = "3"

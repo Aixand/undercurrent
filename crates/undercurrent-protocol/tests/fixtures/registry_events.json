@@ -1,0 +1,18 @@
+[
+  "session_created",
+  "session_renamed",
+  "session_configuration_changed",
+  "session_removed",
+  "lifecycle_changed",
+  "process_ownership_changed",
+  "foreground_changed",
+  "foreground_evidence_changed",
+  "health_changed",
+  "health_evidence_changed",
+  "work_context_changed",
+  "restart_scheduled",
+  "restart_cancelled",
+  "restart_state_changed",
+  "restart_exhausted",
+  "terminal_resized"
+]

@@ -1,0 +1,88 @@
+# Rust build output and raw coverage profiles
+target/
+*.profraw
+
+# Python environments and package build output
+.venv/
+.venv*/
+*.egg-info/
+/python/build/
+/python/dist/
+
+# Python bytecode and lint caches
+__pycache__/
+*.py[cod]
+.ruff_cache/
+
+# Editor temporary files and macOS directory metadata
+*.swp
+*.tmp
+.DS_Store
+
+# Portable product releases and pinned interpreter archives
+/dist/
+/build/
+
+# Local support archives collected while diagnosing an installation.
+/uc-support*.zip
+
+# Local credentials; sanitized examples remain reviewable.
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Keep coding-assistant instructions and local configuration out of Git.
+# The case-insensitive index/CI check also rejects forced additions and variants.
+AGENTS.md
+AGENTS.*.md
+AGENTS.md.*
+agents.md
+agent.md
+CLAUDE.md
+CLAUDE.*.md
+CLAUDE.md.*
+claude.md
+CODEX.md
+GEMINI.md
+gemini.md
+QWEN.md
+AMP.md
+WARP.md
+CRUSH.md
+OPENCODE.md
+AI.md
+AI_CONTEXT.md
+copilot-instructions.md
+opencode.json
+opencode.jsonc
+.agent/
+.agents/
+.claude/
+.codex/
+.cursor/
+.windsurf/
+.cline/
+.roo/
+.continue/
+.gemini/
+.qwen/
+.opencode/
+.junie/
+.cursorrules
+.cursorignore
+.cursorindexingignore
+.windsurfrules
+.clinerules*
+.roorules*
+.copilotignore
+.goosehints
+.gooseignore
+.aider*
+.github/agents/
+.github/instructions/
+.github/prompts/

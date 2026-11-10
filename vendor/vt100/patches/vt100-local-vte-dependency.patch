@@ -1,0 +1,19 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -44,7 +44,8 @@
+ version = "0.1.10"
+ 
+ [dependencies.vte]
+-version = "0.11.0"
++version = "=0.11.1"
++path = "../vte"
+ 
+ [dev-dependencies.nix]
+ version = "0.26.2"
+@@ -66,4 +67,5 @@
+ version = "0.2.3"
+ 
+ [dev-dependencies.vte]
+-version = "0.11.0"
++version = "=0.11.1"
++path = "../vte"

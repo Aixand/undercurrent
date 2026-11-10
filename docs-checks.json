@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "include": [
+    "README.md",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "SECURITY.md",
+    "SUPPORT.md",
+    "REPOSITORY_FILES.md",
+    "CHANGELOG.md",
+    "docs/**/*.md",
+    "crates/**/README.md",
+    "crates/**/PUBLIC_API.md",
+    "crates/**/docs/**/*.md",
+    "python/**/*.md",
+    "scripts/README.md",
+    "tests/**/README.md"
+  ],
+  "exclude": [
+    "python/build",
+    "python/dist"
+  ],
+  "allow_placeholders": false
+}

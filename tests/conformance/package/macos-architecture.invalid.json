@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "A macOS platform ID must match its CPU architecture.",
+  "target": "package",
+  "base": "undercurrent-package.json",
+  "mutation": {
+    "operation": "replace",
+    "path": "/platforms/1/architecture",
+    "value": "x86_64"
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$.platforms[1]"
+}

@@ -1,0 +1,14 @@
+schema_version: 0.1.0-beta
+name: ask
+description: Explicit profile for the demo importer's confirmation prompt
+archetype: unclassified
+input_delivery:
+  type: immediate
+foreground_rules:
+  - claim:
+      type: interaction
+      state: requested
+      modality: options
+      semantic: demo.ask
+    patterns: ['(?m)^APPROVAL REQUIRED: import 4 rows \[yes/no\][ \t]*$']
+    confidence_basis_points: 9500

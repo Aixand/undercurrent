@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "Product contract metadata requires exact versions and rejects compatibility-range fields.",
+  "target": "package",
+  "base": "undercurrent-package.json",
+  "mutation": {
+    "operation": "add",
+    "path": "/contracts/contract_compatibility",
+    "value": ">=0.2.0,<0.1.0-beta"
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$.contracts"
+}

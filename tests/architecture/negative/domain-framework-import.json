@@ -1,0 +1,11 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "domain-framework-import",
+  "description": "Domain cannot import an asynchronous runtime framework.",
+  "mutation": {
+    "kind": "add_import",
+    "package": "undercurrent-domain",
+    "symbol": "tokio"
+  },
+  "expected_rule": "ARCH_DOMAIN_FORBIDDEN_IMPORT"
+}

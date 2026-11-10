@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "profile": "solo",
+  "repository": "Aixand/undercurrent",
+  "new_repository": false,
+  "documentation_only": false,
+  "project_checks": [
+    {
+      "context": "Documentation checks",
+      "app_slug": "github-actions"
+    },
+    {
+      "context": "License inventory and packaging",
+      "app_slug": "github-actions"
+    },
+    {
+      "context": "Product installer (ubuntu-22.04)",
+      "app_slug": "github-actions"
+    },
+    {
+      "context": "Product installer (macos-15-intel)",
+      "app_slug": "github-actions"
+    },
+    {
+      "context": "Product installer (macos-15)",
+      "app_slug": "github-actions"
+    },
+    {
+      "context": "Product installer (windows-2022)",
+      "app_slug": "github-actions"
+    },
+    {
+      "context": "Dependency advisories",
+      "app_slug": "github-actions"
+    }
+  ],
+  "overrides": {
+    "security": {
+      "dependabot_security_updates": true
+    }
+  }
+}

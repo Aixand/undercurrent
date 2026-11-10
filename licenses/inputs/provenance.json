@@ -1,0 +1,18 @@
+{
+  "terminal": {
+    "source": "https://raw.githubusercontent.com/microsoft/terminal/6676c6f938f7e98ad680f0cecedd3bafb6529734/NOTICE.md",
+    "sha256": "e7fbaadee6ab20c28b87730a510ee5f5815d8fb4bd88d1d54d282dc2a74c0726",
+    "scope": "Conservative upstream Terminal notices; includes components beyond ConPTY. The pinned NuGet package does not publish a build-to-source revision."
+  },
+  "rust": {
+    "version": "1.95.0",
+    "source": "https://static.rust-lang.org/dist/2026-04-16/rust-docs-1.95.0-x86_64-unknown-linux-gnu.tar.xz",
+    "files": {
+      "rust-1.95.0-COPYRIGHT-library.html": "90567e2718bf7fd65a71a3a43c5596488e80e5f51ed02bfea6fec54458b5f3d1",
+      "rust-MIT.txt": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+      "rust-Apache-2.0.txt": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff"
+    },
+    "archive_sha256": "0f472fe2a1f8195610dd587ac7ce507d33a4b64eaed06e7b92d3bd12ba13745f",
+    "extraction": "COPYRIGHT-library.html and licenses/{MIT,Apache-2.0}.txt from the locally installed official rust-docs component for Rust 1.95.0."
+  }
+}

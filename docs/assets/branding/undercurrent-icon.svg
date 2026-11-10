@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="254 238 818 818" role="img" aria-labelledby="title">
+  <title id="title">Undercurrent</title>
+  <defs>
+    <linearGradient id="charcoal" x1="313" y1="347" x2="1015" y2="948" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22272a"/>
+      <stop offset="1" stop-color="#252b2d"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="313" y1="598" x2="968" y2="862" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#178e94"/>
+      <stop offset="1" stop-color="#269397"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#charcoal)" d="M367 347h434c31 0 54 24 54 54v147c-139-19-205 49-281 114-49 43-104 97-163 97-57 0-98-25-98-69V402c0-30 24-55 54-55Z"/>
+  <circle cx="390" cy="408" r="18" fill="#00afb4"/>
+  <g fill="#f5f5f4">
+    <circle cx="457" cy="408" r="18"/>
+    <circle cx="524" cy="408" r="18"/>
+    <path d="M372 482h25l62 64-62 63h-25v-11l54-52-54-53Z"/>
+    <path d="M476 587h87v22h-87Z"/>
+  </g>
+  <path fill="url(#teal)" d="M313 756c40 33 75 39 113 39 114 0 165-63 245-124 57-44 104-73 148-73 63 0 120 33 149 83-24-15-54-24-83-24-92 0-141 54-216 114-64 52-121 91-202 91-70 0-128-40-154-106Z"/>
+  <path fill="url(#charcoal)" d="M398 879c37 20 90 22 139 10 102-23 155-73 224-127 44-35 89-59 134-59 54 0 100 29 120 79-31-18-53-26-84-26-79 0-125 48-185 94-68 53-124 98-196 98-61 0-116-25-152-69Z"/>
+</svg>

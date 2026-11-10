@@ -1,0 +1,32 @@
+name: Feature request
+description: Suggest a capability or improvement to an existing workflow.
+title: "[Feature]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Search [existing issues](https://github.com/Aixand/undercurrent/issues) for similar requests first. Describe the problem you want to solve; an implementation plan is not required. No diagnostic archive is needed.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What are you trying to accomplish, and what makes it difficult today? Include a concrete example of the workflow.
+    validations:
+      required: true
+  - type: textarea
+    id: desired-outcome
+    attributes:
+      label: Desired outcome
+      description: Describe what you would like to be able to do. Example commands or SDK usage are welcome if you have them.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives or workarounds
+      description: Optional. What have you tried or considered, and what limitations remain?
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Optional. Add relevant platforms, integrations, examples, or related issues.

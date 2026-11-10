@@ -1,0 +1,11 @@
+{
+  "schema_version": "undercurrent.architecture-negative/v0.1.0-beta",
+  "name": "runtime-store-edge",
+  "description": "The runtime adapter cannot depend on a concrete persistence adapter.",
+  "mutation": {
+    "kind": "add_edge",
+    "from": "undercurrent-runtime",
+    "to": "undercurrent-store-sqlite"
+  },
+  "expected_rule": "ARCH_RUNTIME_STORE_IMPLEMENTATION"
+}

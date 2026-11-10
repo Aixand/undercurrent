@@ -1,0 +1,22 @@
+[package]
+name = "undercurrent-python-bridge"
+description = "Subprocess bridge for the Undercurrent Python SDK"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "uc-python-bridge"
+path = "src/main.rs"
+
+[dependencies]
+undercurrent-sdk = { package = "aixand-undercurrent", path = "../undercurrent-sdk" }
+undercurrent-protocol = { package = "aixand-undercurrent-protocol", path = "../undercurrent-protocol" }
+serde.workspace = true
+serde_json = "1.0.151"
+uuid.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,20 @@
+--- a/src/grid.rs
++++ b/src/grid.rs
+@@ -113 +113 @@
+-        for row in &mut self.rows {
++        for row in self.rows.iter_mut().chain(self.scrollback.iter_mut()) {
+@@ -160 +160,2 @@
+-            .chain(self.rows.iter().take(rows_len - self.scrollback_offset))
++            .chain(self.rows.iter())
++            .take(rows_len)
+@@ -844 +845,4 @@
+-            if self.scrollback_len > 0 && !self.scroll_region_active() {
++            // A top-anchored region can leave a fixed composer/status area below
++            // it. Rows leaving the top still belong to primary-screen history.
++            // Interior regions and the zero-history alternate grid stay excluded.
++            if self.scrollback_len > 0 && self.scroll_top == 0 {
+@@ -886,4 +889,0 @@
+-    }
+-
+-    fn scroll_region_active(&self) -> bool {
+-        self.scroll_top != 0 || self.scroll_bottom != self.size.rows - 1

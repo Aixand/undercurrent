@@ -1,0 +1,203 @@
+# SPDX-License-Identifier: Apache-2.0
+schema_version: 0.1.0-beta
+name: codex
+description: OpenAI Codex CLI
+disabled: false
+matching:
+- binary:
+  - codex
+  arguments: []
+  required_environment: []
+archetype: animated_agent
+input_delivery:
+  type: paced_trailing_submit
+  delay_millis: 120
+  text_mode: paste
+baseline_interaction: null
+foreground_rules:
+- claim:
+    type: interaction
+    state: requested
+    modality: options
+    semantic: codex.permission_settings
+  patterns:
+  - '(?ms)^[ \t]*Update Model Permissions[ \t]*\r?\n.*?^[ \t]*[›❯]?[ \t]*1\.[ \t]+Ask for approval\b.*?^[ \t]*[›❯]?[ \t]*2\.[ \t]+Approve for me\b.*?^[ \t]*[›❯]?[ \t]*3\.[ \t]+Full Access\b.*?^[ \t]*[›❯]?[ \t]*4\.[ \t]+Read Only\b.*?^[ \t]*enter select[ \t]+·[ \t]+esc back[ \t]*\s*\z'
+  region: null
+  confidence_basis_points: 9500
+- claim:
+    type: interaction
+    state: requested
+    modality: options
+    semantic: codex.workspace_trust
+  patterns:
+  - '(?ms)^[ \t]*Folder access[ \t]*\r?\n.*?^[ \t]*Trust this folder\?.*?^[ \t]*[›❯]?[ \t]*1\.[ \t]+Trust and continue[ \t]*\r?\n[ \t]*[›❯]?[ \t]*2\.[ \t]+Quit[ \t]*\r?\n\s*enter continue[ \t]+·[ \t]+esc quit\s*\z'
+  region: null
+  confidence_basis_points: 9500
+- claim:
+    type: interaction
+    state: requested
+    modality: options
+    semantic: codex.workspace_trust
+  patterns:
+  - (?m)Press enter to (?:confirm|continue)
+  - '(?m)^\s*[›❯]?\s*1\.\s+Yes'
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9500
+- claim:
+    type: interaction
+    state: requested
+    modality: options
+    semantic: codex.permission
+  patterns:
+  - (?m)needs your approval
+  - (?m)MCP server to run tool
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9500
+- claim:
+    type: constraint
+    state: present
+    semantic: codex.rate_limit
+  patterns:
+  - (?m)Quota exceeded
+  - (?m)at capacity
+  - (?m)experiencing high demand
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9500
+- claim:
+    type: constraint
+    state: present
+    semantic: codex.retrying
+  patterns:
+  - '(?m)Retrying\b'
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 8
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 8500
+- claim:
+    type: interaction
+    state: available
+    modality: text
+    semantic: codex.composer
+  patterns:
+  - '(?ms)^[ \t]*›[^\r\n]*\r?\n.*^[ \t]*(?i:gpt)-[[:alnum:]._-]+[ \t]+(?:default|low|medium|high|xhigh|max|ultra)[^\r\n]*[
+    \t]+(?:/|~[\\/]|[A-Za-z]:[\\/])[^\r\n]*$'
+  excludes:
+  - (?m)Press enter to (?:confirm|continue)
+  - '(?m)^\s*[›❯]?\s*1\.\s+Yes'
+  - (?m)MCP server to run tool
+  - '(?im)\b(?:model|directory):\s*loading\b'
+  - '(?im)\b(?:starting|booting)\s+MCP\s+servers?\b'
+  - '(?im)\btab[ \t]+to[ \t]+queue[ \t]+message\b'
+  - '(?im)\besc[ \t]+to[ \t]+interrupt\b'
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region: null
+  confidence_basis_points: 9000
+- claim:
+    type: constraint
+    state: present
+    semantic: codex.error
+  patterns:
+  - '(?m)^■\s'
+  - '(?m)^✘\s'
+  - (?m)Fatal error
+  excludes: []
+  traits:
+    last_line_ends_with: null
+    last_line_starts_with: null
+    screen_contains: []
+    screen_excludes: []
+    cursor_at_end: null
+  region:
+    type: bottom_rows
+    rows: 16
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9000
+# Match the live composer/footer together so quoted hints in the transcript
+# cannot establish activity by themselves. See ../../../docs/guides/configuration/profiles.md.
+- claim:
+    type: execution
+    state: active
+  patterns:
+  - '(?m)^[ \t]*›[^\r\n]*\r?\n(?:[ \t]*\r?\n)*[ \t]*(?:esc[ \t]+to[ \t]+interrupt|tab[ \t]+to[ \t]+queue[ \t]+message)[ \t]*\r?\n(?:[ \t]*\r?\n|[ \t]*\d+%[ \t]+context[ \t]+left[ \t]*\r?\n)*[ \t]*(?i:gpt)-[[:alnum:]._-]+[ \t]+(?:default|low|medium|high|xhigh|max|ultra)[^\r\n]*[ \t]+(?:/|~[\\/]|[A-Za-z]:[\\/])[^\r\n]*\s*\z'
+  - '(?m)^[ \t]*[^›❯\r\n]+\((?:\d+h[ \t]+)?(?:\d+m[ \t]+)?\d+s[ \t]+[•·][ \t]+esc[ \t]+to[ \t]+interrupt\)[^\r\n]*\r?\n(?:[ \t─━]*\r?\n|[ \t]+└[^\r\n]*\r?\n){0,6}[ \t]*›[^\r\n]*\r?\n(?:[ \t─━]*\r?\n|[ \t]*(?:tab[ \t]+to[ \t]+queue[ \t]+message|\d+%[ \t]+context[ \t]+left)[ \t]*\r?\n)*[ \t]*(?i:gpt)-[[:alnum:]._-]+[ \t]+(?:default|low|medium|high|xhigh|max|ultra)[^\r\n]*[ \t]+(?:/|~[\\/]|[A-Za-z]:[\\/])[^\r\n]*\s*\z'
+  excludes:
+  - '(?m)Press enter to (?:confirm|continue)'
+  - '(?m)^\s*[›❯]?\s*1\.\s+Yes'
+  - '(?m)needs your approval'
+  - '(?m)MCP server to run tool'
+  - '(?im)\b(?:model|directory):\s*loading\b'
+  - '(?im)\b(?:starting|booting)\s+MCP\s+servers?\b'
+  region: null
+  confidence_basis_points: 9000
+background_rules:
+- kind: process_group
+  patterns:
+  - '(?im)\d+\s+back(?:ground|\s*round)\s+terminals?\s+running'
+  excludes: []
+  name_patterns: []
+  label: background terminal
+  region:
+    type: bottom_rows
+    rows: 8
+    anchor:
+      type: any
+    columns: null
+  confidence_basis_points: 9000
+alternate_screen_is_normal: false
+silent_until_input: false
+output_exclusions:
+  top_rows: 0
+  bottom_rows: 0

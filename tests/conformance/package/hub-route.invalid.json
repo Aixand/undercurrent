@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../schemas/package-negative-fixture.schema.json",
+  "fixture_version": "undercurrent.package-negative-fixture/v0.1.0-beta",
+  "description": "A direct product route cannot restore the removed Hub relay.",
+  "target": "package",
+  "base": "undercurrent-package.json",
+  "mutation": {
+    "operation": "replace",
+    "path": "/runtime/direct_route",
+    "value": "caller -> external-coordinator -> undercurrent-websocket-adapter -> uc-daemon"
+  },
+  "expected_code": "SCHEMA_INVALID",
+  "expected_path": "$.runtime.direct_route"
+}
