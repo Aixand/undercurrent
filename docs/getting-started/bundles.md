@@ -1,25 +1,13 @@
 # Install matching standalone artifacts
 
-Hosted downloads require maintainer-confirmed working endpoints and a published
-bundle for your platform. Availability is not established for this source
-snapshot. Use [source installation](installation.md#install-for-source-development)
-or a supplied [portable product artifact](product-installer.md) instead.
+Use the [hosted installer](installation.md#install-a-published-release)
+at [installer.aixand.org/undercurrent](https://installer.aixand.org/undercurrent)
+for published releases. It verifies a pinned bundle and installs the complete
+portable product. Follow the installation guide for installation,
+platform prerequisites, verification, and shell setup.
 
-
-Use this guide to install a published release, build from source, or verify a
-separately supplied bundle. Keep `uc`, `uc-daemon`, and `uc-session-host` from
-the same release or source build.
-
-For a published Linux/macOS release, use the public installer:
-
-```sh
-curl -fsSL https://install.aixand.org | sh -s -- undercurrent
-```
-
-It downloads the matching bundle from `downloads.aixand.org` and verifies it
-before installation. See [installation and first use](installation.md) for
-curl/Python prerequisites, published platform availability, license acceptance,
-install paths, verification, and a first-session walkthrough.
+Use this guide for alternative source builds and separately supplied bundles.
+Keep `uc`, `uc-daemon`, and `uc-session-host` from the same release or source build.
 
 For a local source checkout, use [the development installer](installation.md#install-for-source-development):
 `./dev.sh install --prod` on Linux/macOS or `./dev.ps1 install --prod` on Windows.

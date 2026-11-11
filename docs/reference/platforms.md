@@ -9,14 +9,15 @@ rather than inferring qualification from this map.
 | --- | --- | --- | --- |
 | Public local transport | Unix socket adapter | Unix socket adapter | Named-pipe adapter |
 | Native process/runtime paths | Implemented | Implemented with macOS observation adapter | Implemented ConPTY/job/process paths |
-| Public installer `install.aixand.org` | x86_64 with GNU libc, published bundle required | arm64 and x86_64, published bundle required | x86_64 through `/install.ps1`, published Windows bundle required |
+| Public installer `installer.aixand.org/undercurrent` | x86_64 with GNU libc, published bundle required | arm64 and x86_64, published bundle required | x86_64 through `/install.ps1`, published Windows bundle required |
 | Source installer `dev.sh` | x86_64 with GNU libc | arm64 and x86_64, Xcode tools required | Not supported by this script |
 | Checked-in native CI | Ubuntu 24.04 job | macOS 14 and macOS 15 Intel jobs | Windows Server 2022 job in the same workflow |
 | Python live qualification | No result established here | No result established here | No result established here |
 
-The public installer requires curl and Python 3.11+ on supported hosts. Native
-compiler requirements apply to source builds; Windows local development uses
-`dev.ps1`.
+The hosted installer needs no system Python or Rust. See
+[installation prerequisites](../getting-started/installation.md#choose-an-installation-route)
+for native tools. Compiler requirements apply to source builds; Windows local
+development uses `dev.ps1`.
 
 Owners: [local transport](../../crates/undercurrent-transport-local/README.md),
 [runtime](../../crates/undercurrent-runtime/README.md), [installer](../../dev.sh),

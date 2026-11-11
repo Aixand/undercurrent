@@ -16,7 +16,8 @@ for terminal workflows, process observation, service health, and automation.
 4. [Choose a workflow](#choose-a-workflow) below, or continue with
    [task guides](../guides/README.md) and [SDK integration](../sdk/README.md).
 
-Need to install `uc`? See [installation](installation.md). Source builds belong
+Need to install `uc`? Use the [hosted installer](installation.md#install-a-published-release)
+at [installer.aixand.org/undercurrent](https://installer.aixand.org/undercurrent). Source builds belong
 in [development setup](../development/setup.md); separately supplied archives
 are covered by [bundle verification](bundles.md).
 

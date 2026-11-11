@@ -10,6 +10,10 @@ The configured targets are Linux GNU x64, macOS Intel/ARM64, and Windows x64.
 Actual execution is recorded in [installer validation](../development/installer-validation.md).
 Build each target natively and qualify it before publication.
 
+For published releases, use the [hosted installer](installation.md#install-a-published-release)
+at [installer.aixand.org/undercurrent](https://installer.aixand.org/undercurrent).
+The instructions below cover artifact builders, supplied bundles, and lifecycle operations.
+
 ## Build and qualify
 
 Builders need Python 3.11+, uv 0.12.7, Rust 1.95.0, and a native compiler/linker.

@@ -98,8 +98,18 @@ Coming from tmux? [Compare the workflows and capabilities](docs/getting-started/
 
 ## Installation
 
-Install from this checkout with the commands below. For supplied artifacts or
-published downloads, see [other installation routes](#portable-artifacts-and-published-downloads).
+Use [installer.aixand.org/undercurrent](https://installer.aixand.org/undercurrent)
+for a prebuilt release. No source checkout, Rust, or system Python is required.
+From any directory on Linux/macOS, run:
+
+```sh
+curl -fsSL https://installer.aixand.org/undercurrent | sh
+```
+
+
+The installer includes all five executables and the Python SDK wheel.
+See [installation and verification](docs/getting-started/installation.md#install-a-published-release)
+for prerequisites, PATH setup, and Windows PowerShell commands.
 
 ### Local development
 
@@ -128,10 +138,6 @@ includes all five native executables, the Python SDK wheel, reviewed notices,
 and its helper interpreter. Use its matching bootstrap and license digest.
 No system Python or Rust is required for this route. Maintainers build and
 [qualify the artifact](docs/development/installer-validation.md) separately.
-
-Hosted installer availability is not established for this source snapshot.
-If a maintainer confirms a published release and working endpoints for your
-platform, follow the [download installation guide](docs/getting-started/installation.md#install-a-published-release).
 
 ### Initialize your shell
 
