@@ -258,6 +258,15 @@ setup and the [complete runnable example](crates/undercurrent-sdk/examples/query
 
 ### Python
 
+Install the SDK in your application's Python 3.11+ virtual environment:
+
+```sh
+python -m pip install aixand-undercurrent-sdk==0.1.0b0
+```
+
+Use matching `0.1.0-beta` native executables, including `uc-python-bridge`.
+The Python package does not install them.
+
 After [installing the Python package and matching bridge](docs/sdk/python/quickstart.md),
 list sessions in the selected home:
 

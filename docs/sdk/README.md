@@ -17,10 +17,14 @@ daemon implicitly or offers an embedded runtime.
 | First task | [Connect and query from Rust](rust/README.md) | [Verify an input round trip from Python](python/README.md) |
 
 Rust needs the repository's pinned Rust 1.95.0 toolchain and native dependencies
-for source builds. Python needs 3.11+ and separately built matching executables;
+for source builds. Python needs 3.11+ and separately installed matching executables;
 pip installation does not provide them. Use [installation](../getting-started/installation.md)
 and [platform scope](../reference/platforms.md), keeping native Rust support
 separate from Python live-integration qualification.
+
+Install `aixand-undercurrent-sdk==0.1.0b0` from PyPI into your application's
+virtual environment. Follow the [Python quickstart](python/quickstart.md) to
+select the native executables and verify a complete round trip.
 
 This comparison concerns client boundaries, not runtime ownership changes.
 

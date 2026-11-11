@@ -16,6 +16,9 @@ components, initialize your shell, and create your first session.
 The hosted installer includes `uc`, `uc-daemon`, `uc-session-host`,
 `uc-python-bridge`, `uc-mcp`, and the Python SDK wheel. It downloads a pinned,
 checksum-verified GitHub Release bundle and bootstraps its helper interpreter.
+Python applications install `aixand-undercurrent-sdk==0.1.0b0` from PyPI into
+their own virtual environment. Follow the [Python SDK quickstart](../sdk/python/quickstart.md)
+to use the matching bridge and runtime.
 
 The required executables are `uc`, `uc-daemon`, and `uc-session-host` (`.exe` on
 Windows). Windows also requires the matching `uc-conpty` directory containing

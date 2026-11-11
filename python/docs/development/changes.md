@@ -86,15 +86,16 @@ for link checks and rendered Mermaid inspection.
 
 ## Verification scope
 
-No Python live-daemon test suite or cross-platform Python qualification artifact
-is present in this checkout. Verify the
+The [packaging workflow](../../../.github/workflows/python-sdk.yml) installs the
+built wheel and runs unit tests on Python 3.11–3.14 on Linux. These checks do not
+establish live-daemon or cross-platform integration qualification. Verify the
 examples against matching binaries in an isolated home before declaring live
 qualification. Rust native platform support alone does not establish Python
 integration qualification. The unit tests simulate requests and observations;
 they cannot validate bridge startup or native process IO.
 
 The [package manifest](../../pyproject.toml) declares Python 3.11+, no third-party
-runtime dependencies, and setuptools 68+ for wheel builds. The wheel contains
+runtime dependencies, and setuptools 77.0.3+ for wheel builds. The wheel contains
 Python code and typing metadata; the bridge and daemon must be supplied
 separately. The [workspace manifest](../../../Cargo.toml) requires Rust 1.95+
 and the [toolchain file](../../../rust-toolchain.toml) pins 1.95.0 for source builds.

@@ -1,7 +1,7 @@
 # Install the client and verify an input round trip
 
 Start a local terminal process, send it input, and verify its acknowledgment
-through Python SDK 0.1.0. Then clean up the session and isolated runtime.
+through Python SDK **0.1.0b0** from PyPI. Then clean up the session and isolated runtime.
 This guide assumes `uc` is already installed and available in your terminal.
 
 For a complete workflow built on these controls, see the
@@ -12,13 +12,15 @@ Verify this round trip first, then follow the workflow setup below.
 You need:
 
 - **Linux**, a POSIX shell, and **Python 3.11+** with `venv` and `pip`.
-- This repository checkout to install the Python package and run its example.
+- This repository checkout for the maintained example source.
 - The matching `uc-python-bridge` on `PATH`. If you need to build it, use the
   pinned **Rust 1.95.0** toolchain and [native build prerequisites](../../development/setup.md).
 
-Use the bridge, daemon, CLI, and session host from the **same revision** as the
-Python package. This checkout does not establish Python qualification on macOS
-or Windows; see the [verification scope](../../../python/docs/development/changes.md#verification-scope).
+Use matching **0.1.0-beta** native executables with Python package **0.1.0b0**.
+Install them together through the [hosted installer](../../getting-started/installation.md)
+or build them from matching source. Python packaging tests cover Python 3.11–3.14;
+they do not establish live integration qualification on macOS or Windows.
+See the [verification scope](../../../python/docs/development/changes.md#verification-scope).
 
 Run all commands from the **repository root**, containing `Cargo.toml` and
 `python/`, and keep the same shell open through cleanup.
@@ -30,11 +32,19 @@ Run all commands from the **repository root**, containing `Cargo.toml` and
 ```sh
 python3 -m venv .venv-python-sdk
 . .venv-python-sdk/bin/activate
-python -m pip install ./python
+python -m pip install aixand-undercurrent-sdk==0.1.0b0
+python -c 'from importlib.metadata import version; from undercurrent import Client; print(version("aixand-undercurrent-sdk"))'
 ```
 
-The SDK finds `uc-python-bridge` on `PATH`. If it is not installed, install it
-from this checkout:
+The version check prints `0.1.0b0` and verifies that `Client` imports.
+The [PyPI distribution](https://pypi.org/project/aixand-undercurrent-sdk/0.1.0b0/)
+contains Python code and typing metadata; it does not install native executables.
+
+For SDK development, replace the PyPI install command with
+`python -m pip install ./python` and use native executables from that same checkout.
+
+The SDK finds `uc-python-bridge` on `PATH`. For a source installation, build it
+from the checkout matching your other native executables:
 
 ```sh
 cargo install --locked --path crates/undercurrent-python-bridge
@@ -42,8 +52,8 @@ cargo install --locked --path crates/undercurrent-python-bridge
 
 The [portable product installer](../../getting-started/product-installer.md)
 includes the matching bridge and SDK wheel. Its shared command directory can
-provide the bridge on PATH; applications still install the wheel into their own
-Python environment. Applications with private installations select their own
+provide the bridge on `PATH`; applications install the PyPI package or supplied
+wheel into their own Python environment. Applications with private installations select their own
 bridge and explicit runtime home.
 
 For a bridge outside `PATH`, set `UNDERCURRENT_PYTHON_BRIDGE` to its absolute path.
@@ -102,8 +112,8 @@ If the bridge is missing, check `UNDERCURRENT_PYTHON_BRIDGE` and executable
 permissions.
 
 If connection setup fails, check `uc daemon status` using the same
-home and user. Match the CLI, daemon, session host, bridge, and Python checkout before diagnosing
-protocol errors.
+home and user. Match the CLI, daemon, session host, bridge, and Python package
+versions before diagnosing protocol errors.
 
 A timeout after sending a mutation is an uncertain outcome;
 use the [recovery guide](recovery.md), preserving the printed name and session ID.

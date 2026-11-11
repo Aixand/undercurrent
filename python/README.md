@@ -3,9 +3,8 @@
 The `aixand-undercurrent-sdk` package provides an **async Python 3.11+ client** for
 starting local terminal sessions, delivering input, reading output, observing
 state, and stopping processes. Import it as `undercurrent`. These pages describe
-release **0.1.0-beta** in this checkout. Python packaging normalizes that same
-release to **0.1.0b0**. Use the daemon and `uc-python-bridge` built
-from the same revision.
+release **0.1.0-beta**, published on PyPI as **0.1.0b0**. Use matching
+**0.1.0-beta** native executables, including the daemon and `uc-python-bridge`.
 
 Python owns the connection and observation helpers. The external daemon owns
 sessions, durable state, and process supervision. Closing a client detaches;
@@ -27,6 +26,13 @@ does not establish termination.
 | Maintainer | [Trace the implementation and extend it](docs/README.md) | [Source owners](docs/README.md#ownership-and-source-map) and [SDK comparison](../docs/sdk/README.md) |
 
 ## Setup and examples
+
+In your application's Python 3.11+ virtual environment, install the
+[published package](https://pypi.org/project/aixand-undercurrent-sdk/0.1.0b0/):
+
+```sh
+python -m pip install aixand-undercurrent-sdk==0.1.0b0
+```
 
 Follow the [Linux quickstart](../docs/sdk/python/quickstart.md) to install the
 package, select matching native executables, and start an isolated daemon.
