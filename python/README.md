@@ -1,6 +1,6 @@
 # Use Undercurrent from Python
 
-The `undercurrent-sdk` package provides an **async Python 3.11+ client** for
+The `aixand-undercurrent-sdk` package provides an **async Python 3.11+ client** for
 starting local terminal sessions, delivering input, reading output, observing
 state, and stopping processes. Import it as `undercurrent`. These pages describe
 release **0.1.0-beta** in this checkout. Python packaging normalizes that same

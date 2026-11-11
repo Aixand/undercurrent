@@ -3,6 +3,7 @@ name: Release
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -14,6 +15,7 @@ concurrency:
 
 jobs:
   validate:
+    if: github.event_name == 'push'
     name: Validate release tag
     runs-on: ubuntu-24.04
     timeout-minutes: 5
@@ -45,24 +47,31 @@ jobs:
   product:
     needs: validate
     uses: ./.github/workflows/product-installer.yml
+  python:
+    needs: validate
+    uses: ./.github/workflows/python-sdk.yml
   native:
     needs: validate
     uses: ./.github/workflows/platform-contracts.yml
 
   publish:
     name: Publish qualified release
-    needs: [documentation, repository-policy, secrets, advisories, licenses, product, native]
+    needs: [documentation, repository-policy, secrets, advisories, licenses, product, native, python]
     if: github.repository == 'Aixand/undercurrent'
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     environment: release
     permissions:
       contents: write
+      id-token: write
     steps:
       - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           fetch-depth: 0
           persist-credentials: false
+      - uses: astral-sh/setup-uv@eb1897b8dc4b5d5bfe39a428a8f2304605e0983c # v7.0.0
+        with:
+          version: '0.12.7'
       - run: rustup toolchain install 1.95.0 --profile minimal
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
@@ -77,6 +86,10 @@ jobs:
         env:
           RELEASE_TAG: ${{ github.ref_name }}
         run: python3 scripts/release/automation.py collect
+      - name: Select the qualified Python SDK wheel
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: python3 scripts/release/automation.py prepare-python
       - name: Prepare draft GitHub Release and upload downloads
         env:
           RELEASE_TAG: ${{ github.ref_name }}
@@ -87,8 +100,44 @@ jobs:
           RELEASE_TAG: ${{ github.ref_name }}
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
         run: python3 scripts/release/automation.py publish-crates
-      - name: Publish GitHub Release after crates.io succeeds
+      - name: Publish Python SDK to PyPI
+        run: uv publish --trusted-publishing always dist/pypi/*.whl
+      - name: Publish GitHub Release after crates.io and PyPI succeed
         env:
           RELEASE_TAG: ${{ github.ref_name }}
           GH_TOKEN: ${{ github.token }}
         run: python3 scripts/release/automation.py publish-release
+
+  python-only-checks:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.repository == 'Aixand/undercurrent'
+    uses: ./.github/workflows/python-sdk.yml
+
+  publish-python-only:
+    name: Publish only the Python SDK
+    needs: python-only-checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@eb1897b8dc4b5d5bfe39a428a8f2304605e0983c # v7.0.0
+        with:
+          version: '0.12.7'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: python-sdk-wheel
+          path: dist/pypi
+      - name: Verify publication inputs
+        run: |
+          tag="v$(python3 -c 'import tomllib; print(tomllib.load(open("Cargo.toml", "rb"))["workspace"]["package"]["version"])')"
+          python3 scripts/release/automation.py python-check --tag "$tag"
+          python3 scripts/release/third_party_licenses.py check
+          python3 scripts/checks/check-repository-files.py
+          python3 scripts/checks/check-docs.py --root .
+      - name: Publish Python SDK to PyPI
+        run: uv publish --trusted-publishing always dist/pypi/*.whl

@@ -1,0 +1,47 @@
+name: Python SDK packaging
+on:
+  workflow_call:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    name: Python SDK (${{ matrix.python }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12', '3.13', '3.14']
+    steps:
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@eb1897b8dc4b5d5bfe39a428a8f2304605e0983c # v7.0.0
+        with:
+          version: '0.12.7'
+          python-version: ${{ matrix.python }}
+          activate-environment: true
+      - name: Build distribution with the product backend constraints
+        run: uv build --wheel --no-sources --build-constraints scripts/product-build-requirements.txt --out-dir dist/pypi python
+      - name: Validate distribution metadata against the workspace version
+        run: |
+          tag="v$(python -c 'import tomllib; print(tomllib.load(open("Cargo.toml", "rb"))["workspace"]["package"]["version"])')"
+          python scripts/release/automation.py python-check --tag "$tag"
+      - name: Test the installed wheel
+        run: |
+          uv pip install --no-deps dist/pypi/*.whl
+          python -I -c 'from undercurrent import Client; from importlib.metadata import distribution; d = distribution("aixand-undercurrent-sdk"); assert d.read_text("METADATA"); assert Client.__module__ == "undercurrent.client"'
+          python -m unittest discover -s python/tests
+      - name: Test release rejection and recovery
+        run: python tests/tooling/checks/release_automation_test.py
+      - name: Retain the tested wheel for manual PyPI publication
+        if: github.event_name == 'workflow_dispatch' && matrix.python == '3.12'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: python-sdk-wheel
+          path: dist/pypi/*.whl
+          if-no-files-found: error

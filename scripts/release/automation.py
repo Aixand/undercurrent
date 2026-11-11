@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import argparse
+from email.parser import BytesParser
 import hashlib
 import io
 import json
@@ -16,6 +17,7 @@ import subprocess
 import tarfile
 import tempfile
 import tomllib
+import zipfile
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
@@ -70,6 +72,52 @@ def tag_version(tag):
     return tag[1:]
 
 
+def python_version(version):
+    """Map supported release suffixes to canonical Python package versions."""
+    match = re.fullmatch(r"(\d+\.\d+\.\d+)(?:-(alpha|beta|rc)(?:\.(0|[1-9]\d*))?)?", version)
+    require(match is not None, "Release version has no supported Python version mapping")
+    base, stage, number = match.groups()
+    return base + ({"alpha": "a", "beta": "b", "rc": "rc"}[stage] + (number or "0") if stage else "")
+
+
+def validate_python(version, root=ROOT):
+    project = tomllib.loads((root / "python/pyproject.toml").read_text())["project"]
+    require(project["name"] == "aixand-undercurrent-sdk", "Python distribution name differs")
+    require(project["version"] == python_version(version), "Python version differs from release tag")
+    return project
+
+
+def python_wheel(data, version, root=ROOT):
+    project = validate_python(version, root)
+    stem = "aixand_undercurrent_sdk-" + project["version"]
+    with zipfile.ZipFile(io.BytesIO(data)) as wheel:
+        metadata = BytesParser().parsebytes(wheel.read(stem + ".dist-info/METADATA"))
+        require(metadata["Name"] == project["name"] and metadata["Version"] == project["version"],
+                "Wheel metadata differs from release")
+        require(metadata["Requires-Python"] == project["requires-python"], "Wheel Python requirement differs")
+        require("undercurrent/py.typed" in wheel.namelist(), "Wheel lacks typing marker")
+    return stem + "-py3-none-any.whl"
+
+
+def prepare_python(tag, assets, output):
+    """Select the already qualified universal wheel without rebuilding it."""
+    release = check(tag)
+    version = release["version"]
+    name = f"undercurrent-{version}-linux-x86_64-gnu-sdk"
+    with tarfile.open(assets / (name + ".tar.gz")) as archive:
+        metadata = json.load(archive.extractfile(name + "/release-metadata.json"))
+        require(metadata["commit"] == release["commit"] and metadata["version"] == version,
+                "Python SDK archive belongs to another release")
+        wheels = [m for m in archive.getmembers()
+                  if m.name.startswith(name + "/artifacts/component/wheelhouse/") and m.name.endswith(".whl")]
+        require(len(wheels) == 1 and wheels[0].isfile(), "Expected one qualified SDK wheel")
+        data = archive.extractfile(wheels[0]).read()
+    filename = python_wheel(data, version)
+    require(Path(wheels[0].name).name == filename, "Unexpected wheel filename")
+    output.mkdir(parents=True, exist_ok=False)
+    (output / filename).write_bytes(data)
+
+
 def dependencies(manifest):
     for kind in ("dependencies", "build-dependencies", "dev-dependencies"):
         yield from manifest.get(kind, {}).items()
@@ -85,6 +133,7 @@ def validate_versions(tag, root=ROOT):
     versions.extend(p["version"] for p in installation["products"].values())
     versions.append(read(root / "undercurrent-package.json")["version"])
     require(all(v == version for v in versions), "Tag, Cargo, product, and package versions differ")
+    validate_python(version, root)
     seen = set()
     for name in CRATES:
         manifest = tomllib.loads((root / "crates" / CRATE_DIRECTORIES[name] / "Cargo.toml").read_text())
@@ -309,9 +358,10 @@ def github_release(tag, assets, *, publish=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("operation", choices=("check", "archive", "collect", "crates-check", "publish-crates", "draft", "publish-release"))
+    parser.add_argument("operation", choices=("check", "archive", "collect", "crates-check", "publish-crates", "prepare-python", "python-check", "draft", "publish-release"))
     parser.add_argument("--tag", default=os.environ.get("RELEASE_TAG"))
     parser.add_argument("--assets", type=Path, default=ROOT / "dist/assets")
+    parser.add_argument("--wheels", type=Path, default=ROOT / "dist/pypi")
     args = parser.parse_args()
     if args.operation == "check":
         print(json.dumps(check(args.tag)))
@@ -319,6 +369,13 @@ def main():
         archive(args.tag)
     elif args.operation == "collect":
         collect(args.tag, args.assets)
+    elif args.operation == "prepare-python":
+        prepare_python(args.tag, args.assets, args.wheels)
+    elif args.operation == "python-check":
+        version = validate_versions(args.tag)
+        wheels = list(args.wheels.glob("*.whl"))
+        require(len(wheels) == 1, "Expected one SDK wheel")
+        require(wheels[0].name == python_wheel(wheels[0].read_bytes(), version), "Unexpected wheel filename")
     elif args.operation in {"crates-check", "publish-crates"}:
         crates(args.tag, publish=args.operation == "publish-crates")
     else:

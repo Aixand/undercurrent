@@ -50,7 +50,7 @@
     "licenses/inputs/rust-MIT.txt": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
     "licenses/inputs/terminal-NOTICE.md": "e7fbaadee6ab20c28b87730a510ee5f5815d8fb4bd88d1d54d282dc2a74c0726",
     "python/LICENSE": "c94788b242f3ee3ee9141c1fd61120b60d42d22dc511d687e5a6975ed9f0a45c",
-    "python/pyproject.toml": "86af655ac692c82b3fa6b899c13f98b0dbdb7c6425fcaee4896b056cd0dbf4b1",
+    "python/pyproject.toml": "e93266521ba9b266d886a0070018b96c31a711b5b0387febb4f040e98e5663d8",
     "rust-toolchain.toml": "24ef3b9d3edbd850aa386cb0a98e10450b0030991a4537cb359f54d49dbbb33a",
     "scripts/release/third_party_licenses.py": "6d1527e002a93e54e596d0ca202e8b37827946b4d468f27a4ee7c7273b788887",
     "vendor/README.md": "a6c8bea8dd5a3936244beb4544c8fca24c7e48dcddbc8f292c12198f8c3c6e9a",

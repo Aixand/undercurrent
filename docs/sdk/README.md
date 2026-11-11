@@ -7,7 +7,7 @@ daemon implicitly or offers an embedded runtime.
 
 | Decision | Rust | Python |
 | --- | --- | --- |
-| Package in this checkout | `undercurrent-sdk` 0.1.0-beta plus `undercurrent-protocol` 0.1.0-beta | Distribution `undercurrent-sdk` 0.1.0-beta, import `undercurrent` |
+| Package in this checkout | `undercurrent-sdk` 0.1.0-beta plus `undercurrent-protocol` 0.1.0-beta | Distribution `aixand-undercurrent-sdk` 0.1.0b0, import `undercurrent` |
 | Execution model | Blocking calls and receives; cheaply cloned shared client | Asyncio coroutines and generators on one event loop |
 | Connection setup | Explicit absolute endpoint and client profile | Home plus matching `uc-python-bridge` executable |
 | Scope | Full typed finite operation and logical stream contract | Focused start/list/inspect/input/stop, output reads, watch/events, and state waits |

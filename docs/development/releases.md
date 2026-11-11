@@ -183,6 +183,17 @@ the product version in `undercurrent-package.json`. Regenerate and review the
 changes. Refresh `Cargo.lock` and the external consumer lockfile when crate
 versions change. Schema and protocol versions follow their own contracts.
 
+Update `python/pyproject.toml` with the matching Python version. Stable versions
+keep `X.Y.Z`; `-alpha`, `-beta`, and `-rc` map to `a0`, `b0`, and `rc0`.
+Numbered suffixes retain their number: `0.1.0-rc.1` maps to `0.1.0rc1`.
+Other suffixes fail release validation.
+
+Configure a PyPI trusted publisher for `aixand-undercurrent-sdk`: owner `Aixand`,
+repository `undercurrent`, workflow `release.yml`, environment `release`.
+For the first publication, create a pending publisher in your PyPI account.
+The release job uses GitHub OIDC with `id-token: write`; no PyPI token is needed.
+See [PyPI publisher setup](https://docs.pypi.org/trusted-publishers/creating-a-project-through-oidc/).
+
 Merge the prepared changes into `main`. Start from a clean checkout of that
 commit and fetch the current remote references. For the current beta version:
 
@@ -202,7 +213,30 @@ Publication waits for documentation, file policy, secret scanning, dependency
 advisories, licensing, product installation, and deep native qualification.
 Product jobs also package and compile the crates.io graph on each native host.
 The publication job prepares a draft release, uploads downloads, publishes
-crates, and then makes the GitHub Release public.
+crates and the Python SDK, then makes the GitHub Release public. Python packaging
+CI tests the installed wheel on Python 3.11 through 3.14.
+
+### Publish only the Python SDK
+
+To publish the Python package from a commit on `main`, push the changes without
+creating or moving a version tag. In GitHub Actions, open **Release**, select
+**Run workflow**, and choose `main`. The manual run tests Python packaging on
+Python 3.11 through 3.14, then publishes the tested Python 3.12 wheel to PyPI.
+It uses the same `release.yml` trusted publisher and `release` environment.
+It does not run native builds, publish crates, or create or modify a GitHub Release.
+The run uses the commit selected when the workflow starts.
+
+Use this path for the initial `aixand-undercurrent-sdk` publication at `0.1.0b0`.
+This publishes the current Python source; it does not replace the SDK wheel
+inside the existing `v0.1.0-beta` archives. Install the matching bridge separately.
+The manual path checks wheel installation and SDK unit tests; it does not repeat
+native runtime qualification. Check compatibility before publishing SDK behavior changes.
+
+PyPI versions are immutable. Rerun the failed job in the original run to reuse
+its tested wheel. A new run can rebuild different bytes; if PyPI already has
+that version, use a new version for changed contents. For the next full release,
+bump the product and Python versions together, then push the new version tag.
+Tag-triggered releases continue publishing all artifacts, including PyPI.
 
 ### Find release downloads
 
@@ -225,7 +259,9 @@ SDK components use an application's Python environment rather than a product
 store. Their wheels are under `artifacts/component/wheelhouse/`; install a wheel
 with that environment's pip. `INSTALL.txt` explains component verification.
 These downloads are portable bundles, not MSI, PKG, DEB, or RPM installers.
-Python SDK payloads are bundled; this workflow does not publish to PyPI.
+The workflow also publishes the qualified Linux SDK archive's universal wheel
+to PyPI as `aixand-undercurrent-sdk`. The Python import remains `undercurrent`.
+The wheel needs a separately installed matching runtime and `uc-python-bridge`.
 
 Versions containing a prerelease suffix, including `-beta` and `-rc.1`, become
 GitHub prereleases and are not marked as the latest stable release.
@@ -233,7 +269,7 @@ GitHub prereleases and are not marked as the latest stable release.
 ### Recover a failed publication
 
 Inspect the failed job before retrying. Checks and builds publish nothing.
-A publication failure can leave a draft GitHub Release and some published crates.
+A publication failure can leave a draft GitHub Release, published crates, and a PyPI wheel.
 Crates.io publication is incremental and cannot be rolled back as a transaction.
 
 Rerun the failed jobs on the original workflow run and original tag. Matching
@@ -241,7 +277,8 @@ draft assets can be replaced while the release remains private. The publisher
 checks an existing crate's registry checksum, source commit, and packaged bytes
 before skipping it. `Cargo.lock` is excluded from the byte comparison because
 Cargo's dry-run registry changes lockfile sources. All other files must match.
-Yanked versions and conflicting contents stop publication.
+Yanked versions and conflicting contents stop publication. The PyPI upload uses
+`uv publish`, which skips identical files on retries and rejects conflicting bytes.
 
 Do not move a published tag or overwrite a crate version. Fix source defects
 with a new version and tag. Once the GitHub Release is public, reruns refuse to

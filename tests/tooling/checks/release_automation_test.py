@@ -43,10 +43,67 @@ class ReleaseTests(unittest.TestCase):
         self.root = Path(self.temporary.name)
         for filename in ("Cargo.toml", "installation.toml", "undercurrent-package.json"):
             shutil.copyfile(ROOT / filename, self.root / filename)
+        (self.root / "python").mkdir()
+        shutil.copyfile(ROOT / "python/pyproject.toml", self.root / "python/pyproject.toml")
         for name in release.CRATES:
             destination = self.root / "crates" / release.CRATE_DIRECTORIES[name]
             destination.mkdir(parents=True)
             shutil.copyfile(ROOT / "crates" / release.CRATE_DIRECTORIES[name] / "Cargo.toml", destination / "Cargo.toml")
+
+    def test_python_version_mapping_and_mismatch(self):
+        for version, expected in (("0.1.0-beta", "0.1.0b0"), ("1.2.3", "1.2.3"),
+                                  ("1.2.3-alpha.2", "1.2.3a2"), ("1.2.3-rc.1", "1.2.3rc1")):
+            self.assertEqual(release.python_version(version), expected)
+        with self.assertRaisesRegex(ValueError, "mapping"):
+            release.python_version("1.2.3-preview")
+        manifest = self.root / "python/pyproject.toml"
+        original = manifest.read_text()
+        manifest.write_text(original.replace('version = "0.1.0b0"', 'version = "0.2.0"'))
+        with self.assertRaisesRegex(ValueError, "Python version differs"):
+            release.validate_versions(TAG, self.root)
+        manifest.write_text(original.replace('name = "aixand-undercurrent-sdk"', 'name = "undercurrent-sdk"'))
+        with self.assertRaisesRegex(ValueError, "distribution name"):
+            release.validate_versions(TAG, self.root)
+
+    def test_python_wheel_metadata_and_typing(self):
+        def wheel(name="aixand-undercurrent-sdk", version="0.1.0b0", typed=True):
+            stream = io.BytesIO()
+            with zipfile.ZipFile(stream, "w") as archive:
+                archive.writestr("aixand_undercurrent_sdk-0.1.0b0.dist-info/METADATA",
+                                 f"Name: {name}\nVersion: {version}\nRequires-Python: >=3.11\n")
+                if typed:
+                    archive.writestr("undercurrent/py.typed", "")
+            return stream.getvalue()
+        self.assertEqual(release.python_wheel(wheel(), "0.1.0-beta"),
+                         "aixand_undercurrent_sdk-0.1.0b0-py3-none-any.whl")
+        for data in (wheel(name="undercurrent-sdk"), wheel(version="0.2.0"), wheel(typed=False)):
+            with self.assertRaises(ValueError):
+                release.python_wheel(data, "0.1.0-beta")
+
+    def test_prepare_python_preserves_qualified_bytes_and_checks_commit(self):
+        name = "undercurrent-0.1.0-beta-linux-x86_64-gnu-sdk"
+        filename = "aixand_undercurrent_sdk-0.1.0b0-py3-none-any.whl"
+        archive_path = self.root / (name + ".tar.gz")
+        def write_archive(commit, wheels):
+            with tarfile.open(archive_path, "w:gz") as archive:
+                files = {name + "/release-metadata.json": json.dumps(
+                    {"commit": commit, "version": "0.1.0-beta"}).encode()}
+                files.update({name + "/artifacts/component/wheelhouse/" + f: b"qualified bytes" for f in wheels})
+                for path, data in files.items():
+                    entry = tarfile.TarInfo(path)
+                    entry.size = len(data)
+                    archive.addfile(entry, io.BytesIO(data))
+        with patch.object(release, "check", return_value={"commit": COMMIT, "version": "0.1.0-beta"}), \
+             patch.object(release, "python_wheel", return_value=filename):
+            write_archive(COMMIT, [filename])
+            release.prepare_python(TAG, self.root, self.root / "output")
+            self.assertEqual((self.root / "output" / filename).read_bytes(), b"qualified bytes")
+            write_archive("b" * 40, [filename])
+            with self.assertRaisesRegex(ValueError, "another release"):
+                release.prepare_python(TAG, self.root, self.root / "bad-output")
+            write_archive(COMMIT, [filename, "other.whl"])
+            with self.assertRaisesRegex(ValueError, "one qualified"):
+                release.prepare_python(TAG, self.root, self.root / "bad-output")
 
     def test_versions_and_dependency_closure(self):
         self.assertEqual(release.validate_versions(TAG, self.root), "0.1.0-beta")
