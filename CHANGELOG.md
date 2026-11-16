@@ -1,8 +1,9 @@
 # Changelog
 
-This checkout contains the initial `0.1.0-beta` development snapshot.
-No published release is announced here. Future entries will record user-visible
-changes from this baseline.
+User-visible changes to Undercurrent are recorded here. The initial
+[`0.1.0-beta` release](https://github.com/Aixand/undercurrent/releases/tag/v0.1.0-beta)
+is available on GitHub. Entries under Unreleased describe development-branch
+changes; see the tagged source and release notes for the published baseline.
 
 ## Unreleased
 
