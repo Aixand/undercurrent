@@ -13,8 +13,9 @@ available; see [maintainer setup](../../../../docs/development/setup.md) for bui
 Follow the settings through their receiving component as well as this crate.
 
 1. **Choose the owner.** Establish the receiving component's contract and whether the setting belongs
-   to configuration, an explicit operation, or a client API. Do not add runtime
-   imports to this crate; its allowed internal dependency list is empty.
+   to configuration, an explicit operation, or a client API. Keep component
+   construction in the consumer. The [architecture policy](../../../../tests/architecture/allowed-graph.json)
+   allows only Foundation as a direct workspace crate dependency.
 2. **Define the field.** Add or revise the Serde field, its units and meaning, and its default in
    [document.rs](../../src/document.rs). All product structs deny unknown fields
    and default omitted fields. Review bootstrap separately: the whole-section

@@ -3,16 +3,17 @@
 Follow a document from discovery to a validated in-memory snapshot, and locate
 the boundary between shared validation and component configuration. This is a
 maintainer explanation for the current 0.1.0-beta workspace and configuration
-configuration release 0.1.0-beta. For commands, use the [inspection guide](../../../../docs/guides/configuration/diagnose.md).
+release 0.1.0-beta. For commands, use the [inspection guide](../../../../docs/guides/configuration/diagnose.md).
 
 ## Ownership and dependencies
 
 The [architecture policy](../../../../tests/architecture/allowed-graph.json)
-assigns this crate the `shared_configuration` role with no internal
-dependencies. Keeping component constructors outside it lets the CLI reject
-daemon-invalid settings offline without depending on daemon implementation
-crates. The [manifest](../../Cargo.toml) depends on Serde, JSON, TOML,
-`granit-parser`, and `serde-saphyr`; `tempfile` is a development dependency.
+assigns this crate the `shared_configuration` role. The
+[manifest](../../Cargo.toml) lists Foundation as its sole workspace crate
+dependency. The loader uses Foundation's release marker for schema identity,
+and [validation](../../src/validate.rs) uses its length when checking frame
+budgets. CLI and daemon own component construction, which lets CLI validate
+shared settings offline.
 
 For the compile-time dependency view, see the [workspace code map](../../../../docs/architecture/dependencies.md).
 The local flow below follows the loader's work before the adapters receive a snapshot.

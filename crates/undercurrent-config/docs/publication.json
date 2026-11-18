@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "config",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "config",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Configuration development",
+      "description": "Maintain discovery, typed loading, path policy and coupled validation."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "config/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "internals/loading.md",
+      "slug": "config/internals/loading",
+      "section": "Internals",
+      "order": 12
+    },
+    {
+      "file": "internals/paths.md",
+      "slug": "config/internals/paths",
+      "section": "Internals",
+      "order": 13
+    }
+  ]
+}
