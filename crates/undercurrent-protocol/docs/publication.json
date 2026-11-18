@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "protocol",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "protocol",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Protocol development",
+      "description": "Maintain product DTOs, operation contracts, encoding and compatibility."
+    },
+    {
+      "file": "development/extend-contract.md",
+      "slug": "protocol/development/extend-contract",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "internals/contract-boundary.md",
+      "slug": "protocol/internals/contract-boundary",
+      "section": "Internals",
+      "order": 12
+    }
+  ]
+}

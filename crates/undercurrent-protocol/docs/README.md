@@ -7,9 +7,26 @@ operations; the daemon, application, store, and runtime own their effects.
 | Task | Start here |
 | --- | --- |
 | Find a message, validator, digest, or regression test | [Contract source map](internals/contract-boundary.md#source-map) |
+| Choose registry, validation, and adapter tests | [Focused verification](development/extend-contract.md#verification) |
 | Change a contract and check its consumers | [Extension procedure](development/extend-contract.md) |
 | Construct or interpret a public payload | [Consumer protocol reference](../../../docs/reference/protocol/README.md) |
 | Follow a request through the system | [Shared walkthroughs](../../../docs/architecture/flows.md) |
+
+## Package and reader scope
+
+The [architecture policy](../../../tests/architecture/allowed-graph.json)
+supports this package and `aixand-undercurrent` for external Rust consumers.
+The crate and exact product contract are `0.1.0-beta`. The schema generation is
+`1`. The UCMP transport version is independent. Public agent-bridge DTOs
+describe a private channel. The protocol performs no connection, process, or
+storage I/O. The SDK carries these values, and the daemon validates them and
+translates them into application commands.
+
+For attached-runtime integration, see [attempt status and repair](../../../docs/reference/protocol/recovery.md),
+[exact cancellation](../../../docs/reference/protocol/cancellation.md), and
+[agent events](../../../docs/reference/protocol/agent-events.md).
+Use [generated Rustdoc](../../../docs/reference/protocol/README.md#generate-symbol-level-documentation)
+for symbol lookup.
 
 ## Runtime ownership
 
