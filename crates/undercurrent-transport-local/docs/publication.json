@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "transport-local",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "transport-local",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Local transport development",
+      "description": "Maintain protected endpoints, peer checks and framed IO."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "transport-local/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "development/troubleshooting.md",
+      "slug": "transport-local/development/troubleshooting",
+      "section": "Development",
+      "order": 12
+    },
+    {
+      "file": "internals/endpoints.md",
+      "slug": "transport-local/internals/endpoints",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "internals/ownership.md",
+      "slug": "transport-local/internals/ownership",
+      "section": "Internals",
+      "order": 14
+    },
+    {
+      "file": "internals/server.md",
+      "slug": "transport-local/internals/server",
+      "section": "Internals",
+      "order": 15
+    },
+    {
+      "file": "reference/diagnostics.md",
+      "slug": "transport-local/reference/diagnostics",
+      "section": "Reference",
+      "order": 16
+    },
+    {
+      "file": "reference/framing.md",
+      "slug": "transport-local/reference/framing",
+      "section": "Reference",
+      "order": 17
+    },
+    {
+      "file": "reference/server-limits.md",
+      "slug": "transport-local/reference/server-limits",
+      "section": "Reference",
+      "order": 18
+    }
+  ]
+}

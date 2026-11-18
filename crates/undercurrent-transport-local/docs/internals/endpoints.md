@@ -11,6 +11,11 @@ for constructor errors, [Unix checks](#linux-and-macos-checks) and
 [stale recovery](#unix-stale-recovery) for socket failures, or
 [Windows named pipes](#windows-named-pipes) for pipe name and handle lifetime.
 
+| Native endpoint | Peer identity | Listener lifetime |
+| --- | --- | --- |
+| [Linux and macOS sockets](#linux-and-macos-checks) | Effective UID via kernel peer credentials | Exclusive lock and socket path. [Stale recovery](#unix-stale-recovery) checks exact entry identity. |
+| [Windows named pipes](#windows-named-pipes) | Verified account SID | Native pipe handle ownership. Closing the handles releases the endpoint. |
+
 ## Address validation comes before native validation
 
 `LocalEndpoint::new` in [endpoint.rs](../../src/endpoint.rs) performs no filesystem
