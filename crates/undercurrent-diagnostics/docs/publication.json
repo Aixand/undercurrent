@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "diagnostics",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "diagnostics",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Diagnostics development",
+      "description": "Maintain bounded failure evidence, privacy and executable capture."
+    }
+  ]
+}
