@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "domain",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "domain",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Domain development",
+      "description": "Maintain pure session, lifecycle, attempt and observation decisions."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "domain/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "internals/attempts-and-recovery.md",
+      "slug": "domain/internals/attempts-and-recovery",
+      "section": "Internals",
+      "order": 12
+    },
+    {
+      "file": "internals/model.md",
+      "slug": "domain/internals/model",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "internals/observations-and-profiles.md",
+      "slug": "domain/internals/observations-and-profiles",
+      "section": "Internals",
+      "order": 14
+    },
+    {
+      "file": "internals/session-lifecycle.md",
+      "slug": "domain/internals/session-lifecycle",
+      "section": "Internals",
+      "order": 15
+    },
+    {
+      "file": "internals/work-and-queries.md",
+      "slug": "domain/internals/work-and-queries",
+      "section": "Internals",
+      "order": 16
+    },
+    {
+      "file": "reference/values-and-io.md",
+      "slug": "domain/reference/values-and-io",
+      "section": "Reference",
+      "order": 17
+    }
+  ]
+}
