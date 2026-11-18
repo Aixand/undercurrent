@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "transport-core",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "transport-core",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Transport core development",
+      "description": "Develop request admission, leases, dispatch and retained results."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "transport-core/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "internals/idempotency.md",
+      "slug": "transport-core/internals/idempotency",
+      "section": "Internals",
+      "order": 12
+    },
+    {
+      "file": "internals/ownership.md",
+      "slug": "transport-core/internals/ownership",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "internals/request-lifecycle.md",
+      "slug": "transport-core/internals/request-lifecycle",
+      "section": "Internals",
+      "order": 14
+    },
+    {
+      "file": "internals/streams-and-recovery.md",
+      "slug": "transport-core/internals/streams-and-recovery",
+      "section": "Internals",
+      "order": 15
+    },
+    {
+      "file": "reference/diagnostics.md",
+      "slug": "transport-core/reference/diagnostics",
+      "section": "Reference",
+      "order": 16
+    },
+    {
+      "file": "reference/errors.md",
+      "slug": "transport-core/reference/errors",
+      "section": "Reference",
+      "order": 17
+    }
+  ]
+}
