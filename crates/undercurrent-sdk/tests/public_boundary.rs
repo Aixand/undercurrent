@@ -53,7 +53,7 @@ const FORBIDDEN_TYPES: &[&str] = &[
     "VersionRange",
     "WireCodec",
 ];
-const CURRENT_API_BASELINE: &str = include_str!("../PUBLIC_API.md");
+const CURRENT_API_BASELINE: &str = include_str!("../docs/reference/public-api.md");
 
 #[test]
 fn public_declarations_do_not_expose_private_wire_or_router_types() {
