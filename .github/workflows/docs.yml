@@ -20,8 +20,17 @@ jobs:
         with:
           persist-credentials: false
       - name: Test the checker
-        run: python3 tests/tooling/checks/docs_test.py
+        run: |
+          python3 tests/tooling/checks/docs_test.py
+          python3 tests/tooling/checks/doc_coverage_test.py
+          python3 tests/tooling/checks/skill_references_test.py
       - name: Check selected documentation
         run: python3 scripts/checks/check-docs.py --root .
+      - name: Check complete documentation coverage
+        run: python3 scripts/checks/check-doc-coverage.py --root .
+      - name: Check portable skill references and downloads
+        run: |
+          python3 scripts/docs/generate_skill_references.py --check
+          python3 scripts/docs/package_skills.py --check
       # Native installation and SDK behavior run in product-installer.yml.
       # Render changed diagrams and review both themes using the documentation guide.
