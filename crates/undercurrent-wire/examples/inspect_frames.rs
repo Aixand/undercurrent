@@ -71,7 +71,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut input = encoded[..7].to_vec();
     assert_eq!(
         codec.decode_client(&input)?,
-        DecodeStatus::NeedMore { minimum_total: 12 }
+        DecodeStatus::NeedMore { minimum_total: 22 }
     );
     input.extend_from_slice(&encoded[7..]);
     input.extend_from_slice(&codec.encode_client(&ClientMessage::Ping)?);
