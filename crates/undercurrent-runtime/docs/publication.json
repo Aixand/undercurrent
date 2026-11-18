@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "runtime",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "runtime",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Runtime development",
+      "description": "Develop process hosting, terminal IO, evidence and host recovery."
+    },
+    {
+      "file": "development/verification.md",
+      "slug": "runtime/development/verification",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "internals/coordination/events.md",
+      "slug": "runtime/internals/coordination/events",
+      "section": "Internals",
+      "order": 12
+    },
+    {
+      "file": "internals/coordination/scheduling.md",
+      "slug": "runtime/internals/coordination/scheduling",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "internals/evidence.md",
+      "slug": "runtime/internals/evidence",
+      "section": "Internals",
+      "order": 14
+    },
+    {
+      "file": "internals/host/recovery.md",
+      "slug": "runtime/internals/host/recovery",
+      "section": "Internals",
+      "order": 15
+    },
+    {
+      "file": "internals/host/session-host.md",
+      "slug": "runtime/internals/host/session-host",
+      "section": "Internals",
+      "order": 16
+    },
+    {
+      "file": "internals/ownership.md",
+      "slug": "runtime/internals/ownership",
+      "section": "Internals",
+      "order": 17
+    },
+    {
+      "file": "internals/processes/execution.md",
+      "slug": "runtime/internals/processes/execution",
+      "section": "Internals",
+      "order": 18
+    },
+    {
+      "file": "internals/processes/launch.md",
+      "slug": "runtime/internals/processes/launch",
+      "section": "Internals",
+      "order": 19
+    },
+    {
+      "file": "internals/processes/native-processes.md",
+      "slug": "runtime/internals/processes/native-processes",
+      "section": "Internals",
+      "order": 20
+    },
+    {
+      "file": "internals/terminal.md",
+      "slug": "runtime/internals/terminal",
+      "section": "Internals",
+      "order": 21
+    },
+    {
+      "file": "reference/host-protocol.md",
+      "slug": "runtime/reference/host-protocol",
+      "section": "Reference",
+      "order": 22
+    }
+  ]
+}
