@@ -4,7 +4,9 @@ Use this explanation to maintain the transition from a local connection to
 UCMP traffic. It describes the current Rust implementation in
 [connection.rs](../../src/connection.rs) and [handshake.rs](../../src/handshake.rs).
 The [wire reference](../reference/wire-format.md) owns byte layouts; this page owns the
-description of negotiation values and selection rules.
+description of negotiation values and selection rules. The separate
+[private session-host format](../../../undercurrent-runtime/docs/reference/host-protocol.md)
+also uses the `UCHS` magic. Identify the channel before choosing a decoder.
 
 ## Agreement selection and admission
 

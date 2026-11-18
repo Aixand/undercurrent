@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "wire",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "wire",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Wire development",
+      "description": "Trace frame codecs, negotiation, scalar bounds and byte consumption."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "wire/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "internals/flows.md",
+      "slug": "wire/internals/flows",
+      "section": "Internals",
+      "order": 12
+    },
+    {
+      "file": "internals/negotiation.md",
+      "slug": "wire/internals/negotiation",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "internals/ownership.md",
+      "slug": "wire/internals/ownership",
+      "section": "Internals",
+      "order": 14
+    },
+    {
+      "file": "reference/scalars.md",
+      "slug": "wire/reference/scalars",
+      "section": "Reference",
+      "order": 15
+    },
+    {
+      "file": "reference/wire-format.md",
+      "slug": "wire/reference/wire-format",
+      "section": "Reference",
+      "order": 16
+    }
+  ]
+}

@@ -36,7 +36,7 @@ The maintained [example](../../examples/inspect_frames.rs), run via the
 [maintainer guide](../development/contributing.md#run-the-example), makes the
 buffer rule concrete:
 
-1. Seven request bytes produce `NeedMore { minimum_total: 12 }`.
+1. Seven request bytes produce `NeedMore { minimum_total: 22 }`.
 2. Appending the rest of that request and a complete ping lets the next decode
    return the request alone. Its `consumed` value ends at the request boundary.
 3. Decoding the suffix returns the ping. Together the consumed lengths equal
