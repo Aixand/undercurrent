@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "foundation",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "foundation",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Foundation development",
+      "description": "Maintain bounded values, digests, privacy classification and release identity."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "foundation/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "internals/ownership.md",
+      "slug": "foundation/internals/ownership",
+      "section": "Internals",
+      "order": 12
+    },
+    {
+      "file": "internals/privacy.md",
+      "slug": "foundation/internals/privacy",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "reference/values.md",
+      "slug": "foundation/reference/values",
+      "section": "Reference",
+      "order": 14
+    }
+  ]
+}

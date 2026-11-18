@@ -1,14 +1,27 @@
 # undercurrent-foundation maintainer documentation
 
-Start with the [crate overview](../README.md) for scope and supported consumer
-entry points. Use these paths to investigate or change a Foundation primitive.
+Foundation owns bounded values, content identity, and privacy detection.
+Callers choose limits, disclosure policy, and what bytes to hash. Use these
+paths to locate or change a primitive. The [crate overview](../README.md)
+identifies supported consumer entry points.
 
 | I need to… | Start here |
 | --- | --- |
-| Reproduce a value check locally | [Run the maintained example](development/contributing.md#run-the-example). |
+| Reproduce a value check locally | [Run the maintained example](development/contributing.md#run-the-example), then [choose focused checks](development/contributing.md#choose-the-right-checks). |
 | Decide where a change belongs | [Code owners and caller boundaries](internals/ownership.md#code-map), then [extension steps](development/contributing.md#extend-the-correct-layer). |
 | Explain a rejection or changed digest | [Local diagnosis](development/contributing.md#diagnose-a-local-rejection), then the exact [value contract](reference/values.md). |
 | Interpret a sensitive-material finding | [Boundary decisions](internals/privacy.md#use-the-result-at-a-boundary), then [field](internals/privacy.md#field-name-policy) and [text](internals/privacy.md#text-policy) rules. |
+
+## Package and reader scope
+
+These in-memory primitives serve domain, protocol, and storage. Foundation
+supplies the shared `0.1.0-beta` release marker. Each codec owns its encoding.
+The [manifest](../Cargo.toml) inherits Rust 1.95 and edition 2024 from the
+workspace and declares no crate features. Its Rust exports serve internal
+composition. For supported endpoints, use the [SDK guides](../../../docs/sdk/README.md)
+and [protocol reference](../../../docs/reference/protocol/README.md).
+See [NOTICE](../NOTICE) for original source attribution and intentionally
+excluded APIs.
 
 ## Internals
 
