@@ -1,18 +1,36 @@
 # undercurrent-store-sqlite maintainer documentation
 
-Choose the mechanism or contract you need to investigate below. The
-[crate overview](../README.md) describes its scope and starting checks.
+SQLite owns transaction and worker mechanics. Application defines persistence
+ports and controls process effects. Use the [source map](internals/ownership.md#code-map)
+to locate the SQL, codec, or worker, then follow the relevant transaction below.
+Start with the [temporary repository reproduction](development/contributing.md#run-an-isolated-reproduction)
+or select [focused tests](development/contributing.md#choose-the-relevant-tests)
+for the contract you change.
+
+## Package and reader scope
+
+This internal workspace crate is version `0.1.0-beta`, sets `publish = false`,
+and uses bundled SQLite without optional crate features. The
+[architecture policy](../../../tests/architecture/allowed-graph.json) assigns it
+`daemon_private_store_adapter`. The public SDKs reach storage through the daemon.
+
+A bounded worker owns each connection. The repository atomically writes session
+aggregates, outbox events, and event snapshots. It retains fenced attempts,
+cancellation controls, and agent events and replies. Separate maintenance
+functions verify, back up, and restore databases. With the pinned Rust toolchain
+and locked dependencies, the temporary repository example covers reopen,
+backup, restore, and cleanup without a daemon or child process.
 
 ## Internals
 
 - [Understand repository ownership and worker behavior](internals/ownership.md).
 
-### Durable transactions
-
-- [Trace session transactions and outbox delivery](internals/transactions/sessions-and-outbox.md).
-- [Reconcile operation attempts without repeating unknown effects](internals/transactions/attempts.md).
-- [Follow durable runtime cancellation through restart](internals/transactions/runtime-cancellation.md).
-- [Understand durable agent events and replies](internals/transactions/agent-channel.md).
+| Investigate | Trace |
+| --- | --- |
+| A session update conflicted or an event went missing | [Session transactions and outbox](internals/transactions/sessions-and-outbox.md) |
+| A process effect is uncertain | [Attempt identity, fences, and settlement](internals/transactions/attempts.md) |
+| A runtime cancellation is pending after restart | [Durable cancellation controls](internals/transactions/runtime-cancellation.md) |
+| An agent call or reply was duplicated, rejected, or is still pending | [Agent event and reply transactions](internals/transactions/agent-channel.md) |
 
 ## Reference
 

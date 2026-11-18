@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "store-sqlite",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "store-sqlite",
+      "section": "Architecture",
+      "order": 0,
+      "title": "SQLite store development",
+      "description": "Maintain transactions, fenced attempts, outbox records and offline maintenance."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "store-sqlite/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "development/maintenance.md",
+      "slug": "store-sqlite/development/maintenance",
+      "section": "Development",
+      "order": 12
+    },
+    {
+      "file": "internals/ownership.md",
+      "slug": "store-sqlite/internals/ownership",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "internals/transactions/agent-channel.md",
+      "slug": "store-sqlite/internals/transactions/agent-channel",
+      "section": "Internals",
+      "order": 14
+    },
+    {
+      "file": "internals/transactions/attempts.md",
+      "slug": "store-sqlite/internals/transactions/attempts",
+      "section": "Internals",
+      "order": 15
+    },
+    {
+      "file": "internals/transactions/runtime-cancellation.md",
+      "slug": "store-sqlite/internals/transactions/runtime-cancellation",
+      "section": "Internals",
+      "order": 16
+    },
+    {
+      "file": "internals/transactions/sessions-and-outbox.md",
+      "slug": "store-sqlite/internals/transactions/sessions-and-outbox",
+      "section": "Internals",
+      "order": 17
+    },
+    {
+      "file": "reference/storage-format.md",
+      "slug": "store-sqlite/reference/storage-format",
+      "section": "Reference",
+      "order": 18
+    }
+  ]
+}
