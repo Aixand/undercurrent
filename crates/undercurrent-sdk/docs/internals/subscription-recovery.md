@@ -114,6 +114,12 @@ replacement to release active waits. Cancellation/removal of an individual handl
 a later resume result from reviving it. `Failed` retains a stable failure reason;
 `last_recovery_error` on the encoded resilient layer preserves its source.
 
+| What failed | What to inspect |
+| --- | --- |
+| A finite response wait ended | The request outcome and any available effect evidence. Reconnection leaves finite requests unreplayed. |
+| A replacement stream failed activation | The slot's resume error or gap. Rebuild the view or reopen from application-owned evidence as appropriate. |
+| A subscription close saturated the writer | [Shared connection pressure](../../../../docs/sdk/rust/streams-and-recovery.md#close-pressure-can-affect-peers). Connection loss can interrupt peer calls and subscriptions. |
+
 ## Bounded attempts and manual recovery
 
 The [recovery implementation](../../src/reconnect.rs) attempts the connector at most

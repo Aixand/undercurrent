@@ -3,7 +3,24 @@
 Find the SDK mechanism or verification task you need. These pages describe the
 Rust SDK 0.1.0-beta implementation; integrators should start with the
 [Rust consumer guides](../../../docs/sdk/rust/README.md) and
-[public 0.1.0-beta boundary](../PUBLIC_API.md).
+[public 0.1.0-beta boundary](reference/public-api.md).
+
+## Client dependencies and evidence
+
+The SDK exposes product data from the [protocol crate](../../undercurrent-protocol/docs/README.md)
+and uses [wire](../../undercurrent-wire/docs/README.md) and
+[multiplex](../../undercurrent-multiplex/docs/README.md) internally. The concrete
+local client connector lives here. The [public reference](reference/public-api.md)
+owns platform, connection, adapter, and mutation guarantees. The SDK targets
+Linux, macOS, and Windows with workspace Rust 1.95. The local connector
+performs mutual OS peer verification. The SDK provides blocking Rust calls,
+with no embedded daemon, implicit daemon launch, or Rust async facade. The asynchronous
+[Python SDK](../../../python/docs/README.md) has a separate presentation API.
+
+Behavioral evidence includes [client contract tests](../tests/client_contract.rs),
+[typed product tests](../tests/product_client.rs), and
+[native local transport tests](../tests/local_boundary.rs).
+The [Rust consumer guides](../../../docs/sdk/rust/README.md) link to maintained examples.
 
 ## Responsibility and dependency boundary
 
@@ -27,8 +44,7 @@ agent channels are outside the public client transport.
 | How do stream activation, credit, and replacement work? | [Subscription recovery](internals/subscription-recovery.md) |
 | Where should a change go, and how do I verify it? | [Extend and verify the boundary](development/extending-client.md) |
 | Which source owns a particular mechanism? | [Code map](development/extending-client.md#code-map) |
-
-Jump directly to the task or mechanism below.
+| Which tests cover the behavior I changed? | [Focused checks and evidence](development/extending-client.md#verification) |
 
 ## Code map
 

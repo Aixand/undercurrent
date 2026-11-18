@@ -2,7 +2,7 @@
 
 Use this guide to place a change in its owning component and select the focused
 SDK checks. Consumer setup is in the [connection tutorial](../../../../docs/sdk/rust/connect-and-query.md);
-public compatibility is defined by the [0.1.0-beta boundary](../../PUBLIC_API.md).
+public compatibility is defined by the [0.1.0-beta boundary](../reference/public-api.md).
 
 ## Place an extension at its owner
 

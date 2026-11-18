@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "rust-sdk",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "rust-sdk",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Rust SDK development",
+      "description": "Develop the blocking client, connection ownership and subscription recovery."
+    },
+    {
+      "file": "development/extending-client.md",
+      "slug": "rust-sdk/development/extending-client",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "internals/client-runtime.md",
+      "slug": "rust-sdk/internals/client-runtime",
+      "section": "Internals",
+      "order": 12
+    },
+    {
+      "file": "internals/subscription-recovery.md",
+      "slug": "rust-sdk/internals/subscription-recovery",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "reference/public-api.md",
+      "slug": "rust-sdk/reference/public-api",
+      "section": "Reference",
+      "order": 30
+    }
+  ]
+}
