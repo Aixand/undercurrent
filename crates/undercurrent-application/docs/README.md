@@ -1,7 +1,21 @@
 # undercurrent-application maintainer documentation
 
-Choose the mechanism or contract you need to investigate below. The
-[crate overview](../README.md) describes its scope and starting checks.
+Application owns use-case ordering and [port contracts](../src/ports.rs).
+Domain owns the decisions inside a transition, runtime and SQLite implement
+the effects, and daemon composes the adapters. Start with the
+[ownership and source map](internals/ownership.md), trace the relevant workflow
+below, then use the [fake-port verification loop](development/contributing.md#run-a-focused-verification-loop)
+to check ordering and failure handling.
+
+## Package and reader scope
+
+The [crate root](../src/lib.rs) exposes modules and re-exports.
+Application depends only on [domain](../../undercurrent-domain/docs/README.md)
+among workspace crates. Its `pub` items support internal composition.
+The [architecture policy](../../../tests/architecture/allowed-graph.json)
+identifies the SDK and protocol as the external Rust library surfaces.
+For an output retention regression, run the [in-memory gap example](internals/sessions/terminal-io.md#run-an-in-memory-retention-example).
+Lifecycle tests exercise ordering without a daemon.
 
 ## Internals
 

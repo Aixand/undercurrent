@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "application",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "application",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Application development",
+      "description": "Trace use cases, ports, commit ordering, effects and reconciliation."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "application/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "internals/diagnostics.md",
+      "slug": "application/internals/diagnostics",
+      "section": "Internals",
+      "order": 12
+    },
+    {
+      "file": "internals/execution/agent-channel.md",
+      "slug": "application/internals/execution/agent-channel",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "internals/execution/attempts.md",
+      "slug": "application/internals/execution/attempts",
+      "section": "Internals",
+      "order": 14
+    },
+    {
+      "file": "internals/execution/commands-and-secrets.md",
+      "slug": "application/internals/execution/commands-and-secrets",
+      "section": "Internals",
+      "order": 15
+    },
+    {
+      "file": "internals/execution/runtime-controls.md",
+      "slug": "application/internals/execution/runtime-controls",
+      "section": "Internals",
+      "order": 16
+    },
+    {
+      "file": "internals/observation/observations.md",
+      "slug": "application/internals/observation/observations",
+      "section": "Internals",
+      "order": 17
+    },
+    {
+      "file": "internals/observation/profiles.md",
+      "slug": "application/internals/observation/profiles",
+      "section": "Internals",
+      "order": 18
+    },
+    {
+      "file": "internals/ownership.md",
+      "slug": "application/internals/ownership",
+      "section": "Internals",
+      "order": 19
+    },
+    {
+      "file": "internals/recovery/events-and-outbox.md",
+      "slug": "application/internals/recovery/events-and-outbox",
+      "section": "Internals",
+      "order": 20
+    },
+    {
+      "file": "internals/recovery/startup.md",
+      "slug": "application/internals/recovery/startup",
+      "section": "Internals",
+      "order": 21
+    },
+    {
+      "file": "internals/sessions/lifecycle.md",
+      "slug": "application/internals/sessions/lifecycle",
+      "section": "Internals",
+      "order": 22
+    },
+    {
+      "file": "internals/sessions/read-models.md",
+      "slug": "application/internals/sessions/read-models",
+      "section": "Internals",
+      "order": 23
+    },
+    {
+      "file": "internals/sessions/terminal-io.md",
+      "slug": "application/internals/sessions/terminal-io",
+      "section": "Internals",
+      "order": 24
+    }
+  ]
+}
