@@ -1,0 +1,1289 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "pages": [
+    {
+      "file": "docs/architecture/credentials.md",
+      "slug": "architecture/credentials",
+      "section": "Concepts",
+      "order": 20
+    },
+    {
+      "file": "docs/architecture/dependencies.md",
+      "slug": "architecture/dependencies",
+      "section": "Concepts",
+      "order": 20
+    },
+    {
+      "file": "docs/architecture/flows.md",
+      "slug": "architecture/flows",
+      "section": "Concepts",
+      "order": 20
+    },
+    {
+      "file": "docs/architecture/lifecycle.md",
+      "slug": "architecture/lifecycle",
+      "section": "Concepts",
+      "order": 20
+    },
+    {
+      "file": "docs/architecture/local-ipc.md",
+      "slug": "architecture/local-ipc",
+      "section": "Concepts",
+      "order": 20
+    },
+    {
+      "file": "docs/architecture/observations-and-output.md",
+      "slug": "architecture/observations-and-output",
+      "section": "Concepts",
+      "order": 20
+    },
+    {
+      "file": "docs/architecture/runtime-dispatch.md",
+      "slug": "architecture/runtime-dispatch",
+      "section": "Concepts",
+      "order": 20
+    },
+    {
+      "file": "docs/architecture/README.md",
+      "slug": "architecture",
+      "section": "Concepts",
+      "order": 20
+    },
+    {
+      "file": "docs/getting-started/bundles.md",
+      "slug": "getting-started/bundles",
+      "section": "Getting started",
+      "order": 20
+    },
+    {
+      "file": "docs/getting-started/first-session-windows.md",
+      "slug": "getting-started/first-session-windows",
+      "section": "Getting started",
+      "order": 20
+    },
+    {
+      "file": "docs/getting-started/undercurrent-vs-tmux.md",
+      "slug": "getting-started/undercurrent-vs-tmux",
+      "section": "Getting started",
+      "order": 20
+    },
+    {
+      "file": "docs/getting-started/README.md",
+      "slug": "getting-started",
+      "section": "Getting started",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/cli/groups.md",
+      "slug": "guides/cli/groups",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/cli/interactive.md",
+      "slug": "guides/cli/interactive",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/cli/sessions.md",
+      "slug": "guides/cli/sessions",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/cli/shell-integration.md",
+      "slug": "guides/cli/shell-integration",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/cli/status-and-output.md",
+      "slug": "guides/cli/status-and-output",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/configuration/diagnose.md",
+      "slug": "guides/configuration/diagnose",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/configuration/profiles.md",
+      "slug": "guides/configuration/profiles",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/configuration/README.md",
+      "slug": "guides/configuration",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/connected-examples.md",
+      "slug": "guides/connected-examples",
+      "section": "Integrations",
+      "order": 5
+    },
+    {
+      "file": "docs/guides/daemon/cli-lifecycle.md",
+      "slug": "guides/daemon/cli-lifecycle",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/daemon/diagnostics.md",
+      "slug": "guides/daemon/diagnostics",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/daemon/operations.md",
+      "slug": "guides/daemon/operations",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/daemon/storage.md",
+      "slug": "guides/daemon/storage",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/daemon/README.md",
+      "slug": "guides/daemon",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/windows.md",
+      "slug": "guides/windows",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/README.md",
+      "slug": "guides",
+      "section": "Guides",
+      "order": 20
+    },
+    {
+      "file": "docs/getting-started/installation.md",
+      "slug": "installation",
+      "section": "Getting started",
+      "order": 0
+    },
+    {
+      "file": "docs/getting-started/first-session.md",
+      "slug": "quickstart",
+      "section": "Getting started",
+      "order": 1
+    },
+    {
+      "file": "docs/reference/cli-output.md",
+      "slug": "reference/cli-output",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/cli.md",
+      "slug": "reference/cli-overview",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/cli-commands.md",
+      "slug": "reference/cli",
+      "section": "Reference",
+      "order": 21
+    },
+    {
+      "file": "docs/reference/compatibility.md",
+      "slug": "reference/compatibility",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/configuration-fields.md",
+      "slug": "reference/configuration-fields",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/configuration.md",
+      "slug": "reference/configuration",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/errors.md",
+      "slug": "reference/errors",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/platforms.md",
+      "slug": "reference/platforms",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/protocol/agent-events.md",
+      "slug": "reference/protocol/agent-events",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/protocol/cancellation.md",
+      "slug": "reference/protocol/cancellation",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/protocol/encoding.md",
+      "slug": "reference/protocol/encoding",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/protocol/operations.md",
+      "slug": "reference/protocol/operations",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/protocol/recovery.md",
+      "slug": "reference/protocol/recovery",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/protocol/streams.md",
+      "slug": "reference/protocol/streams",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/protocol/README.md",
+      "slug": "reference/protocol",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/reference/README.md",
+      "slug": "reference",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/python/operations.md",
+      "slug": "sdk/python/operations",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/python/quickstart.md",
+      "slug": "sdk/python/quickstart",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/python/recovery.md",
+      "slug": "sdk/python/recovery",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/python/state.md",
+      "slug": "sdk/python/state",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/python/streams.md",
+      "slug": "sdk/python/streams",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/python/README.md",
+      "slug": "sdk/python",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/recovery.md",
+      "slug": "sdk/recovery",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/rust/connect-and-query.md",
+      "slug": "sdk/rust/connect-and-query",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/rust/first-payload.md",
+      "slug": "sdk/rust/first-payload",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/rust/limits-and-diagnostics.md",
+      "slug": "sdk/rust/limits-and-diagnostics",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/rust/operations.md",
+      "slug": "sdk/rust/operations",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/rust/streams-and-recovery.md",
+      "slug": "sdk/rust/streams-and-recovery",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/rust/README.md",
+      "slug": "sdk/rust",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/sdk/README.md",
+      "slug": "sdk",
+      "section": "Reference",
+      "order": 20
+    },
+    {
+      "file": "docs/guides/troubleshooting.md",
+      "slug": "troubleshooting",
+      "section": "Troubleshooting",
+      "order": 20
+    },
+    {
+      "file": "docs/development/README.md",
+      "slug": "development",
+      "section": "Development",
+      "order": 70
+    },
+    {
+      "file": "docs/development/setup.md",
+      "slug": "development/setup",
+      "section": "Development",
+      "order": 71
+    },
+    {
+      "file": "docs/development/extending.md",
+      "slug": "development/extending",
+      "section": "Development",
+      "order": 72
+    },
+    {
+      "file": "docs/development/verification.md",
+      "slug": "development/verification",
+      "section": "Development",
+      "order": 73
+    },
+    {
+      "file": "docs/development/platform-testing.md",
+      "slug": "development/platform-testing",
+      "section": "Development",
+      "order": 74
+    },
+    {
+      "file": "docs/development/documentation.md",
+      "slug": "development/documentation",
+      "section": "Development",
+      "order": 75
+    },
+    {
+      "file": "docs/development/workspace-guide.md",
+      "slug": "development/workspace-guide",
+      "section": "Development",
+      "order": 76
+    },
+    {
+      "file": "docs/agent/README.md",
+      "slug": "agent",
+      "section": "Integrations",
+      "order": 77
+    },
+    {
+      "file": "docs/agent/mcp.md",
+      "slug": "agent/mcp",
+      "section": "Integrations",
+      "order": 78
+    },
+    {
+      "file": "docs/guides/cli/connections.md",
+      "slug": "guides/cli/connections",
+      "section": "Guides",
+      "order": 79
+    },
+    {
+      "file": "docs/guides/cli/workspace.md",
+      "slug": "guides/cli/workspace",
+      "section": "Guides",
+      "order": 80
+    },
+    {
+      "file": "docs/examples/runtime/setup.md",
+      "slug": "guides/runtime-examples",
+      "section": "Guides",
+      "order": 81
+    },
+    {
+      "file": "docs/examples/crates/README.md",
+      "slug": "crates",
+      "section": "Crate mechanisms",
+      "order": 20,
+      "collection": "examples",
+      "tags": [
+        "Rust",
+        "Development"
+      ]
+    },
+    {
+      "file": "docs/examples/crates/bounded-delivery.md",
+      "slug": "crates/bounded-delivery",
+      "section": "Crate mechanisms",
+      "order": 21,
+      "collection": "examples",
+      "tags": [
+        "Rust",
+        "Development"
+      ]
+    },
+    {
+      "file": "docs/examples/crates/foundation-values.md",
+      "slug": "crates/foundation-values",
+      "section": "Crate mechanisms",
+      "order": 21,
+      "collection": "examples",
+      "tags": [
+        "Rust",
+        "Development"
+      ]
+    },
+    {
+      "file": "docs/examples/crates/framing-roundtrip.md",
+      "slug": "crates/framing-roundtrip",
+      "section": "Crate mechanisms",
+      "order": 21,
+      "collection": "examples",
+      "tags": [
+        "Rust",
+        "Development"
+      ]
+    },
+    {
+      "file": "docs/examples/crates/inspect-cancellation.md",
+      "slug": "crates/inspect-cancellation",
+      "section": "Crate mechanisms",
+      "order": 21,
+      "collection": "examples",
+      "tags": [
+        "Rust",
+        "Development"
+      ]
+    },
+    {
+      "file": "docs/examples/crates/inspect-config.md",
+      "slug": "crates/inspect-config",
+      "section": "Crate mechanisms",
+      "order": 21,
+      "collection": "examples",
+      "tags": [
+        "Rust",
+        "Development"
+      ]
+    },
+    {
+      "file": "docs/examples/crates/inspect-frames.md",
+      "slug": "crates/inspect-frames",
+      "section": "Crate mechanisms",
+      "order": 21,
+      "collection": "examples",
+      "tags": [
+        "Rust",
+        "Development"
+      ]
+    },
+    {
+      "file": "docs/examples/crates/inspect-payload.md",
+      "slug": "crates/inspect-payload",
+      "section": "Crate mechanisms",
+      "order": 21,
+      "collection": "examples",
+      "tags": [
+        "Rust",
+        "Development"
+      ]
+    },
+    {
+      "file": "docs/examples/crates/model-walkthrough.md",
+      "slug": "crates/model-walkthrough",
+      "section": "Crate mechanisms",
+      "order": 21,
+      "collection": "examples",
+      "tags": [
+        "Rust",
+        "Development"
+      ]
+    },
+    {
+      "file": "docs/examples/crates/output-gap.md",
+      "slug": "crates/output-gap",
+      "section": "Crate mechanisms",
+      "order": 21,
+      "collection": "examples",
+      "tags": [
+        "Rust",
+        "Development"
+      ]
+    },
+    {
+      "file": "docs/examples/crates/repository-roundtrip.md",
+      "slug": "crates/repository-roundtrip",
+      "section": "Crate mechanisms",
+      "order": 21,
+      "collection": "examples",
+      "tags": [
+        "Rust",
+        "Development"
+      ]
+    },
+    {
+      "file": "docs/examples/crates/retained-result.md",
+      "slug": "crates/retained-result",
+      "section": "Crate mechanisms",
+      "order": 21,
+      "collection": "examples",
+      "tags": [
+        "Rust",
+        "Development"
+      ]
+    },
+    {
+      "file": "docs/examples/runtime/README.md",
+      "slug": "runtime",
+      "section": "Runtime SDK workflows",
+      "order": -20,
+      "collection": "examples",
+      "tags": [
+        "Python",
+        "SDK"
+      ]
+    },
+    {
+      "file": "docs/examples/runtime/daemon-reconnect.md",
+      "slug": "runtime/daemon-reconnect",
+      "section": "Runtime SDK workflows",
+      "order": -19,
+      "collection": "examples",
+      "tags": [
+        "Python",
+        "SDK"
+      ],
+      "recording": "daemon-reconnect",
+      "recordingCaption": "Actual local SDK and process execution; verified result and cleanup, no model calls.",
+      "transcript": [
+        "Start a worker and archive its initial 14 output bytes.",
+        "Crash only the private daemon; confirm the native process remains alive.",
+        "Start a replacement daemon and inspect the original session.",
+        "Observe the retained-output gap; combine the saved prefix with new bytes.",
+        "Verify successful exit and owned-process cleanup."
+      ]
+    },
+    {
+      "file": "docs/examples/runtime/failed-prerequisite.md",
+      "slug": "runtime/failed-prerequisite",
+      "section": "Runtime SDK workflows",
+      "order": -19,
+      "collection": "examples",
+      "tags": [
+        "Python",
+        "SDK"
+      ]
+    },
+    {
+      "file": "docs/examples/runtime/mcp-observer.md",
+      "slug": "runtime/mcp-observer",
+      "section": "Runtime SDK workflows",
+      "order": -19,
+      "collection": "examples",
+      "tags": [
+        "Python",
+        "SDK"
+      ],
+      "recording": "mcp-observer",
+      "recordingCaption": "Actual local SDK and process execution; verified result and cleanup, no model calls.",
+      "transcript": [
+        "Start a real managed worker.",
+        "Discover read-only tools over MCP stdio.",
+        "Inspect the expected session and attempt a forbidden mutation.",
+        "Verify rejection and that the process remains running.",
+        "Close MCP and stop owned sessions and daemon."
+      ]
+    },
+    {
+      "file": "docs/examples/runtime/output-checkpoint.md",
+      "slug": "runtime/output-checkpoint",
+      "section": "Runtime SDK workflows",
+      "order": -19,
+      "collection": "examples",
+      "tags": [
+        "Python",
+        "SDK"
+      ],
+      "recording": "output-checkpoint",
+      "recordingCaption": "Actual local SDK and process execution; verified result and cleanup, no model calls.",
+      "transcript": [
+        "Start a numbered-line worker and archive its first output bytes.",
+        "Close the first SDK client and save its byte checkpoint.",
+        "Reconnect to the same session; capture the remaining lines.",
+        "Verify 66 exact bytes, six lines and no duplicates.",
+        "Observe owned-session and private-daemon cleanup."
+      ]
+    },
+    {
+      "file": "docs/examples/runtime/parallel-report.md",
+      "slug": "runtime/parallel-report",
+      "section": "Runtime SDK workflows",
+      "order": -19,
+      "collection": "examples",
+      "tags": [
+        "Python",
+        "SDK"
+      ]
+    },
+    {
+      "file": "docs/examples/persistent-sessions.md",
+      "slug": "persistent-sessions",
+      "section": "CLI and SDK workflows",
+      "order": 0,
+      "collection": "examples",
+      "tags": [
+        "CLI"
+      ]
+    },
+    {
+      "file": "docs/examples/server-health.md",
+      "slug": "server-health",
+      "section": "CLI and SDK workflows",
+      "order": 1,
+      "collection": "examples",
+      "tags": [
+        "CLI"
+      ],
+      "recording": "server-health",
+      "recordingCaption": "Fresh source-owned VHS capture with independently checked application results and isolated cleanup.",
+      "transcript": [
+        "Run the maintained source fixture in a private runtime.",
+        "Observe actual CLI and SDK state while work proceeds.",
+        "Check the resulting report or service response and health transitions.",
+        "Stop the demonstration sessions and verify cleanup."
+      ]
+    },
+    {
+      "file": "docs/examples/parallel-jobs.md",
+      "slug": "parallel-jobs",
+      "section": "CLI and SDK workflows",
+      "order": 2,
+      "collection": "examples",
+      "tags": [
+        "Python"
+      ],
+      "recording": "orchestration",
+      "recordingCaption": "Fresh source-owned VHS capture with independently checked application results and isolated cleanup.",
+      "transcript": [
+        "Run the maintained source fixture in a private runtime.",
+        "Observe actual CLI and SDK state while work proceeds.",
+        "Check the resulting report or service response and health transitions.",
+        "Stop the demonstration sessions and verify cleanup."
+      ]
+    },
+    {
+      "file": "docs/examples/carrier-api.md",
+      "slug": "carrier-api",
+      "section": "Connected workflows",
+      "order": 3,
+      "collection": "examples",
+      "tags": [
+        "Python"
+      ],
+      "downloads": [
+        "/undercurrent/examples/api-fixture.py",
+        "/undercurrent/examples/carrier-api.py"
+      ]
+    },
+    {
+      "file": "docs/publication.md",
+      "slug": "development/publication",
+      "section": "Documentation",
+      "order": 95
+    },
+    {
+      "file": "docs/getting-started/product-installer.md",
+      "slug": "installation/portable-artifacts",
+      "section": "Getting started",
+      "order": 5
+    },
+    {
+      "file": "docs/development/distribution/releases.md",
+      "slug": "development/distribution/releases",
+      "section": "Distribution",
+      "order": 80
+    },
+    {
+      "file": "docs/development/distribution/installer-validation.md",
+      "slug": "development/distribution/installer-validation",
+      "section": "Distribution",
+      "order": 81
+    },
+    {
+      "file": "docs/development/maintenance/repository-maintenance.md",
+      "slug": "development/maintenance/repository",
+      "section": "Repository maintenance",
+      "order": 85
+    },
+    {
+      "file": "docs/development/testing/suites.md",
+      "slug": "development/testing",
+      "section": "Testing",
+      "order": 73
+    },
+    {
+      "file": "docs/development/testing/architecture.md",
+      "slug": "development/testing/architecture",
+      "section": "Testing",
+      "order": 74
+    },
+    {
+      "file": "docs/development/testing/end-to-end.md",
+      "slug": "development/testing/end-to-end",
+      "section": "Testing",
+      "order": 75
+    },
+    {
+      "file": "docs/development/tooling/developer-tools.md",
+      "slug": "development/tooling",
+      "section": "Testing",
+      "order": 76
+    },
+    {
+      "file": "docs/development/tooling/self-tests.md",
+      "slug": "development/tooling/self-tests",
+      "section": "Testing",
+      "order": 77
+    },
+    {
+      "file": "docs/development/documentation-coverage.md",
+      "slug": "development/documentation-coverage",
+      "section": "Documentation",
+      "order": 96
+    },
+    {
+      "file": "docs/assets/demos/README.md",
+      "slug": "development/recordings",
+      "section": "Documentation",
+      "order": 97
+    },
+    {
+      "file": "docs/project/README.md",
+      "slug": "project",
+      "section": "Project policies",
+      "order": 100
+    },
+    {
+      "file": "docs/project/about.md",
+      "slug": "project/about",
+      "section": "Project policies",
+      "order": 101
+    },
+    {
+      "file": "docs/project/dependencies.md",
+      "slug": "project/dependencies",
+      "section": "Dependencies",
+      "order": 110
+    },
+    {
+      "file": "licenses/README.md",
+      "slug": "project/dependencies/notices",
+      "section": "Dependencies",
+      "order": 111
+    },
+    {
+      "file": "vendor/README.md",
+      "slug": "project/dependencies/vendor",
+      "section": "Dependencies",
+      "order": 112
+    },
+    {
+      "file": "vendor/portable-pty/UNDERCURRENT.md",
+      "slug": "project/dependencies/portable-pty",
+      "section": "Dependencies",
+      "order": 113
+    },
+    {
+      "file": "SUPPORT.md",
+      "slug": "project/support",
+      "section": "Project policies",
+      "order": 102
+    },
+    {
+      "file": "SECURITY.md",
+      "slug": "project/security",
+      "section": "Project policies",
+      "order": 103
+    },
+    {
+      "file": "CONTRIBUTING.md",
+      "slug": "project/participation",
+      "section": "Project policies",
+      "order": 104
+    },
+    {
+      "file": "CODE_OF_CONDUCT.md",
+      "slug": "project/conduct",
+      "section": "Project policies",
+      "order": 105
+    },
+    {
+      "file": "REPOSITORY_FILES.md",
+      "slug": "project/repository-files",
+      "section": "Project policies",
+      "order": 106
+    },
+    {
+      "file": "CHANGELOG.md",
+      "slug": "project/changelog",
+      "section": "Project policies",
+      "order": 107
+    },
+    {
+      "file": "docs/agent/workflows.md",
+      "slug": "agent/workflows",
+      "section": "Agent workflows",
+      "order": 50,
+      "downloads": [
+        "/undercurrent/skills/undercurrent.zip",
+        "/undercurrent/skills/undercurrent-orchestrate.zip"
+      ]
+    },
+    {
+      "file": "docs/agent/shared/mcp-control.md",
+      "slug": "agent/shared-mcp",
+      "section": "Agent workflows",
+      "order": 51,
+      "title": "Maintain shared MCP instructions",
+      "description": "Shared authoring source; portable skills include their own launch guidance and local references."
+    },
+    {
+      "file": "docs/architecture/decisions/0001-effect-and-observation-boundaries.md",
+      "slug": "architecture/decisions/0001-effect-and-observation-boundaries",
+      "section": "Architecture decisions",
+      "order": 30
+    },
+    {
+      "file": "docs/architecture/decisions/0002-cli-foreground-default.md",
+      "slug": "architecture/decisions/0002-cli-foreground-default",
+      "section": "Architecture decisions",
+      "order": 30
+    },
+    {
+      "file": "docs/architecture/decisions/0003-runtime-cancellation-graceful-authority.md",
+      "slug": "architecture/decisions/0003-runtime-cancellation-graceful-authority",
+      "section": "Architecture decisions",
+      "order": 30
+    },
+    {
+      "file": "docs/architecture/decisions/0004-input-size-limits.md",
+      "slug": "architecture/decisions/0004-input-size-limits",
+      "section": "Architecture decisions",
+      "order": 30
+    },
+    {
+      "file": "docs/architecture/decisions/README.md",
+      "slug": "architecture/decisions",
+      "section": "Architecture decisions",
+      "order": 30
+    },
+    {
+      "file": "docs/_standards/README.md",
+      "slug": "development/documentation/standards",
+      "section": "Documentation standards",
+      "order": 98
+    },
+    {
+      "file": "docs/_standards/agent-workflow.md",
+      "slug": "development/documentation/standards/agent-workflow",
+      "section": "Documentation standards",
+      "order": 98
+    },
+    {
+      "file": "docs/_standards/diagrams.md",
+      "slug": "development/documentation/standards/diagrams",
+      "section": "Documentation standards",
+      "order": 98
+    },
+    {
+      "file": "docs/_standards/maintenance.md",
+      "slug": "development/documentation/standards/maintenance",
+      "section": "Documentation standards",
+      "order": 98
+    },
+    {
+      "file": "docs/_standards/references.md",
+      "slug": "development/documentation/standards/references",
+      "section": "Documentation standards",
+      "order": 98
+    },
+    {
+      "file": "docs/_standards/standard.md",
+      "slug": "development/documentation/standards/standard",
+      "section": "Documentation standards",
+      "order": 98
+    },
+    {
+      "file": "docs/_standards/style-guide.md",
+      "slug": "development/documentation/standards/style-guide",
+      "section": "Documentation standards",
+      "order": 98
+    },
+    {
+      "file": "docs/agent/skills/undercurrent/SKILL.md",
+      "slug": "agent/skills/undercurrent",
+      "section": "Agent sessions",
+      "order": 52,
+      "format": "agent-skill"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent/references/cli-control.md",
+      "slug": "agent/skills/undercurrent/references/cli-control",
+      "section": "Agent sessions",
+      "order": 52,
+      "title": "Session skill: control sessions through CLI"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent/references/mcp-control.md",
+      "slug": "agent/skills/undercurrent/references/mcp-control",
+      "section": "Agent sessions",
+      "order": 52,
+      "title": "Session skill: control sessions through MCP"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent/references/observation.md",
+      "slug": "agent/skills/undercurrent/references/observation",
+      "section": "Agent sessions",
+      "order": 52,
+      "title": "Session skill: observe state and output through CLI"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent/references/recovery.md",
+      "slug": "agent/skills/undercurrent/references/recovery",
+      "section": "Agent sessions",
+      "order": 52,
+      "title": "Session skill: reconcile CLI operations before retrying"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent/references/sessions.md",
+      "slug": "agent/skills/undercurrent/references/sessions",
+      "section": "Agent sessions",
+      "order": 52,
+      "title": "Session skill: run and control sessions through CLI"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent/references/setup.md",
+      "slug": "agent/skills/undercurrent/references/setup",
+      "section": "Agent sessions",
+      "order": 52,
+      "title": "Session skill: check the selected CLI installation"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent-orchestrate/SKILL.md",
+      "slug": "agent/skills/undercurrent-orchestrate",
+      "section": "Agent orchestration",
+      "order": 52,
+      "format": "agent-skill"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent-orchestrate/references/launching-workers-cli.md",
+      "slug": "agent/skills/undercurrent-orchestrate/references/launching-workers-cli",
+      "section": "Agent orchestration",
+      "order": 52,
+      "title": "Orchestration skill: launch workers through CLI"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent-orchestrate/references/launching-workers-mcp.md",
+      "slug": "agent/skills/undercurrent-orchestrate/references/launching-workers-mcp",
+      "section": "Agent orchestration",
+      "order": 52,
+      "title": "Orchestration skill: launch workers through MCP"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent-orchestrate/references/launching-workers.md",
+      "slug": "agent/skills/undercurrent-orchestrate/references/launching-workers",
+      "section": "Agent orchestration",
+      "order": 52,
+      "title": "Orchestration skill: launch finite or interactive workers"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent-orchestrate/references/mcp-control.md",
+      "slug": "agent/skills/undercurrent-orchestrate/references/mcp-control",
+      "section": "Agent orchestration",
+      "order": 52,
+      "title": "Orchestration skill: control sessions through MCP"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent-orchestrate/references/parallel-implementation.md",
+      "slug": "agent/skills/undercurrent-orchestrate/references/parallel-implementation",
+      "section": "Agent orchestration",
+      "order": 52,
+      "title": "Orchestration skill: parallel implementation and dependent tasks"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent-orchestrate/references/parallel-reviews.md",
+      "slug": "agent/skills/undercurrent-orchestrate/references/parallel-reviews",
+      "section": "Agent orchestration",
+      "order": 52,
+      "title": "Orchestration skill: parallel reviews"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent-orchestrate/references/recovery.md",
+      "slug": "agent/skills/undercurrent-orchestrate/references/recovery",
+      "section": "Agent orchestration",
+      "order": 52,
+      "title": "Orchestration skill: record and resume an orchestration run"
+    },
+    {
+      "file": "docs/agent/skills/undercurrent-orchestrate/references/uc-control.md",
+      "slug": "agent/skills/undercurrent-orchestrate/references/uc-control",
+      "section": "Agent orchestration",
+      "order": 52,
+      "title": "Orchestration skill: control workers through CLI"
+    }
+  ],
+  "assets": [
+    {
+      "file": "docs/examples/runtime/workflows.py",
+      "target": "public/undercurrent/examples/runtime/workflows.py"
+    },
+    {
+      "file": "docs/examples/runtime/worker.py",
+      "target": "public/undercurrent/examples/runtime/worker.py"
+    },
+    {
+      "file": "docs/examples/integrations/api-fixture.py",
+      "target": "public/undercurrent/examples/api-fixture.py"
+    },
+    {
+      "file": "docs/examples/integrations/carrier-api.py",
+      "target": "public/undercurrent/examples/carrier-api.py"
+    },
+    {
+      "file": "docs/examples/runtime/recordings/output-checkpoint.mp4",
+      "target": "public/demos/undercurrent/output-checkpoint.mp4"
+    },
+    {
+      "file": "docs/examples/runtime/recordings/output-checkpoint-poster.png",
+      "target": "public/demos/undercurrent/output-checkpoint-poster.png"
+    },
+    {
+      "file": "docs/examples/runtime/recordings/output-checkpoint.tape",
+      "target": "public/demos/undercurrent/output-checkpoint.tape"
+    },
+    {
+      "file": "docs/examples/runtime/recordings/output-checkpoint-capture.json",
+      "target": "public/demos/undercurrent/output-checkpoint-capture.json"
+    },
+    {
+      "file": "docs/examples/runtime/recordings/daemon-reconnect.mp4",
+      "target": "public/demos/undercurrent/daemon-reconnect.mp4"
+    },
+    {
+      "file": "docs/examples/runtime/recordings/daemon-reconnect-poster.png",
+      "target": "public/demos/undercurrent/daemon-reconnect-poster.png"
+    },
+    {
+      "file": "docs/examples/runtime/recordings/daemon-reconnect.tape",
+      "target": "public/demos/undercurrent/daemon-reconnect.tape"
+    },
+    {
+      "file": "docs/examples/runtime/recordings/daemon-reconnect-capture.json",
+      "target": "public/demos/undercurrent/daemon-reconnect-capture.json"
+    },
+    {
+      "file": "docs/examples/runtime/recordings/mcp-observer.mp4",
+      "target": "public/demos/undercurrent/mcp-observer.mp4"
+    },
+    {
+      "file": "docs/examples/runtime/recordings/mcp-observer-poster.png",
+      "target": "public/demos/undercurrent/mcp-observer-poster.png"
+    },
+    {
+      "file": "docs/examples/runtime/recordings/mcp-observer.tape",
+      "target": "public/demos/undercurrent/mcp-observer.tape"
+    },
+    {
+      "file": "docs/examples/runtime/recordings/mcp-observer-capture.json",
+      "target": "public/demos/undercurrent/mcp-observer-capture.json"
+    },
+    {
+      "file": "docs/examples/recordings/orchestration.mp4",
+      "target": "public/demos/undercurrent/orchestration.mp4"
+    },
+    {
+      "file": "docs/examples/recordings/orchestration-poster.png",
+      "target": "public/demos/undercurrent/orchestration-poster.png"
+    },
+    {
+      "file": "docs/examples/recordings/orchestration.tape",
+      "target": "public/demos/undercurrent/orchestration.tape"
+    },
+    {
+      "file": "docs/examples/recordings/orchestration-capture.json",
+      "target": "public/demos/undercurrent/orchestration-capture.json"
+    },
+    {
+      "file": "docs/examples/recordings/server-health.mp4",
+      "target": "public/demos/undercurrent/server-health.mp4"
+    },
+    {
+      "file": "docs/examples/recordings/server-health-poster.png",
+      "target": "public/demos/undercurrent/server-health-poster.png"
+    },
+    {
+      "file": "docs/examples/recordings/server-health.tape",
+      "target": "public/demos/undercurrent/server-health.tape"
+    },
+    {
+      "file": "docs/examples/recordings/server-health-capture.json",
+      "target": "public/demos/undercurrent/server-health-capture.json"
+    },
+    {
+      "file": "LICENSE",
+      "target": "public/undercurrent/dependencies/LICENSE.txt",
+      "link": true
+    },
+    {
+      "file": "crates/undercurrent-foundation/NOTICE",
+      "target": "public/undercurrent/dependencies/foundation-NOTICE.txt",
+      "link": true
+    },
+    {
+      "file": "licenses/THIRD-PARTY-NOTICES.txt",
+      "target": "public/undercurrent/dependencies/THIRD-PARTY-NOTICES.txt",
+      "link": true
+    },
+    {
+      "file": "licenses/RUST-STDLIB.html",
+      "target": "public/undercurrent/dependencies/RUST-STDLIB.html.txt",
+      "link": true
+    },
+    {
+      "file": "licenses/inputs/terminal-NOTICE.md",
+      "target": "public/undercurrent/dependencies/terminal-NOTICE.md.txt",
+      "link": true
+    },
+    {
+      "file": "vendor/vt100/README.md",
+      "target": "public/undercurrent/dependencies/vt100-README.md.txt",
+      "link": true
+    },
+    {
+      "file": "vendor/vt100/CHANGELOG.md",
+      "target": "public/undercurrent/dependencies/vt100-CHANGELOG.md.txt",
+      "link": true
+    },
+    {
+      "file": "vendor/vt100/LICENSE",
+      "target": "public/undercurrent/dependencies/vt100-LICENSE.txt",
+      "link": true
+    },
+    {
+      "file": "vendor/vt100/PROVENANCE.json",
+      "target": "public/undercurrent/dependencies/vt100-PROVENANCE.json",
+      "link": true
+    },
+    {
+      "file": "vendor/vte/README.md",
+      "target": "public/undercurrent/dependencies/vte-README.md.txt",
+      "link": true
+    },
+    {
+      "file": "vendor/vte/CHANGELOG.md",
+      "target": "public/undercurrent/dependencies/vte-CHANGELOG.md.txt",
+      "link": true
+    },
+    {
+      "file": "vendor/vte/LICENSE-APACHE",
+      "target": "public/undercurrent/dependencies/vte-LICENSE-APACHE.txt",
+      "link": true
+    },
+    {
+      "file": "vendor/vte/LICENSE-MIT",
+      "target": "public/undercurrent/dependencies/vte-LICENSE-MIT.txt",
+      "link": true
+    },
+    {
+      "file": "vendor/vte/PROVENANCE.json",
+      "target": "public/undercurrent/dependencies/vte-PROVENANCE.json",
+      "link": true
+    },
+    {
+      "file": "vendor/vte/UNSAFE-AUDIT.json",
+      "target": "public/undercurrent/dependencies/vte-UNSAFE-AUDIT.json",
+      "link": true
+    },
+    {
+      "file": "vendor/portable-pty/LICENSE.md",
+      "target": "public/undercurrent/dependencies/portable-pty-LICENSE.md.txt",
+      "link": true
+    },
+    {
+      "file": "vendor/portable-pty/LICENSE-RUST-MIT",
+      "target": "public/undercurrent/dependencies/portable-pty-LICENSE-RUST-MIT.txt",
+      "link": true
+    },
+    {
+      "file": "vendor/portable-pty/PROVENANCE.json",
+      "target": "public/undercurrent/dependencies/portable-pty-PROVENANCE.json",
+      "link": true
+    },
+    {
+      "file": "vendor/portable-pty/conpty/PROVENANCE.json",
+      "target": "public/undercurrent/dependencies/conpty-PROVENANCE.json",
+      "link": true
+    },
+    {
+      "file": "vendor/portable-pty/conpty/LICENSE",
+      "target": "public/undercurrent/dependencies/conpty-LICENSE.txt",
+      "link": true
+    },
+    {
+      "file": "docs/agent/downloads/undercurrent.zip",
+      "target": "public/undercurrent/skills/undercurrent.zip",
+      "link": true
+    },
+    {
+      "file": "docs/agent/downloads/undercurrent-orchestrate.zip",
+      "target": "public/undercurrent/skills/undercurrent-orchestrate.zip",
+      "link": true
+    },
+    {
+      "file": "docs/coverage.json",
+      "target": "public/undercurrent/documentation/coverage.json",
+      "link": true
+    }
+  ],
+  "sourceRoot": "repository"
+}

@@ -5,7 +5,7 @@ logging private payloads. The authoritative defaults are in
 [profile.rs](../../../crates/undercurrent-sdk/src/profile.rs); validation belongs to
 [boundary.rs](../../../crates/undercurrent-sdk/src/boundary.rs), [client.rs](../../../crates/undercurrent-sdk/src/client.rs),
 [local.rs](../../../crates/undercurrent-sdk/src/local.rs), and [product.rs](../../../crates/undercurrent-sdk/src/product.rs).
-The [public API reference](../../../crates/undercurrent-sdk/PUBLIC_API.md) owns supported version/surface
+The [public API reference](../../../crates/undercurrent-sdk/docs/reference/public-api.md) owns supported version/surface
 policy, and [stream recovery](streams-and-recovery.md) owns recovery behavior.
 
 To connect a support case to daemon logs, call `ProductClient::with_correlation_id`

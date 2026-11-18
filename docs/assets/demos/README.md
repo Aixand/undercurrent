@@ -174,4 +174,4 @@ The runner handles failure cleanup. For application
 integration, use the [Python quickstart](../../sdk/python/quickstart.md) and its
 maintained examples, including their lifecycle and error handling.
 
-[Documentation assets](../README.md)
+[Documentation assets](../../development/documentation.md#documentation-assets)

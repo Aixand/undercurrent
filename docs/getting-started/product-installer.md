@@ -7,7 +7,7 @@ environment. Undercurrent runs as native executables and an external daemon;
 the SDK connects through local IPC.
 
 The configured targets are Linux GNU x64, macOS Intel/ARM64, and Windows x64.
-Actual execution is recorded in [installer validation](../development/installer-validation.md).
+Actual execution is recorded in [installer validation](../development/distribution/installer-validation.md).
 Build each target natively and qualify it before publication.
 
 For published releases, use the [hosted installer](installation.md#install-a-published-release)
@@ -154,7 +154,7 @@ by the download installer.
 `dist/handoff` contains the exact artifact, descriptor, and bound installation
 report. Keep `dist/bootstrap` and `dist/lifecycle.json` alongside it. Export does
 not publish or manufacture an attestation. The
-[release workflow](../development/releases.md#publish-a-version-tag) validates
+[release workflow](../development/distribution/releases.md#publish-a-version-tag) validates
 `v<version>` tags, runs native qualification, and attaches versioned archives to
 a GitHub Release after crates.io publication succeeds. Export itself does not
 deploy hosted installer endpoints or make a release available for download.

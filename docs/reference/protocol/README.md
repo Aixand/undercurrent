@@ -62,9 +62,9 @@ contracts and signatures belong there. Use the current warning-denied
 `python3 scripts/validate.py --stage rustdoc` stage for repository
 verification; see [verification prerequisites](../../development/verification.md).
 
-The [public 0.1.0-beta boundary](../../../crates/undercurrent-sdk/PUBLIC_API.md) distinguishes
+The [public 0.1.0-beta boundary](../../../crates/undercurrent-sdk/docs/reference/public-api.md) distinguishes
 supported SDK/protocol types from internal public Rust symbols. The retained
-[0.1.0-beta pointer](../../../crates/undercurrent-sdk/PUBLIC_API.md) marks retirement;
+[0.1.0-beta pointer](../../../crates/undercurrent-sdk/docs/reference/public-api.md) marks retirement;
 it is not a compatibility negotiation option.
 
 [SDK setup](../../sdk/README.md) · [Error lookup](../errors.md) · [Documentation index](../../README.md)

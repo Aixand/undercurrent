@@ -1,24 +1,21 @@
-# Change and verify Undercurrent
+# Change, verify and distribute Undercurrent
 
-Use this path when building or maintaining the source checkout. The
-[architecture guide](../architecture/README.md) explains the system;
-[crate dependencies and ownership](../architecture/dependencies.md) locates
-the component whose implementation guide you need.
+Use these reading paths from the source checkout. General owns shared setup and
+cross-crate verification. Each crate and Python maintainer category owns local
+implementation mechanisms and focused checks.
 
-These guides support maintainers and readers working on their own checkouts.
-We welcome issues, but are not accepting pull requests; see the
-[participation policy](../../CONTRIBUTING.md). Follow the
-[code of conduct](../../CODE_OF_CONDUCT.md) and use the
-[private reporting route](../../SECURITY.md) for security vulnerabilities.
+| Task | Owning guide |
+| --- | --- |
+| Choose an implementation owner | [Workspace map](workspace-guide.md) |
+| Prepare the toolchain | [Development setup](setup.md) |
+| Extend a capability | [Extension points](extending.md) |
+| Select meaningful evidence | [Verification](verification.md) and [native platforms](platform-testing.md) |
+| Find test families | [Test map](testing/suites.md), [architecture gate](testing/architecture.md), [live regressions](testing/end-to-end.md) |
+| Maintain developer tools | [Tool map](tooling/developer-tools.md) and [tool self-tests](tooling/self-tests.md) |
+| Assemble and publish | [Distribution](distribution/releases.md) and [installer qualification](distribution/installer-validation.md) |
+| Maintain repository checks | [Repository maintenance](maintenance/repository-maintenance.md) |
+| Write and publish documentation | [Authoring](documentation.md), [coverage](documentation-coverage.md) and [publication](../publication.md) |
+| Understand a lasting design choice | [Architecture decisions](../architecture/decisions/README.md) |
 
-1. [Prepare your development environment](setup.md).
-2. [Choose the extension point](extending.md) and follow its owning crate guide.
-3. [Select verification](verification.md), including [native platform evidence](platform-testing.md) where applicable.
-4. For distribution work, follow [bundle qualification](releases.md).
-5. For repository checks and GitHub settings, see [repository maintenance](repository-maintenance.md).
-6. For documentation changes, follow the [shared standard and project checks](documentation.md).
-
-[Design decisions](../architecture/decisions/README.md) record current design
-choices.
-
-[Documentation index](../README.md)
+[Participation](../../CONTRIBUTING.md) explains the current issue/PR policy.
+[Security reports](../../SECURITY.md) use the private reporting route.

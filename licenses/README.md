@@ -144,4 +144,4 @@ their embedded license files matched the root Apache license byte for byte.
 These checks establish packaging behavior; native runtime qualification remains
 part of the separate release procedure.
 
-[Release qualification](../docs/development/releases.md) · [Apache-2.0](../LICENSE)
+[Release qualification](../docs/development/distribution/releases.md) · [Apache-2.0](../LICENSE)

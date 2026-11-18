@@ -3,8 +3,7 @@
 Run commands from the repository root after [development setup](setup.md).
 Choose the owning package's tests first, then integration gates affected by the
 change. A successful check establishes only its executed scope and target.
-The [test directory guide](../../tests/README.md) maps suites and fixtures;
-[scripts/](../../scripts/README.md) contains developer commands and shared tools.
+The [test suite map](testing/suites.md) locates scenarios and fixtures.
 
 | Change or claim | Useful evidence | Limit |
 | --- | --- | --- |
@@ -25,15 +24,15 @@ for native-process fixture requirements before execution.
 
 ```sh
 cargo test --locked -p undercurrent-application --lib commands::command_tests
-cargo test --locked -p aixand-undercurrent --test product_client
 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=python/src python3 -m unittest discover -s python/tests -v
-git diff --check
 ```
 
-Expected result: each command exits zero. Preserve the failing test name, target,
+For an SDK-only Rust check, use the [setup example](setup.md#build-the-boundary-you-changed).
+The Python command uses mocked requests and does not need a running daemon.
+Each command should exit zero. Preserve the failing test name, target,
 revision, and typed stage when reporting a failure. Avoid copying terminal or
 environment payloads into public issue reports. Cargo retains build artifacts;
-the Python mocks and whitespace check create no runtime state. Real-daemon
+the Python mocks create no runtime state. Real-daemon
 fixtures have their own cleanup and retain evidence if termination is uncertain.
 
 ## Project validation runner
@@ -66,28 +65,29 @@ python3 scripts/validate.py --list
 python3 scripts/validate.py --stage rustdoc --report target/standalone-validation/rustdoc.json
 ```
 
+Use `python3 scripts/validate.py --all` to run every stage.
 The Rustdoc stage uses `RUSTDOCFLAGS=-Dwarnings` with locked workspace docs,
 all features, and no dependency docs. The `tests` stage separately includes
-doctests. This runner forces offline Cargo, records logs and an
-`executed_stages_only` report, and stops on the first failed stage. A passed
+doctests. This runner forces offline Cargo, writes logs under
+`target/standalone-validation/` and records an `executed_stages_only` report, and stops on the first failed stage. A passed
 single-stage report is not a passed full validation run.
 
-The `tooling` stage checks the vendor integrity policy, E2E catalog and runner,
-subprocess cleanup, CI logging, and validation reporting.
-Discover feature regressions with `python3 tests/e2e/run.py --list`; select
-a test with `--test NAME --bin-dir target/debug`. Tests marked manual are not
-implied by the validation runner.
+Use these guides for focused checks:
+
+- [Architecture gate](testing/architecture.md) covers dependency boundaries,
+  external consumers, and native symbol checks.
+- [Live product regressions](testing/end-to-end.md) explains discovery, selection,
+  native prerequisites, and manual probes.
+- [Tooling self-tests](tooling/self-tests.md) covers script and runner behavior.
+- [Developer tools](tooling/developer-tools.md) maps scripts to their owners.
 
 For native scope, consult [platform coverage](platform-testing.md).
-For bundles, follow [release qualification](releases.md).
+For bundles, follow [release qualification](distribution/releases.md).
 
 ## Review the reader outcome
 
-Follow the [documentation workflow](documentation.md) and run
-`python3 scripts/checks/check-docs.py --root .` for selected pages, local links
-and anchors, structure, and diagram accessibility metadata. The `documentation`
-stage also runs the checker's regression suite. External URLs, raw HTML links,
-example execution, and rendered-diagram review need separate verification.
+Follow the [documentation workflow](documentation.md) for offline checks,
+example execution, and rendered-diagram review.
 
 Check that commands name their directory, prerequisites, placeholders, expected
 result, failure handling and cleanup. Compare every guarantee with its owning

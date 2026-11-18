@@ -1,0 +1,355 @@
+{
+  "schema": 1,
+  "manifests": [
+    "docs/publication.json",
+    "crates/undercurrent-application/docs/publication.json",
+    "crates/undercurrent-cli/docs/publication.json",
+    "crates/undercurrent-config/docs/publication.json",
+    "crates/undercurrent-daemon/docs/publication.json",
+    "crates/undercurrent-diagnostics/docs/publication.json",
+    "crates/undercurrent-domain/docs/publication.json",
+    "crates/undercurrent-foundation/docs/publication.json",
+    "crates/undercurrent-mcp/docs/publication.json",
+    "crates/undercurrent-multiplex/docs/publication.json",
+    "crates/undercurrent-platform-macos/docs/publication.json",
+    "crates/undercurrent-platform-windows/docs/publication.json",
+    "crates/undercurrent-protocol/docs/publication.json",
+    "crates/undercurrent-python-bridge/docs/publication.json",
+    "crates/undercurrent-runtime/docs/publication.json",
+    "crates/undercurrent-sdk/docs/publication.json",
+    "crates/undercurrent-store-sqlite/docs/publication.json",
+    "crates/undercurrent-transport-core/docs/publication.json",
+    "crates/undercurrent-transport-local/docs/publication.json",
+    "crates/undercurrent-wire/docs/publication.json",
+    "python/docs/publication.json"
+  ],
+  "documents": [
+    {
+      "path": "README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "docs/project/about.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 500
+    },
+    {
+      "path": "docs/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "docs/project/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "python/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "python/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "scripts/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "docs/development/tooling/developer-tools.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "tests/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "docs/development/testing/suites.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "tests/architecture/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "docs/development/testing/architecture.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "tests/e2e/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "docs/development/testing/end-to-end.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "tests/tooling/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "docs/development/tooling/self-tests.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-wire/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-wire/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-transport-local/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-transport-local/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-transport-core/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-transport-core/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-store-sqlite/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-store-sqlite/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-sdk/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-sdk/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-runtime/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-runtime/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-python-bridge/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-python-bridge/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-protocol/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-protocol/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-platform-windows/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-platform-windows/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-platform-macos/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-platform-macos/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-multiplex/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-multiplex/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-mcp/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-mcp/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-foundation/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-foundation/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-domain/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-domain/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-diagnostics/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-diagnostics/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-daemon/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-daemon/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-config/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-config/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-cli/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-cli/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-application/README.md",
+      "role": "entrypoint",
+      "destinations": [
+        "crates/undercurrent-application/docs/README.md"
+      ],
+      "reason": "Concise repository/package entrypoint; substantive material is maintained in its published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "docs/development/releases.md",
+      "role": "redirect",
+      "destinations": [
+        "docs/development/distribution/releases.md"
+      ],
+      "reason": "Stable source path retained after organizing the canonical published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "docs/development/installer-validation.md",
+      "role": "redirect",
+      "destinations": [
+        "docs/development/distribution/installer-validation.md"
+      ],
+      "reason": "Stable source path retained after organizing the canonical published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "docs/development/repository-maintenance.md",
+      "role": "redirect",
+      "destinations": [
+        "docs/development/maintenance/repository-maintenance.md"
+      ],
+      "reason": "Stable source path retained after organizing the canonical published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "crates/undercurrent-sdk/PUBLIC_API.md",
+      "role": "redirect",
+      "destinations": [
+        "crates/undercurrent-sdk/docs/reference/public-api.md"
+      ],
+      "reason": "Stable source path retained after organizing the canonical published owner.",
+      "maxWords": 350
+    },
+    {
+      "path": "licenses/inputs/terminal-NOTICE.md",
+      "role": "dependency",
+      "destinations": [
+        "docs/project/dependencies.md"
+      ],
+      "reason": "Original upstream documentation/notice retained byte-for-byte and available through the published attachment hub."
+    },
+    {
+      "path": "vendor/vt100/README.md",
+      "role": "dependency",
+      "destinations": [
+        "docs/project/dependencies.md"
+      ],
+      "reason": "Original upstream documentation/notice retained byte-for-byte and available through the published attachment hub."
+    },
+    {
+      "path": "vendor/vt100/CHANGELOG.md",
+      "role": "dependency",
+      "destinations": [
+        "docs/project/dependencies.md"
+      ],
+      "reason": "Original upstream documentation/notice retained byte-for-byte and available through the published attachment hub."
+    },
+    {
+      "path": "vendor/vte/README.md",
+      "role": "dependency",
+      "destinations": [
+        "docs/project/dependencies.md"
+      ],
+      "reason": "Original upstream documentation/notice retained byte-for-byte and available through the published attachment hub."
+    },
+    {
+      "path": "vendor/vte/CHANGELOG.md",
+      "role": "dependency",
+      "destinations": [
+        "docs/project/dependencies.md"
+      ],
+      "reason": "Original upstream documentation/notice retained byte-for-byte and available through the published attachment hub."
+    },
+    {
+      "path": "vendor/portable-pty/LICENSE.md",
+      "role": "dependency",
+      "destinations": [
+        "docs/project/dependencies.md"
+      ],
+      "reason": "Original upstream documentation/notice retained byte-for-byte and available through the published attachment hub."
+    }
+  ]
+}

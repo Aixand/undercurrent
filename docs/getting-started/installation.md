@@ -11,7 +11,7 @@ components, initialize your shell, and create your first session.
 | Hosted installer | Linux x86_64 GNU or macOS arm64/x86_64: curl, tar/gzip, awk, mktemp, and sha256sum or shasum. Windows x64: PowerShell 5.1+ and system tar. No system Python or Rust. |
 | Source development | This complete repository, pinned Rust 1.95.0, Cargo, native compiler/linker, and dependency access. |
 | Portable product artifact | A supplied artifact and matching bootstrap for your native platform. Follow the [product installer](product-installer.md). |
-| Verified artifact | A separately obtained bundle with checksums, provenance, and license metadata. See [bundle qualification](../development/releases.md). |
+| Verified artifact | A separately obtained bundle with checksums, provenance, and license metadata. See [bundle qualification](../development/distribution/releases.md). |
 
 The hosted installer includes `uc`, `uc-daemon`, `uc-session-host`,
 `uc-python-bridge`, `uc-mcp`, and the Python SDK wheel. It downloads a pinned,

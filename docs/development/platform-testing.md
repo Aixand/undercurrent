@@ -19,6 +19,8 @@ for example `ci/windows-20261008-1`. This starts CI without publishing a release
 The separate repository and [product checks](../../.github/workflows/product-checks.yml)
 run on pushes to `main` and maintainer pull requests. Full installer qualification
 runs through version-tag releases or a manual installer workflow run.
+See [installer qualification](distribution/installer-validation.md) for native
+artifact checks and the evidence to retain.
 
 An all-platform run starts four native jobs: Ubuntu 24.04, macOS 15 (Arm64),
 macOS 15 Intel, and Windows Server 2022. Each job uses its platform's existing

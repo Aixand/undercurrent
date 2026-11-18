@@ -44,7 +44,7 @@ undercurrent-protocol = { package = "aixand-undercurrent-protocol", path = "/abs
 ```
 
 These are checkout dependencies, not a claim that a registry release is
-available. See the [public boundary](../../../crates/undercurrent-sdk/PUBLIC_API.md) for version axes.
+available. See the [public boundary](../../../crates/undercurrent-sdk/docs/reference/public-api.md) for version axes.
 
 ## 2. Run against the selected daemon
 
@@ -155,7 +155,7 @@ valid endpoint does not prove that a daemon exists there.
 | --- | --- |
 | `InvalidEndpoint` | Use the configured absolute path, remove `..`, shorten Unix paths; validation does no filesystem IO |
 | Failure at `Connect` | Confirm the daemon and path, same OS owner, protected permissions, and supported platform; do not bypass ownership checks |
-| Failure at `Negotiate` or `MissingCapability` | Match daemon/SDK versions and required capabilities; check frame/codec limits and the [0.1.0-beta contract](../../../crates/undercurrent-sdk/PUBLIC_API.md) |
+| Failure at `Negotiate` or `MissingCapability` | Match daemon/SDK versions and required capabilities; check frame/codec limits and the [0.1.0-beta contract](../../../crates/undercurrent-sdk/docs/reference/public-api.md) |
 | Call takes longer than five seconds | Five seconds is the example's response wait; initial connection retries have their own budget. See [deadline scope](streams-and-recovery.md#deadlines-and-ownership) |
 | `ServerRejected` | Inspect the typed category and optional disposition, especially authorization and cursor errors |
 | Watch times out or returns a gap | Inspect recovery phase; rebuild observation using the [stream recovery guide](streams-and-recovery.md#recover-after-a-gap) |

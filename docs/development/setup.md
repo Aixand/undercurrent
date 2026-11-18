@@ -89,15 +89,7 @@ Exiting the subshell restores your original environment. The
 [Python tutorial](../sdk/python/quickstart.md) covers the extra bridge and
 Python environment.
 
-Python package tests use the standard library and mocked requests:
-
-```sh
-PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=python/src python3 -m unittest discover -s python/tests -v
-```
-
-Expected result: tests pass without a running daemon. This does not verify the
-bridge subprocess or native PTY delivery. A build alone leaves Cargo artifacts;
-the mocked Python command needs no runtime cleanup.
+For Python package tests, see [focused checks](verification.md#focused-checks).
 
 ## Before review
 

@@ -16,7 +16,7 @@ Python additionally needs the matching bridge described in
 
 For an independently supplied bundle, use its accompanying manifest, checksums,
 license and verification instructions before installation. The current
-[bundle qualification guide](../development/releases.md) describes the
+[bundle qualification guide](../development/distribution/releases.md) describes the
 repository's verifier and isolated installation proof. Do not assemble a mixed
 set of artifacts from different builds.
 

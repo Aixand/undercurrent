@@ -236,12 +236,14 @@ does not authorize another write.
 
 ## Stop a session
 
-`stop(session, force=False, expected_revision=None)` requests termination and
+`stop(session, force=False, graceful_only=False, expected_revision=None)` requests termination and
 returns the resulting `Session`.
 
 Default stop permits graceful termination and
 the runtime's escalation policy; it is not the protocol's `graceful_only` mode.
 `force=True` requests immediate forced termination.
+`graceful_only=True` requests cooperative-only stopping and cannot be combined
+with `force=True`. Inspect the returned state and reconcile an uncertain result.
 
 Revision checking occurs
 before state changes or signaling. Each invocation generates a new mutation key;

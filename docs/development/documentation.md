@@ -59,7 +59,7 @@ regression suite automatically.
 Run changed examples in isolated runtime homes and preserve their failure
 evidence. See [verification](verification.md) for selecting product tests.
 Installation examples use the [product guide](../getting-started/product-installer.md)
-and [installer qualification](installer-validation.md).
+and [installer qualification](distribution/installer-validation.md).
 
 Render changed Mermaid blocks with Mermaid CLI 12, inspect both default and
 dark themes, and preview them in the publishing renderer.
@@ -98,3 +98,34 @@ executed examples, inspected diagram themes, and remaining gaps. A link-check
 pass alone does not establish a successful installation or supported platform.
 
 [Documentation index](../README.md) · [Development guides](README.md)
+
+## Documentation assets
+
+Store shared documentation images under `docs/assets/` and reference them
+with relative links.
+Brand resources include the [Undercurrent logo](../assets/branding/undercurrent-icon.svg)
+and a [legacy static architecture image](../assets/diagrams/undercurrent-architecture.png). Keep brand images in
+`branding/` and technical diagrams in `diagrams/`. The logo is displayed at
+240 × 240 pixels. Maintain the [SVG](../assets/branding/undercurrent-icon.svg) as the vector
+logo and keep the [transparent PNG](../assets/branding/undercurrent-icon.png) consistent
+when updating the branding.
+
+Review the architecture image against the [architecture guide](../architecture/README.md)
+when runtime boundaries change. It has no editable source in this repository;
+keep labels readable at README width and preserve its full-resolution link.
+
+Terminal recordings live in [`demos/`](../assets/demos/README.md), with their VHS tapes,
+sample programs, generated GIFs, and static posters. Use the documented runner
+to regenerate them against an isolated daemon and verify the recorded workflow.
+
+If a README uses Shields badges, its CI badge should identify and link to
+the native platform workflow; a static workflow label does not display live pass/fail results. Keep the
+license and language badges aligned with [LICENSE](../../LICENSE),
+[rust-toolchain.toml](../../rust-toolchain.toml), and
+[Python requirements](../../python/pyproject.toml). Use live status or release
+badges only when their public endpoints return usable results.
+
+
+## Account for every document
+
+Follow [documentation coverage](documentation-coverage.md). Coverage, generated skill references and downloadable packages are checked in CI and the documentation validation stage.

@@ -11,7 +11,7 @@ rather than inferring qualification from this map.
 | Native process/runtime paths | Implemented | Implemented with macOS observation adapter | Implemented ConPTY/job/process paths |
 | Public installer `installer.aixand.org/undercurrent` | x86_64 with GNU libc, published bundle required | arm64 and x86_64, published bundle required | x86_64 through `/install.ps1`, published Windows bundle required |
 | Source installer `dev.sh` | x86_64 with GNU libc | arm64 and x86_64, Xcode tools required | Not supported by this script |
-| Checked-in native CI | Ubuntu 24.04 job | macOS 14 and macOS 15 Intel jobs | Windows Server 2022 job in the same workflow |
+| Checked-in native CI | Ubuntu 24.04 job | `macos-15` and `macos-15-intel` jobs | Windows Server 2022 job in the same workflow |
 | Python live qualification | No result established here | No result established here | No result established here |
 
 The hosted installer needs no system Python or Rust. See
