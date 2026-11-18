@@ -184,22 +184,23 @@ They require no live daemon and leave no managed sessions to clean up:
 
 ```sh
 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=python/src python3 -m unittest discover -s python/tests -v
+cargo test --locked -p undercurrent-python-bridge
 cargo clippy --locked -p undercurrent-python-bridge --no-deps -- -D warnings
 cargo test --locked -p aixand-undercurrent --test product_client --test client_contract
 RUSTDOCFLAGS=-Dwarnings cargo doc --locked -p undercurrent-python-bridge --no-deps
 ```
 
-Expected: the Python suite and SDK tests pass, Clippy reports no warnings, and
+Expected: the Python suite, bridge unit tests, and SDK tests pass, Clippy reports no warnings, and
 Rustdoc generates documentation without warnings. A failure should be investigated
 at the owning boundary in the table below.
 
-There is no bridge library target or bridge-local Rust test module. Rustdoc checks
-comments and links; an empty crate test run cannot establish framing or subprocess
-behavior. Python tests below replace the transport with fakes; they do not launch
-a bridge or daemon.
+The bridge unit tests run in the binary target. Rustdoc checks comments and links.
+The Python input and wait tests below use fakes for their behavior under test.
 
 | Evidence | What it checks; what it does not establish |
 | --- | --- |
+| [Bridge command tests](../../src/main.rs) | Rename preparation and request identity, request-size option and line bounds, and per-instance recovery jitter |
+| [Envelope writer test](../../src/output.rs) | Fatal emission waits for a partial worker frame and suppresses later frames using a controlled writer |
 | [Python input tests](../../../../python/tests/test_input.py) | `test_modes_and_submission` checks auto-text, paste, literal text, optional Enter, and argument rejection; bypasses `_request` transport |
 | [Python wait tests](../../../../python/tests/test_wait.py) | Transient state, coalesced observations, gaps, revision floors, disconnected inspection, terminal state, timeout and cancellation cleanup; fake observation source |
 | [SDK product tests](../../../undercurrent-sdk/tests/product_client.rs) | Typed request/stream sharing, cancellation correlation, capability checks, category/disposition preservation, and retained recovery profile behavior; no bridge stdio |

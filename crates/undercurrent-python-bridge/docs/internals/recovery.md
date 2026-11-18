@@ -135,7 +135,7 @@ paths to preserve external attempt fences.
 
 When the daemon connection drops but the bridge remains alive, the Rust
 [recovery supervisor](../../../undercurrent-sdk/src/resilient.rs) attempts bounded
-reconnection and subscription resume using the standard profile. Python keeps
+reconnection and subscription resume using the SDK profile initialized at startup. Python keeps
 the same stream ID in its own queue map. This is restoration of a logical stream,
 not replay of a pending mutation. Resume can report a gap, fail one stream, or
 exhaust the shared recovery budget.

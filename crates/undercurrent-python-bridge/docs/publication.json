@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "python-bridge",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "python-bridge",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Python bridge development",
+      "description": "Maintain private stdio framing, request workers, stream ACKs and teardown."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "python-bridge/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "internals/operation-flow.md",
+      "slug": "python-bridge/internals/operation-flow",
+      "section": "Internals",
+      "order": 12
+    },
+    {
+      "file": "internals/recovery.md",
+      "slug": "python-bridge/internals/recovery",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "reference/stdio-protocol.md",
+      "slug": "python-bridge/reference/stdio-protocol",
+      "section": "Reference",
+      "order": 14
+    }
+  ]
+}

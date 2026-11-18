@@ -1,9 +1,9 @@
 # Look up the private stdio protocol
 
 Use this reference when changing the paired Python transport and Rust bridge.
-It describes package `0.1.0-beta` and ready protocol `0.1.0-beta` at this revision; it is not an
-independent public API. The owning definitions are [`Command` and `run`](../../src/main.rs)
-and the [Python `Bridge`](../../../../python/src/undercurrent/_transport.py).
+It describes the revision-coupled interface for bridge package `0.1.0-beta`
+and ready protocol `0.1.0-beta`. The owners are
+[`Command` and `run`](../../src/main.rs), the [envelope writer](../../src/output.rs), and the [Python `Bridge`](../../../../python/src/undercurrent/_transport.py).
 Product payload definitions belong to the [protocol DTOs](../../../undercurrent-protocol/src/dto.rs),
 [operation registry](../../../undercurrent-protocol/src/registry.rs), and
 [contract validation](../../../undercurrent-protocol/src/compatibility.rs).
@@ -38,16 +38,17 @@ later worker frames are suppressed before process exit. Broken stdout or process
 termination can still leave incomplete bytes; treat those as bridge failure,
 not a complete response.
 
-The bridge ignores command-line arguments: it has no `--help`, socket flag, or
-CLI parser. Configuration comes from the environment:
+The bridge accepts only the optional private `--request-bytes N` argument.
+See [limits and timing](#limits-and-timing) for its effect on framing. Home and
+executable selection use the following settings.
 
 | Environment variable | Rust bridge behavior | Python caller behavior |
 | --- | --- | --- |
-| `UNDERCURRENT_HOME` | Used as-is; appends `/run/control.sock` | `Client(home=...)` takes precedence, then environment, then `~/.aixand/undercurrent`; expands user and resolves absolute path before spawning |
-| `HOME` | Fallback is `$HOME/.aixand/undercurrent`; absent/non-Unicode `HOME` becomes an empty prefix | Python normally supplies resolved `UNDERCURRENT_HOME` explicitly |
+| `UNDERCURRENT_HOME` | Used as-is; appends `/run/control.sock` | `Client(home=...)` takes precedence, then environment, then `~/.aixand/undercurrent`; expands the user path and resolves it before spawning, preserving absolute native spelling on Windows |
+| `HOME` (Unix), `USERPROFILE` (Windows) | Appends `.aixand/undercurrent` to the native environment value, or to an empty path when absent | Python normally supplies resolved `UNDERCURRENT_HOME` explicitly |
 | `UNDERCURRENT_PYTHON_BRIDGE` | Not read by the Rust process | `Client(bridge=...)` takes precedence, then environment, then `uc-python-bridge` on PATH; resolved with `shutil.which` |
 
-Rust creates a `StandaloneClientProfile::standard` with a fresh
+Rust creates a `StandaloneClientProfile::with_request_limit` with a fresh
 `python-<UUIDv7>` client identity, constructs `LocalClientConfig`, and connects
 with deterministic recovery jitter seeded from the low 64 bits of that fresh
 UUID, which include per-instance random material. Tests can reproduce samples

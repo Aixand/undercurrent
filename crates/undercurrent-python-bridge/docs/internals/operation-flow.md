@@ -36,7 +36,7 @@ It neither carries that private IPC nor bypasses product authorization.
 | Python argument validation and convenience methods | Python `Client` | Accept typed product DTOs, including requests without a Python convenience method |
 | Parent subprocess and async lifecycle | Python `Bridge` | Read commands and emit correlated lines |
 | Contract versions and DTO fields | Product protocol | Fill current metadata for five standalone mutations |
-| Physical connection, authentication, request correlation, stream recovery | Rust SDK | Configure one standard client and share its clones |
+| Physical connection, authentication, request correlation, stream recovery | Rust SDK | Configure one client with the selected request limit and share its clones |
 | Durable state, idempotency policy, authorization, process effects | Daemon/application/runtime/store | Forward successes or projected errors; no local commit log |
 | Application acceptance and task completion | The managed application and its caller | No inference from input receipts, readiness, or observed exit |
 
@@ -49,11 +49,11 @@ The package has no library target.
 | Entry point | Responsibility and invariant |
 | --- | --- |
 | `maximum_line_bytes`, `Command`, `default_timeout` | Bound input before unbounded line allocation; distinguish envelope parse failure from a valid command with invalid timeout |
-| `Output`, `emit` | One mutex spans serialization, newline, and flush; fatal marks output terminal and suppresses later workers; stdout failure exits immediately |
+| `EnvelopeOutput::emit` (`output.rs`) | One mutex spans serialization, newline, and flush; fatal marks output terminal and suppresses later workers; stdout failure exits immediately |
 | `error_value` | Project typed SDK categories and available product evidence without returning request bodies |
 | `Active`, `detach` | Own subscription, one-slot acknowledgment sender, and thread handle; wake both possible wait sites before joining |
 | `prepare` | Add standalone environment binding and replace selected mutation metadata while preserving the idempotency key |
-| `run` startup | Resolve home, install standard client and deterministic jitter, emit ready only after connection succeeds |
+| `run` startup | Resolve home, apply the request limit and deterministic jitter, and emit ready after connection succeeds |
 | `run` reader and `request` arm | Validate envelope and request, admit bounded worker, share client, correlate completion by parent ID |
 | `run` `subscribe` arm | Restrict stream kinds, bound entries, activate on reader, emit acknowledgment of activation before spawning receiver |
 | `run` stream worker | Receive SDK items, project JSON/gap items, wait for parent acknowledgment; terminal failure exits the worker |
