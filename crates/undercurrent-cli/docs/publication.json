@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "cli",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "cli",
+      "section": "Architecture",
+      "order": 0,
+      "title": "CLI development",
+      "description": "Develop command routing, local daemon lifecycle and terminal presentation."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "cli/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "internals/code-map.md",
+      "slug": "cli/internals/code-map",
+      "section": "Internals",
+      "order": 12
+    },
+    {
+      "file": "internals/groups-and-recovery.md",
+      "slug": "cli/internals/groups-and-recovery",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "internals/ownership.md",
+      "slug": "cli/internals/ownership",
+      "section": "Internals",
+      "order": 14
+    },
+    {
+      "file": "internals/session-start.md",
+      "slug": "cli/internals/session-start",
+      "section": "Internals",
+      "order": 15
+    },
+    {
+      "file": "internals/terminal-and-streams.md",
+      "slug": "cli/internals/terminal-and-streams",
+      "section": "Internals",
+      "order": 16
+    }
+  ]
+}

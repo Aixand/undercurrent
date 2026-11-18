@@ -2,7 +2,25 @@
 
 Use these guides to locate and change the CLI implementation. They cover the
 current 0.1.0-beta crate in the root workspace. Start with ownership and the source
-map, then follow the mechanism affected by your change.
+map, then follow the mechanism affected by your change. The CLI owns command
+routing, local state, and presentation. Daemon-backed commands use the Rust SDK
+for product requests.
+
+## Package and reader scope
+
+The CLI translates arguments, formats human and JSON output, manages
+bounded subscriptions and terminal views, and guards local lifecycle actions.
+Its exported Rust adapters support internal orchestration. For supported
+consumer APIs, use the [SDK guides](../../../docs/sdk/README.md) and
+[protocol reference](../../../docs/reference/protocol/README.md).
+
+Install matching `uc`, `uc-daemon`, and `uc-session-host` binaries before running
+the first-session tutorial. Some commands can start an absent daemon. Consult
+the [startup rules](../../../docs/guides/daemon/cli-lifecycle.md#start-and-verify-readiness)
+when scripting. For interactive tasks, see the [workspace TUI](../../../docs/guides/cli/workspace.md),
+[attach and splits](../../../docs/guides/cli/interactive.md),
+[groups](../../../docs/guides/cli/groups.md), and
+[shell hooks](../../../docs/guides/cli/shell-integration.md).
 
 ## Internals
 
@@ -18,7 +36,8 @@ map, then follow the mechanism affected by your change.
 
 [Making and verifying a change](development/contributing.md) maps change types
 to affected contracts, focused tests, and native integration checks. Commands
-run from the repository root; runtime checks require their documented isolated state.
+run from the repository root. Use the [integration evidence map](development/contributing.md#choose-integration-evidence)
+to choose checks for output, startup, reset, or terminal changes.
 
 ## Using the CLI
 
