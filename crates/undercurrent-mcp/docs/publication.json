@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "mcp",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "mcp",
+      "section": "Architecture",
+      "order": 0,
+      "title": "MCP adapter development",
+      "description": "Develop tool schemas, lazy SDK access, admission and bounded observations."
+    },
+    {
+      "file": "development/tools.md",
+      "slug": "mcp/development/tools",
+      "section": "Development",
+      "order": 11
+    }
+  ]
+}
