@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "platform-macos",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "platform-macos",
+      "section": "Architecture",
+      "order": 0,
+      "title": "macOS primitives development",
+      "description": "Develop Darwin process and listener evidence with native verification."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "platform-macos/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "development/diagnosing-observations.md",
+      "slug": "platform-macos/development/diagnosing-observations",
+      "section": "Development",
+      "order": 12
+    },
+    {
+      "file": "internals/runtime-integration.md",
+      "slug": "platform-macos/internals/runtime-integration",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "reference/query-contracts.md",
+      "slug": "platform-macos/reference/query-contracts",
+      "section": "Reference",
+      "order": 14
+    }
+  ]
+}
