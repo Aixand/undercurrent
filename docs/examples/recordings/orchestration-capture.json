@@ -1,0 +1,45 @@
+{
+  "demo": "orchestration",
+  "source_revision": "91cfff2818c1f0a27c139086c5f832da00213008",
+  "source_hashes": {
+    "docs/assets/demos/theme.tape": "6da99441c14cc1a8d58fd226ae32c07af5c6d4c218f9f02c24802ac25bb4966d",
+    "docs/assets/demos/setup.tape": "e11f1dfd650d22550d0be165537d1eec3db627a0bca5ded0e83443ff7174acff",
+    "docs/assets/demos/overview.tape": "8a3363205382785331522d2da583f22f5d2e52046fdc4fe07f8f9e6444c9061e",
+    "docs/assets/demos/python-control.tape": "3fb2936aae77d8ef6556104ce6f895d05e36b71f8a590a19f23b1221420d2185",
+    "docs/assets/demos/interaction.tape": "f22dd5972b9b7d8455b6e9de475730c10c407eb97ffead0a4dc7bc92389f2e99",
+    "docs/assets/demos/orchestration.tape": "1a96993ba8f92c991cdb010ee265d5a5d0e3cca3a77644ed669e755f5bb96a88",
+    "docs/assets/demos/server-health.tape": "a5c8342ad123b861bb8d8604b62c6777c08ae0e5a74db35928e2134b5e5111f6",
+    "docs/assets/demos/fixtures/worker.py": "fa3101da6c004cee2ff98ada1eb518efda70b20fb582b71f0950b052a10422df",
+    "docs/assets/demos/fixtures/demo_helpers.py": "8ab9070e01eba52af3f60f18b334b4fa2a8e3e9c425568908e0b73a6e14e94ba",
+    "docs/assets/demos/fixtures/control.py": "b2c313a20b883399839e62b6ded78b5f2ec4d0fb0a64b81be37b5a60e3f1924f",
+    "docs/assets/demos/fixtures/checkpoint.py": "89d261c2496f00f5180373dcec09743822e7c4b4ea8d698296831a18f2bd1e2f",
+    "docs/assets/demos/fixtures/orders.csv": "34996e62b39f38c4d406935b107bacc9ff2a5bcb692595d4d3f1b06962c0b977",
+    "docs/assets/demos/fixtures/ask.yaml": "ae64858eb30ff9b36ac493bfb95b4cbd2a0ae96197533f2f979be037bd46e839",
+    "docs/assets/demos/fixtures/approval.py": "ee24df5a23a0bda6dcc51d5b600c654ae5e09d8bf72acf29f6029246d409c049",
+    "docs/assets/demos/fixtures/job.py": "6ec498585be5903d7037d2c51e1333da2f4c7e1d78fc97a522fe8d52018719ea",
+    "docs/assets/demos/fixtures/orchestrate.py": "58c16c25e2d8d94d91355b3181c535e708675ab7994cd38688b1a4689416d78a",
+    "docs/assets/demos/fixtures/server_check.py": "73ce558fa2a88491908cc512e9ccf249ff9036959a6f3855ba6e3ed42ca1d7ff",
+    "docs/assets/demos/fixtures/server/package.json": "e1f7ff3f9fc86eb2d5fcb166bb9baa9432d6217bb5e8f7a22b89ec1f5a737c4a",
+    "docs/assets/demos/fixtures/server/server.mjs": "f4014856e1ed73b74e850dbf74896a5a927858f3ad319476844b6be141e97823"
+  },
+  "verified": true,
+  "orchestration_verification": {
+    "parallel_sessions": 2,
+    "prerequisites_succeeded": true,
+    "dependent_started_after_both": true,
+    "report": "Validated orders: 4\nOrder total: 35.50\n"
+  },
+  "schema": 1,
+  "method": "Fresh source recorder executes actual CLI/SDK and independently checks artifacts or HTTP/state; GIF encoded to H264 without replacing output",
+  "media": {
+    "codec_name": "h264",
+    "width": 1600,
+    "height": 900,
+    "duration": "27.450000"
+  },
+  "tapeSha256": "fa2bf86302fbda6eefb1263bbcd43612bf96a499e387cc03ec0023239694378b",
+  "assets": {
+    "orchestration.mp4": "dd41b7139ff59bd29d12795c7c573a61eefefe6b2c4d46d4762136b66aac587b",
+    "orchestration-poster.png": "4e8afec6bde9553aafcddd56f1ea6247b8dfe3d53aa7500723b0836e04e302b3"
+  }
+}

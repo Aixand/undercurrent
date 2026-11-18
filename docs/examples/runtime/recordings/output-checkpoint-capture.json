@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "scope": "Actual local Undercurrent SDK/processes and bounded fixtures; no model calls",
+  "workflow": "output-checkpoint",
+  "recordedAt": "2026-11-17T18:23:21Z",
+  "sourceFiles": {
+    "workflows.py": "abbed945b6d2926c9f0c558f25f7cc6c6efdb5b0989de9d2b2fce19784678f83",
+    "worker.py": "e5b393552607fb45e6d7e1867c44186957f27ec6f11f2c61e5864e33b89e6b3e"
+  },
+  "tapeSha256": "a92b4c5b533efe2d223595dada82f9da0c42ed31d1420537a63b5379bef3f24c",
+  "media": {
+    "codec_name": "h264",
+    "width": 1280,
+    "height": 800,
+    "duration": "18.700000"
+  },
+  "cleanup": {
+    "owned_sessions_stopped": true,
+    "daemon_exited": true,
+    "failures": []
+  },
+  "method": "VHS executes a byte-identical short-path source copy; output is real, never preprinted or simulated",
+  "runtimeBin": "/data/dev/projects/aixand/main-prod/aixand-products/undercurrent/target/debug",
+  "evidence": "/tmp/uc-vhs-wf-9zunh9e6/demo"
+}
