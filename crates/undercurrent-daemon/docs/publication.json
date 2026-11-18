@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "daemon",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "daemon",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Daemon development",
+      "description": "Develop composition, dispatch, startup, workers and teardown."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "daemon/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "internals/composition.md",
+      "slug": "daemon/internals/composition",
+      "section": "Internals",
+      "order": 12
+    },
+    {
+      "file": "internals/configuration/profile-reload.md",
+      "slug": "daemon/internals/configuration/profile-reload",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "internals/configuration/resource-bounds.md",
+      "slug": "daemon/internals/configuration/resource-bounds",
+      "section": "Internals",
+      "order": 14
+    },
+    {
+      "file": "internals/diagnostics.md",
+      "slug": "daemon/internals/diagnostics",
+      "section": "Internals",
+      "order": 15
+    },
+    {
+      "file": "internals/lifecycle/background-work.md",
+      "slug": "daemon/internals/lifecycle/background-work",
+      "section": "Internals",
+      "order": 16
+    },
+    {
+      "file": "internals/lifecycle/startup-and-shutdown.md",
+      "slug": "daemon/internals/lifecycle/startup-and-shutdown",
+      "section": "Internals",
+      "order": 17
+    },
+    {
+      "file": "internals/output-and-streams.md",
+      "slug": "daemon/internals/output-and-streams",
+      "section": "Internals",
+      "order": 18
+    },
+    {
+      "file": "internals/requests/agent-channel.md",
+      "slug": "daemon/internals/requests/agent-channel",
+      "section": "Internals",
+      "order": 19
+    },
+    {
+      "file": "internals/requests/effects-and-recovery.md",
+      "slug": "daemon/internals/requests/effects-and-recovery",
+      "section": "Internals",
+      "order": 20
+    },
+    {
+      "file": "internals/requests/request-flow.md",
+      "slug": "daemon/internals/requests/request-flow",
+      "section": "Internals",
+      "order": 21
+    }
+  ]
+}
