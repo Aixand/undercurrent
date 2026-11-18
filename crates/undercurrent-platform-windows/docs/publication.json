@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "platform-windows",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "platform-windows",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Windows primitives development",
+      "description": "Develop private files, pipes, process jobs and native identity checks."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "platform-windows/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "development/test-coverage.md",
+      "slug": "platform-windows/development/test-coverage",
+      "section": "Development",
+      "order": 12
+    },
+    {
+      "file": "internals/filesystem-security.md",
+      "slug": "platform-windows/internals/filesystem-security",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "internals/ownership.md",
+      "slug": "platform-windows/internals/ownership",
+      "section": "Internals",
+      "order": 14
+    },
+    {
+      "file": "internals/private-ipc.md",
+      "slug": "platform-windows/internals/private-ipc",
+      "section": "Internals",
+      "order": 15
+    },
+    {
+      "file": "internals/processes.md",
+      "slug": "platform-windows/internals/processes",
+      "section": "Internals",
+      "order": 16
+    }
+  ]
+}
