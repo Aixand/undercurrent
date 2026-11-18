@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "multiplex",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "multiplex",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Multiplex development",
+      "description": "Maintain correlation, scheduling, credit and bounded replay."
+    },
+    {
+      "file": "development/contributing.md",
+      "slug": "multiplex/development/contributing",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "development/diagnose-delivery.md",
+      "slug": "multiplex/development/diagnose-delivery",
+      "section": "Development",
+      "order": 12
+    },
+    {
+      "file": "internals/ownership.md",
+      "slug": "multiplex/internals/ownership",
+      "section": "Internals",
+      "order": 13
+    },
+    {
+      "file": "internals/replay.md",
+      "slug": "multiplex/internals/replay",
+      "section": "Internals",
+      "order": 14
+    },
+    {
+      "file": "internals/routing.md",
+      "slug": "multiplex/internals/routing",
+      "section": "Internals",
+      "order": 15
+    },
+    {
+      "file": "internals/scheduling.md",
+      "slug": "multiplex/internals/scheduling",
+      "section": "Internals",
+      "order": 16
+    },
+    {
+      "file": "reference/diagnostics.md",
+      "slug": "multiplex/reference/diagnostics",
+      "section": "Reference",
+      "order": 17
+    }
+  ]
+}
