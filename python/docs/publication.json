@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "project": "undercurrent",
+  "component": "python-sdk",
+  "pages": [
+    {
+      "file": "README.md",
+      "slug": "python-sdk",
+      "section": "Architecture",
+      "order": 0,
+      "title": "Python SDK development",
+      "description": "Maintain async conversion, bridge lifetime, observations and errors."
+    },
+    {
+      "file": "development/changes.md",
+      "slug": "python-sdk/development/changes",
+      "section": "Development",
+      "order": 11
+    },
+    {
+      "file": "internals/connection.md",
+      "slug": "python-sdk/internals/connection",
+      "section": "Internals",
+      "order": 12
+    },
+    {
+      "file": "internals/conversion.md",
+      "slug": "python-sdk/internals/conversion",
+      "section": "Internals",
+      "order": 13
+    }
+  ]
+}

@@ -26,8 +26,8 @@ implements those paths; [bridge stream delivery](../../../crates/undercurrent-py
 explains the Rust-side worker and acknowledgement ordering.
 
 `Bridge.connect` serializes lazy startup, resolves the executable with
-`shutil.which`, and spawns it with pipes and the selected `UNDERCURRENT_HOME`.
-The bridge constructs `StandaloneClientProfile::standard`, authenticates local
+`shutil.which`, and passes `--request-bytes` and the selected `UNDERCURRENT_HOME`
+to the subprocess. The bridge builds its SDK profile with that request limit, authenticates local
 IPC, and only then emits `{"type":"ready","protocol":"0.1.0-beta"}`. That release string is the
 **private bridge protocol**, not the Python package version, product contract
 version, environment `schema_version="0.1.0-beta"`, or public wire version. Mutation
@@ -43,10 +43,9 @@ unwrapping its result.
 Finite calls and subscription opens acquire one of 16 Python slots. Opening a
 subscription releases its slot before iteration begins. The bridge separately
 bounds request workers at 16 and active subscriptions at 64; subscription opening runs in the
-bridge command loop and can delay later commands. JSON lines are bounded to
-4 MiB, while the [standard Rust profile](../../../crates/undercurrent-sdk/src/profile.rs)
-sets smaller product/frame/queue limits. Do not use the line limit to infer the
-maximum accepted terminal prompt or output page.
+bridge command loop and can delay later commands. Both sides use
+`max(4 MiB, request_bytes + 65,536)` for the line bound. Product and SDK bounds
+also apply. See the [private limits reference](../../../crates/undercurrent-python-bridge/docs/reference/stdio-protocol.md#limits-and-timing).
 
 The stream ACK protocol bounds buffering, as shown in the
 [delivery diagram](../../../docs/sdk/python/streams.md#backpressure-and-connection-recovery). It is not a

@@ -73,7 +73,8 @@ acknowledgment and cleanup; its syntax alone does not prove live behavior.
 ### Select the checks for a Rust change
 
 For bridge or Rust changes, select package-level checks such as
-`cargo test --locked -p undercurrent-sdk --test product_client` and
+`cargo test --locked -p aixand-undercurrent --test product_client`,
+`cargo test --locked -p undercurrent-python-bridge`, and
 `cargo clippy --locked -p undercurrent-python-bridge --no-deps -- -D warnings`.
 Use `scripts/check-architecture.py --positive` for dependency/surface policy.
 The repository's broader runner is
